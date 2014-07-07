@@ -39,7 +39,7 @@ public class CouriersManActivity extends Activity {
 	}
 
 	private class MyLayoutListener implements OnClickListener {
-
+		// /
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
