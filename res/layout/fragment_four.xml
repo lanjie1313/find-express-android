@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff"
+    android:orientation="vertical" >
+
+    <com.runye.express.listview.PullToRefreshView
+        android:id="@+id/pullToRefreshView4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" android:background="@drawable/common_listview_selector"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/list4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fff4f7f9"
+            android:cacheColorHint="#00000000"
+            android:divider="#dddbdb"
+            android:dividerHeight="1.0px"
+            android:listSelector="@android:color/transparent"
+            android:scrollbars="none" />
+    </com.runye.express.listview.PullToRefreshView>
+
+</LinearLayout>

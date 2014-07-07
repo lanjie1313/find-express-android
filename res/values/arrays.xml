@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="login_identity">
+        <item>管理员</item>
+        <item>站长</item>
+        <item>快递员</item>
+    </string-array>
+    <string-array name="spinnername">
+        <item>尖草坪站</item>
+        <item>尖草坪站B</item>
+        <item>尖草坪站C</item>
+        <item>尖草坪站D</item>
+        <item>尖草坪站E</item>
+        <item>尖草坪站F</item>
+        <item>尖草坪站G</item>
+        <item>尖草坪站H</item>
+    </string-array>
+
+</resources>

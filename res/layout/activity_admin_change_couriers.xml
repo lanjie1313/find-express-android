@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <com.runye.express.listview.PullToRefreshView
+            android:id="@+id/activity_admin_change_couriers_pull_refresh_view"
+            android:layout_width="fill_parent"
+            android:layout_height="354dp"
+            android:background="@android:color/white"
+            android:orientation="vertical" >
+  	<ListView
+                android:id="@+id/activity_admin_change_couriers_listView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" >
+            </ListView>
+            
+        </com.runye.express.listview.PullToRefreshView>
+    </LinearLayout>
+          
+	<LinearLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:gravity="center" >
+
+		<Button
+		    android:id="@+id/activity_admin_change_couriers_addcouriers"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    style="@style/common_button_style"
+		    android:text="新增快递员" />
+
+    </LinearLayout>
+</LinearLayout>

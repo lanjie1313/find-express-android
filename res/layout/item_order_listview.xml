@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center|left" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ellipsize="marquee"
+                android:singleLine="true"
+                android:text="@string/order_number"
+                android:textSize="15sp" />
+
+            <TextView
+                android:id="@+id/item_order_listview_orderNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="123456789" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/order_time" />
+
+            <TextView
+                android:id="@+id/item_order_listview_orderTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2014年7月3日17:13:10" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/item_order_listview_couriersImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/dx_new_bkg" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/order_shop" />
+
+                <TextView
+                    android:id="@+id/item_order_listview_orderShop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="xxxxxxx金虎" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/order_delivery_address" />
+
+                <TextView
+                    android:id="@+id/item_order_listview_deliveryAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="xxxxxxxxxxxxxxxxx" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <RatingBar
+                    android:id="@+id/item_order_listview_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" 
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:rating="4"
+                    />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <TextView
+            android:id="@+id/item_order_listview_couriresNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:layout_weight="1"
+            android:text="01" />
+
+        <TextView
+            android:id="@+id/item_order_listview_couriresName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:layout_weight="1"
+            android:text="xx" />
+
+        <TextView
+            android:id="@+id/item_order_listview_orderCharge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="￥9999" 
+            android:textColor="#ff0000"/>
+
+        <Button
+            android:id="@+id/item_order_listview_change"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" 
+            android:layout_weight="1"
+            android:background="@drawable/btn_login_selector"
+            android:text="操作" />
+
+    </LinearLayout>
+
+</LinearLayout>
+
+

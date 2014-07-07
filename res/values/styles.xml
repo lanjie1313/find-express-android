@@ -1,0 +1,61 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+    <style name="register_textStyle">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+    <style name="login_textStyle">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+<style name="spinnerStyle">
+        <item name="android:background">@drawable/allorder_spinner_background</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:gravity">center|left</item>
+    </style>
+    
+  <style name="MyWidget" parent="@android:style/Theme" />
+    
+    <style name="MyWidget.TabText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/tab_indicator_text</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:ellipsize">marquee</item>
+    </style>
+
+    <!-- Common list view styles -->
+    <style name="MyWidget.ListView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:cacheColorHint">#00ffffff</item>
+        <item name="android:dividerHeight">2dp</item>
+        <item name="android:listSelector">@android:color/transparent</item>
+        <item name="android:fadeScrollbars">true</item>
+    </style>
+    <style name="common_button_style">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:background">@drawable/common_button_selector</item>
+    </style>
+    <style name="common_edittext_style">
+        <item name="android:ems">10</item>
+        <item name="android:background">@drawable/rounded_edittext_selector</item>
+    </style>
+</resources>

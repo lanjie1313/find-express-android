@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@drawable/header_bg"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:gravity="center|right"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:gravity="left" >
+
+                <Spinner
+                    android:id="@+id/activity_admin_list_spinner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center|right" >
+
+                <Button
+                    android:id="@+id/activity_admin_list_mapMode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="地图模式" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/titlebar"
+        android:layout_width="fill_parent"
+        android:layout_height="42dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/activity_admin_list_orderMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="按订单" />
+
+        <Button
+            android:id="@+id/activity_admin_list_couriersMode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="按快递员" />
+    </LinearLayout>
+
+    <com.runye.express.fragment.ui.TitleIndicator
+        android:id="@+id/activity_admin_list_pagerindicator"
+        android:layout_width="fill_parent"
+        android:layout_height="34dp"
+        android:background="@drawable/tab_bg"
+        app:footerColor="@color/tab_indicator_text_selected"
+        app:footerLineHeight="2dp"
+        app:footerTriangleHeight="3.0dp"
+        app:textColor="@color/tab_indicator_text"
+        app:textSizeNormal="@dimen/common_text_size_middle_2"
+        app:textSizeSelected="@dimen/common_text_size_middle_2" />
+
+    <!-- Don't set background for ViewPager. It doesn't work because of page margin -->
+
+    <com.runye.express.listview.PullToRefreshView
+        android:id="@+id/activity_admin_list_pullToRefreshView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ListView
+            android:id="@+id/activity_admin_list_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" >
+        </ListView>
+    </com.runye.express.listview.PullToRefreshView>
+
+    <com.runye.express.fragment.ui.ViewPagerCompat
+        android:id="@+id/activity_admin_list_pager"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:duplicateParentState="true" >
+    </com.runye.express.fragment.ui.ViewPagerCompat>
+
+</LinearLayout>

@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/linear1"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center" >
+
+            <com.runye.express.utils.RoundedImageView
+                android:id="@+id/activity_register_headImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_launcher" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_top_background"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:gravity="center" >
+
+                <TextView
+                    style="@style/login_textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="@string/register_nickName" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/activity_register_nickname"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null" />
+
+            <requestFocus />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_bottom_background" >
+
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:gravity="center" >
+
+                <TextView
+                    style="@style/login_textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/register_promotionCode" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/activity_register_promotionCode"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_top_background" >
+
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:gravity="center" >
+
+                <TextView
+                    style="@style/login_textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/register_phone" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/activity_register_phone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_bottom_background" >
+
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:gravity="center" >
+
+                <TextView
+                    style="@style/login_textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/register_email" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/activity_register_email"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_top_background" >
+
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:gravity="center" >
+
+                <TextView
+                    style="@style/login_textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/register_password" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/activity_register_password"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_bottom_background" >
+
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:gravity="center" >
+
+                <TextView
+                    style="@style/login_textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/register_password2" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/activity_register_password2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null" />
+        </LinearLayout>
+
+        <RadioGroup
+            android:id="@+id/activity_register_radioGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/activity_register_man"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/register_man" />
+
+            <RadioButton
+                android:id="@+id/activity_register_woman"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/register_woman" />
+
+            <RadioButton
+                android:id="@+id/activity_register_secrecy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/register_secrecy" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:gravity="center" >
+
+            <Button
+                android:id="@+id/activity_register_confirm"
+                style="@style/common_button_style"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="注册" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>
