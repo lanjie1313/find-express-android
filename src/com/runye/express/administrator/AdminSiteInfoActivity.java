@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.runye.express.android.R;
+import com.runye.express.utils.SysExitUtil;
 
 /**
  * 
@@ -36,6 +37,7 @@ public class AdminSiteInfoActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_admin_siteinfo);
 		initUI();
+		SysExitUtil.activityList.add(AdminSiteInfoActivity.this);
 		getSiteInfo();
 	}
 

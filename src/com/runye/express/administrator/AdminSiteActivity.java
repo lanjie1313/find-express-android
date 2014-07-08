@@ -23,6 +23,7 @@ import com.runye.express.bean.SiteBean;
 import com.runye.express.listview.PullToRefreshView;
 import com.runye.express.listview.PullToRefreshView.OnFooterRefreshListener;
 import com.runye.express.listview.PullToRefreshView.OnHeaderRefreshListener;
+import com.runye.express.utils.SysExitUtil;
 import com.runye.express.utils.ToastUtil;
 
 /**
@@ -49,6 +50,7 @@ public class AdminSiteActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_admin_site);
 		initUI();
+		SysExitUtil.activityList.add(AdminSiteActivity.this);
 
 	}
 

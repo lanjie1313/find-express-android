@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.runye.express.android.R;
+import com.runye.express.utils.SysExitUtil;
 
 /**
  * 
@@ -20,6 +21,7 @@ public class AdminChangeWebMasterActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_admin_change_webmaster);
+		SysExitUtil.activityList.add(AdminChangeWebMasterActivity.this);
 	}
 
 	private void initUI() {

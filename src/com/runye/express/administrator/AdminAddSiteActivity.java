@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.runye.express.android.R;
+import com.runye.express.utils.SysExitUtil;
 import com.runye.express.utils.ToastUtil;
 
 /**
@@ -32,6 +33,7 @@ public class AdminAddSiteActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_admin_addsite);
 		initUI();
+		SysExitUtil.activityList.add(AdminAddSiteActivity.this);
 	}
 
 	private void initUI() {

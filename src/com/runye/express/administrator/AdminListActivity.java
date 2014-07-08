@@ -29,6 +29,7 @@ import com.runye.express.fragment.ui.ViewPagerCompat;
 import com.runye.express.listview.PullToRefreshView;
 import com.runye.express.listview.PullToRefreshView.OnFooterRefreshListener;
 import com.runye.express.listview.PullToRefreshView.OnHeaderRefreshListener;
+import com.runye.express.utils.SysExitUtil;
 
 /**
  * 
@@ -65,6 +66,7 @@ public class AdminListActivity extends IndicatorFragmentActivity implements
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		initUI();
+		SysExitUtil.activityList.add(AdminListActivity.this);
 
 	}
 

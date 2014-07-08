@@ -52,7 +52,7 @@
                     android:id="@+id/activity_order_infos_deliveryAdress"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX" />
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -83,7 +83,7 @@
                 android:id="@+id/activity_order_infos_shopName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="xxxx" />
+             />
         </LinearLayout>
 
         <LinearLayout
@@ -95,7 +95,7 @@
                 android:id="@+id/activity_order_infos_shopAdress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="xxxxxxxx" />
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -233,8 +233,7 @@
             <TextView
                 android:id="@+id/activity_order_infos_message"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="xxxxxxxxxxx" />
+                android:layout_height="wrap_content" />
         </LinearLayout>
 
         <LinearLayout
@@ -247,10 +246,9 @@
                 android:text="@string/order_info_done" />
 
             <TextView
-                android:id="@+id/activity_order_infos_done"
+                android:id="@+id/activity_order_infos_time"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="2014年7月4日17:10:55" />
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </LinearLayout>
 

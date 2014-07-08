@@ -1,14 +1,19 @@
 package com.runye.express.webmaster;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 
 import com.runye.express.android.R;
 import com.runye.express.utils.LogUtil;
+import com.runye.express.utils.SysExitUtil;
 
 /**
  * 
@@ -32,6 +37,8 @@ public class MasterMainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_master_main);
 		initUI();
+		SysExitUtil.activityList.add(MasterMainActivity.this);
+
 	}
 
 	private void initUI() {
@@ -45,6 +52,35 @@ public class MasterMainActivity extends Activity {
 			layouts[i] = (LinearLayout) findViewById(ids[i]);
 			layouts[i].setOnClickListener(new MyLayoutListener());
 		}
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			Builder alertDialog = new AlertDialog.Builder(
+					MasterMainActivity.this);
+			alertDialog.setMessage("确定退出？");
+			alertDialog.setPositiveButton("确定",
+					new android.content.DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							SysExitUtil.exit();
+						}
+					});
+			alertDialog.setNegativeButton("取消",
+					new android.content.DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+
+						}
+					});
+			alertDialog.create();
+			alertDialog.show();
+
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 	private class MyLayoutListener implements OnClickListener {

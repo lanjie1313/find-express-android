@@ -23,6 +23,8 @@ import com.runye.express.adapter.SelectCouriersAdapter;
 import com.runye.express.android.R;
 import com.runye.express.bean.CouriersModeBean;
 import com.runye.express.bean.OrderModeBean;
+import com.runye.express.map.MapApplication;
+import com.runye.express.utils.SysExitUtil;
 import com.runye.express.utils.ToastUtil;
 
 /**
@@ -35,6 +37,7 @@ import com.runye.express.utils.ToastUtil;
  * @Company:山西润叶网络科技有限公司
  */
 public class OrderInfoActivity extends Activity {
+	private OrderModeBean mOrderModeBean;
 	private List<OrderModeBean> orderList;
 	private List<CouriersModeBean> couriersList;
 	private ListView mListView;
@@ -45,47 +48,82 @@ public class OrderInfoActivity extends Activity {
 	private Button bt_select;
 	/** 选择快递员对话框 */
 	Dialog mDialog;
+	/** 收货地址 */
+	private TextView tv_deliveryAddress;
+	/** 店铺地址 */
+	private TextView tv_shopAdress;
+	/** 店铺名称 */
+	private TextView tv_shopName;
+	/** 留言地址 */
+	private TextView tv_message;
+	private TextView tv_time;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_order_infos);
+		SysExitUtil.activityList.add(OrderInfoActivity.this);
 		initUI();
 	}
 
 	private void initUI() {
-
-		orderList = getOrderInfo();
+		// 获取上个页面装载完成的数据
+		mOrderModeBean = getIntent().getParcelableExtra("ORDERINFO");
 		mListView = (ListView) findViewById(R.id.activity_order_infos_listview);
 		bt_confim = (Button) findViewById(R.id.activity_order_infos_confim);
 		bt_map = (Button) findViewById(R.id.activity_order_infos_map);
-		boolean isSelect = getIntent().getBooleanExtra("ISSELECT", false);
+		// 此处判断是否为管理员或者站长，true表示可以选择快递员
 		bt_select = (Button) findViewById(R.id.activity_order_infos_select);
-		if (isSelect) {
+		if (mOrderModeBean.getStatus().equals("待分配订单")) {
 			bt_select.setVisibility(View.VISIBLE);
 			bt_select.setOnClickListener(new MyButtonListener());
 		}
+		// 快递员发货
+		if (mOrderModeBean.getStatus().equals("待配送订单")) {
+			bt_confim.setText("发货");
+		}
 		bt_confim.setOnClickListener(new MyButtonListener());
 		bt_map.setOnClickListener(new MyButtonListener());
+		orderList = getOrderInfo();
 		OrderInfoAdapter adapter = new OrderInfoAdapter(OrderInfoActivity.this,
 				orderList);
 		mListView.setAdapter(adapter);
 
+		tv_deliveryAddress = (TextView) findViewById(R.id.activity_order_infos_deliveryAdress);
+		tv_shopAdress = (TextView) findViewById(R.id.activity_order_infos_shopAdress);
+		tv_shopName = (TextView) findViewById(R.id.activity_order_infos_shopName);
+		tv_message = (TextView) findViewById(R.id.activity_order_infos_message);
+		tv_time = (TextView) findViewById(R.id.activity_order_infos_time);
+		tv_time.setText(mOrderModeBean.getTime());
+		tv_deliveryAddress.setText(mOrderModeBean.getAddress());
+		tv_shopAdress.setText(mOrderModeBean.getShopAddress());
+		tv_shopName.setText(mOrderModeBean.getShopName());
+		tv_message.setText(mOrderModeBean.getMessage());
 	}
 
+	/**
+	 * 
+	 * @Description: 根据订单号查询订单详细信息
+	 * @return List<OrderModeBean>
+	 */
 	private List<OrderModeBean> getOrderInfo() {
 		List<OrderModeBean> list = new ArrayList<OrderModeBean>();
-		for (int i = 0; i < 20; i++) {
+		for (int i = 0; i < 3; i++) {
 			OrderModeBean bean = new OrderModeBean();
-			bean.setGoodsName("name" + i);
-			bean.setGoodsNumber(i + "");
-			bean.setGoodsPrice(i + "");
+			bean.setGoodsName("商品" + i);
+			bean.setGoodsNumber("" + i);
+			bean.setGoodsPrice("" + i);
 			list.add(bean);
-
 		}
 		return list;
 	}
 
+	/**
+	 * 
+	 * @Description: 获取快递员信息
+	 * @return
+	 * @return List<CouriersModeBean>
+	 */
 	private List<CouriersModeBean> getCouriersInfo() {
 		List<CouriersModeBean> list = new ArrayList<CouriersModeBean>();
 		for (int i = 0; i < 20; i++) {
@@ -99,6 +137,12 @@ public class OrderInfoActivity extends Activity {
 		return list;
 	}
 
+	/**
+	 * 
+	 * @Description: couriers列表对话框
+	 * @return
+	 * @return Dialog
+	 */
 	private Dialog setDialog() {
 		couriersList = getCouriersInfo();
 		Dialog dialog = new Dialog(OrderInfoActivity.this);
@@ -115,6 +159,12 @@ public class OrderInfoActivity extends Activity {
 		return dialog;
 	}
 
+	/**
+	 * 
+	 * @Description: 选择确认订单
+	 * @param message
+	 * @return void
+	 */
 	private void setConfimDialog(final String message) {
 		Builder alertDialog = new AlertDialog.Builder(OrderInfoActivity.this);
 		alertDialog.setMessage(message);
@@ -158,14 +208,28 @@ public class OrderInfoActivity extends Activity {
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.activity_order_infos_confim:
-				ToastUtil.showShortToast(OrderInfoActivity.this, "sss");
+				if (MapApplication.getInstance().isISCOURIERS()) {
+
+					ToastUtil.showShortToast(OrderInfoActivity.this,
+							"i am couriers，i send");
+				} else {
+
+					ToastUtil.showShortToast(OrderInfoActivity.this,
+							"i am master or admin,i manage");
+				}
 				break;
 			case R.id.activity_order_infos_map:
-				ToastUtil.showShortToast(OrderInfoActivity.this, "xxxx");
+				// admin or master scan couriers couriers scan user location
+				if (MapApplication.getInstance().isISCOURIERS()) {
+
+					ToastUtil.showShortToast(OrderInfoActivity.this,
+							"user location");
+				} else {
+					ToastUtil.showShortToast(OrderInfoActivity.this,
+							"couriers location");
+				}
 				break;
 			case R.id.activity_order_infos_select:
-				// startActivity(new Intent(OrderInfoActivity.this,
-				// SelectCouriersActivity.class));
 				mDialog = setDialog();
 				mDialog.show();
 			default:

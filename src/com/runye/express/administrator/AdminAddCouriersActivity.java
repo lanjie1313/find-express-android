@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import com.runye.express.android.R;
+import com.runye.express.utils.SysExitUtil;
 
 /**
  * 
@@ -20,5 +21,6 @@ public class AdminAddCouriersActivity extends Activity {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_admin_addcouriers);
+		SysExitUtil.activityList.add(AdminAddCouriersActivity.this);
 	}
 }

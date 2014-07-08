@@ -73,7 +73,7 @@ public class OrderModeAdapter extends BaseAdapter {
 			holder.iv_couriersImage = (ImageView) convertView
 					.findViewById(R.id.item_order_listview_couriersImage);
 			holder.bt_change = (Button) convertView
-					.findViewById(R.id.item_order_listview_change);
+					.findViewById(R.id.item_order_listview_status);
 			holder.rb_rating = (RatingBar) convertView
 					.findViewById(R.id.item_order_listview_rating);
 
@@ -139,7 +139,7 @@ public class OrderModeAdapter extends BaseAdapter {
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
-			case R.id.item_order_listview_change:
+			case R.id.item_order_listview_status:
 				// 具体的我操作
 				ToastUtil.showShortToast(mContext, "呵呵");
 				break;

@@ -284,7 +284,6 @@ containing a value of this type.
         public static final int activity_order_infos_buyerName=0x7f0a0037;
         public static final int activity_order_infos_confim=0x7f0a0044;
         public static final int activity_order_infos_deliveryAdress=0x7f0a0038;
-        public static final int activity_order_infos_done=0x7f0a0042;
         public static final int activity_order_infos_freight=0x7f0a003f;
         public static final int activity_order_infos_goodsNumber=0x7f0a003d;
         public static final int activity_order_infos_listview=0x7f0a003c;
@@ -293,6 +292,7 @@ containing a value of this type.
         public static final int activity_order_infos_select=0x7f0a0043;
         public static final int activity_order_infos_shopAdress=0x7f0a003b;
         public static final int activity_order_infos_shopName=0x7f0a003a;
+        public static final int activity_order_infos_time=0x7f0a0042;
         public static final int activity_register_confirm=0x7f0a0050;
         public static final int activity_register_email=0x7f0a0049;
         public static final int activity_register_headImage=0x7f0a0045;
@@ -318,7 +318,6 @@ containing a value of this type.
         public static final int item_order_info_listview_goodsCharge=0x7f0a0066;
         public static final int item_order_info_listview_goodsName=0x7f0a0065;
         public static final int item_order_info_listview_goodsNumber=0x7f0a0067;
-        public static final int item_order_listview_change=0x7f0a0071;
         public static final int item_order_listview_couriersImage=0x7f0a006a;
         public static final int item_order_listview_couriresName=0x7f0a006f;
         public static final int item_order_listview_couriresNumber=0x7f0a006e;
@@ -328,6 +327,7 @@ containing a value of this type.
         public static final int item_order_listview_orderShop=0x7f0a006b;
         public static final int item_order_listview_orderTime=0x7f0a0069;
         public static final int item_order_listview_rating=0x7f0a006d;
+        public static final int item_order_listview_status=0x7f0a0071;
         public static final int item_select_couriers_dialog_name=0x7f0a0073;
         public static final int item_select_couriers_dialog_number=0x7f0a0072;
         public static final int item_select_couriers_dialog_phone=0x7f0a0075;

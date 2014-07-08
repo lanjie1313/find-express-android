@@ -62,7 +62,7 @@ public class FragmentOne extends Fragment implements OnHeaderRefreshListener,
 				R.id.activity_admin_list_spinner);
 		spinner.setOnItemSelectedListener(new MySpinnerListener());
 		// 获取数据
-		mOrderModeList = getAllOrder();
+		mOrderModeList = getAllOrder("");
 		ListView listView = (ListView) mView.findViewById(R.id.list);
 		adapter = new OrderModeAdapter(getActivity(), mOrderModeList);
 		listView.setAdapter(adapter);
@@ -76,7 +76,7 @@ public class FragmentOne extends Fragment implements OnHeaderRefreshListener,
 	 * @Description: 联网获取全部订单
 	 * @return void
 	 */
-	private List<OrderModeBean> getAllOrder() {
+	private List<OrderModeBean> getAllOrder(String status) {
 		List<OrderModeBean> list = new ArrayList<OrderModeBean>();
 		for (int i = 0; i < 10; i++) {
 			OrderModeBean bean = new OrderModeBean();
@@ -88,7 +88,7 @@ public class FragmentOne extends Fragment implements OnHeaderRefreshListener,
 			bean.setCharge("" + i);
 			bean.setCouriersName("sss");
 			bean.setCouriersNumber(i + "");
-			bean.setStatus("ALL");
+			bean.setStatus("待分配订单");
 			list.add(bean);
 		}
 		return list;

@@ -11,6 +11,7 @@ import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
 import com.runye.express.android.R;
+import com.runye.express.utils.SysExitUtil;
 import com.runye.express.utils.ToastUtil;
 
 /**
@@ -46,6 +47,7 @@ public class RegisterActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register);
 		initUI();
+		SysExitUtil.activityList.add(RegisterActivity.this);
 	}
 
 	private void initUI() {
@@ -97,7 +99,7 @@ public class RegisterActivity extends Activity {
 	private void doRegister() {
 		if (checkInput()) {
 			// 联网代码，提交参数
-			
+
 			//
 		} else {
 			ToastUtil.showLongToast(RegisterActivity.this, "还有信息未填写哦！");

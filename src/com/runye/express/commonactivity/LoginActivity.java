@@ -18,7 +18,9 @@ import android.widget.TextView;
 
 import com.runye.express.administrator.AdminMainActivity;
 import com.runye.express.android.R;
+import com.runye.express.couriers.CouriersManActivity;
 import com.runye.express.map.MapApplication;
+import com.runye.express.utils.SysExitUtil;
 import com.runye.express.utils.ToastUtil;
 import com.runye.express.webmaster.MasterMainActivity;
 
@@ -49,12 +51,15 @@ public class LoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		SysExitUtil.activityList.add(LoginActivity.this);
 		initUI();
 
 	}
 
 	private void initUI() {
-
+		MapApplication.getInstance().setISADMIN(false);
+		MapApplication.getInstance().setISCOURIERS(false);
+		MapApplication.getInstance().setISMASTER(false);
 		bt_login = (Button) findViewById(R.id.activity_login);
 		bt_register = (Button) findViewById(R.id.activity_login_register);
 		et_passWord = (EditText) findViewById(R.id.activity_login_userName);
@@ -112,7 +117,8 @@ public class LoginActivity extends Activity {
 						MasterMainActivity.class));
 			}
 			if (MapApplication.getInstance().isISCOURIERS()) {
-				ToastUtil.showShortToast(LoginActivity.this, "开发中");
+				startActivity(new Intent(LoginActivity.this,
+						CouriersManActivity.class));
 			}
 		} else {
 			ToastUtil.showLongToast(LoginActivity.this, "请输入正确的账号或密码！");

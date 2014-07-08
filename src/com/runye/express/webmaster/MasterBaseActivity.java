@@ -21,6 +21,7 @@ import com.runye.express.commonactivity.OrderInfoActivity;
 import com.runye.express.listview.PullToRefreshView;
 import com.runye.express.listview.PullToRefreshView.OnFooterRefreshListener;
 import com.runye.express.listview.PullToRefreshView.OnHeaderRefreshListener;
+import com.runye.express.utils.SysExitUtil;
 
 /**
  * 
@@ -42,6 +43,8 @@ public class MasterBaseActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_master_base);
 		initUI();
+		SysExitUtil.activityList.add(MasterBaseActivity.this);
+
 	}
 
 	private void initUI() {
@@ -63,13 +66,15 @@ public class MasterBaseActivity extends Activity implements
 			OrderModeBean bean = new OrderModeBean();
 			bean.setNumber(i + "");
 			bean.setTime("2014年7月4日14:32:51");
-			bean.setShopName("美特好");
+			bean.setShopName("master");
 			bean.setAddress("华顿实业8层");
 			bean.setRating(3 + "");
 			bean.setCharge("" + i);
 			bean.setCouriersName("sss");
 			bean.setCouriersNumber(i + "");
 			bean.setStatus(status);
+			bean.setMessage("不错啊");
+			bean.setShopAddress("太原工业学院");
 			list.add(bean);
 		}
 		return list;
@@ -82,7 +87,10 @@ public class MasterBaseActivity extends Activity implements
 				long id) {
 			Intent intent = new Intent(MasterBaseActivity.this,
 					OrderInfoActivity.class);
-			intent.putExtra("ISSELECT", true);
+			OrderModeBean bean = mList.get(position);
+			Bundle bundle = new Bundle();
+			bundle.putParcelable("ORDERINFO", bean);
+			intent.putExtras(bundle);
 			startActivity(intent);
 		}
 	}

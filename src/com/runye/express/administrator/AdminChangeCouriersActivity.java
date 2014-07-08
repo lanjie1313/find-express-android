@@ -18,6 +18,7 @@ import com.runye.express.android.R;
 import com.runye.express.listview.PullToRefreshView;
 import com.runye.express.listview.PullToRefreshView.OnFooterRefreshListener;
 import com.runye.express.listview.PullToRefreshView.OnHeaderRefreshListener;
+import com.runye.express.utils.SysExitUtil;
 
 /**
  * 
@@ -41,6 +42,7 @@ public class AdminChangeCouriersActivity extends Activity implements
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_admin_change_couriers);
 		initUI();
+		SysExitUtil.activityList.add(AdminChangeCouriersActivity.this);
 	}
 
 	private void initUI() {

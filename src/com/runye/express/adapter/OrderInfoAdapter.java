@@ -84,7 +84,7 @@ public class OrderInfoAdapter extends BaseAdapter {
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
-			case R.id.item_order_listview_change:
+			case R.id.item_order_listview_status:
 				// 具体的我操作
 				ToastUtil.showShortToast(mContext, "呵呵");
 				break;

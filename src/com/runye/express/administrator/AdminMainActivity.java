@@ -5,11 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -51,6 +55,7 @@ import com.runye.express.listview.HorizontalListView;
 import com.runye.express.map.BMapUtil;
 import com.runye.express.map.MapApplication;
 import com.runye.express.utils.LogUtil;
+import com.runye.express.utils.SysExitUtil;
 import com.runye.express.utils.ToastUtil;
 
 /**
@@ -152,6 +157,7 @@ public class AdminMainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_admin_main);
+		SysExitUtil.activityList.add(AdminMainActivity.this);
 		/**
 		 * 使用地图sdk前需先初始化BMapManager. BMapManager是全局的，可为多个MapView共用，它需要地图模块创建前创建，
 		 * 并在地图地图模块销毁后销毁，只要还有地图模块在使用，BMapManager就不应该销毁
@@ -169,8 +175,8 @@ public class AdminMainActivity extends Activity {
 		bt_list.setOnClickListener(new MyButtonListener());
 		bt_site.setOnClickListener(new MyButtonListener());
 		HorizontalListView listview = (HorizontalListView) findViewById(R.id.activity_admin_main_listview);
-		mAdminListViewAdapter = new MainSiteAdapter(
-				AdminMainActivity.this, dataObjects);
+		mAdminListViewAdapter = new MainSiteAdapter(AdminMainActivity.this,
+				dataObjects);
 		listview.setAdapter(mAdminListViewAdapter);
 		listview.setOnItemClickListener(new MyListViewListener());
 
@@ -684,6 +690,35 @@ public class AdminMainActivity extends Activity {
 	public void onResume() {
 		mMapView.onResume();
 		super.onResume();
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			Builder alertDialog = new AlertDialog.Builder(
+					AdminMainActivity.this);
+			alertDialog.setMessage("确定退出？");
+			alertDialog.setPositiveButton("确定",
+					new android.content.DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							SysExitUtil.exit();
+						}
+					});
+			alertDialog.setNegativeButton("取消",
+					new android.content.DialogInterface.OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+
+						}
+					});
+			alertDialog.create();
+			alertDialog.show();
+
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 	class MyListViewListener implements OnItemClickListener {

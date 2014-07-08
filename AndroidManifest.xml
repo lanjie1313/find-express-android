@@ -86,6 +86,8 @@
         <activity android:name="com.runye.express.commonactivity.SelectCouriersActivity"></activity>
         <activity android:name="com.runye.express.webmaster.MasterMainActivity"></activity>
         <activity android:name="com.runye.express.webmaster.MasterBaseActivity"></activity>
+        <activity android:name="com.runye.express.couriers.CouriersManActivity"></activity>
+        <activity android:name="com.runye.express.couriers.CouriersBaseActivity"></activity>
     </application>
 
 </manifest>

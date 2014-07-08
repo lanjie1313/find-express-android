@@ -90,7 +90,10 @@ public class FragmentTwo extends Fragment implements OnHeaderRefreshListener,
 		public void onItemClick(AdapterView<?> parent, View view, int position,
 				long id) {
 			Intent intent = new Intent(getActivity(), OrderInfoActivity.class);
-			intent.putExtra("ISSELECT", true);
+			OrderModeBean bean = mOrderModeList.get(position);
+			Bundle bundle = new Bundle();
+			bundle.putParcelable("ORDERINFO", bean);
+			intent.putExtras(bundle);
 			startActivity(intent);
 		}
 	}
