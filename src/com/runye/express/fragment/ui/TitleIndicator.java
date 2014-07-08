@@ -26,16 +26,16 @@ import com.runye.express.android.R;
 import com.runye.express.fragment.ui.IndicatorFragmentActivity.TabInfo;
 
 /**
- * 这是个选项卡式的控件，会随着viewpager的滑动而滑动
+ * 
+ * @ClassName: TitleIndicator
+ * @Description: 这是个选项卡式的控件，会随着viewpager的滑动而滑动
+ * @author LanJie.Chen
+ * @date 2014-7-8 下午4:18:07
+ * @version V1.0
+ * @Company:山西润叶网络科技有限公司
  */
-@SuppressWarnings("static-access")
 public class TitleIndicator extends LinearLayout implements
 		View.OnClickListener, OnFocusChangeListener {
-	@SuppressWarnings("unused")
-	private final boolean DEBUG = false;
-
-	@SuppressWarnings("unused")
-	private static final String TAG = "TitleFlowIndicator";
 
 	private static final float FOOTER_LINE_HEIGHT = 4.0f;
 

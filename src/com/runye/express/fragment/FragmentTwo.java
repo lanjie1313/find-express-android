@@ -16,10 +16,10 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import com.runye.express.activity.common.OrderInfoActivity;
 import com.runye.express.adapter.OrderModeAdapter;
 import com.runye.express.android.R;
 import com.runye.express.bean.OrderModeBean;
-import com.runye.express.commonactivity.OrderInfoActivity;
 import com.runye.express.listview.PullToRefreshView;
 import com.runye.express.listview.PullToRefreshView.OnFooterRefreshListener;
 import com.runye.express.listview.PullToRefreshView.OnHeaderRefreshListener;

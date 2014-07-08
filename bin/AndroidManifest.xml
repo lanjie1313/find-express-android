@@ -59,7 +59,7 @@
             android:value="M3hp8waRNtH0IxAuzL1fuADr" >
         </meta-data>
         <activity
-            android:name="com.runye.express.commonactivity.LoginActivity"
+            android:name="com.runye.express.activity.common.LoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -67,27 +67,27 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.runye.express.commonactivity.RegisterActivity" >
+        <activity android:name="com.runye.express.activity.common.RegisterActivity" >
         </activity>
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
             android:process=":remote" />
-        <activity android:name="com.runye.express.administrator.AdminMainActivity" ></activity>
-        <activity android:name="com.runye.express.administrator.AdminAddCouriersActivity"></activity>
-        <activity android:name="com.runye.express.administrator.AdminAddSiteActivity"></activity>
-        <activity android:name="com.runye.express.administrator.AdminSiteActivity"></activity>
-        <activity android:name="com.runye.express.administrator.AdminListActivity"></activity>
-        <activity android:name="com.runye.express.administrator.AdminSiteInfoActivity"></activity>
-        <activity android:name="com.runye.express.administrator.AdminChangeCouriersActivity"></activity>
-        <activity android:name="com.runye.express.administrator.AdminChangeSiteNameActivity"></activity>
-        <activity android:name="com.runye.express.administrator.AdminChangeWebMasterActivity"></activity>
-        <activity android:name="com.runye.express.commonactivity.OrderInfoActivity"></activity>
-        <activity android:name="com.runye.express.commonactivity.SelectCouriersActivity"></activity>
-        <activity android:name="com.runye.express.webmaster.MasterMainActivity"></activity>
-        <activity android:name="com.runye.express.webmaster.MasterBaseActivity"></activity>
-        <activity android:name="com.runye.express.couriers.CouriersManActivity"></activity>
-        <activity android:name="com.runye.express.couriers.CouriersBaseActivity"></activity>
+        <activity android:name="com.runye.express.activity.administrator.AdminMainActivity" ></activity>
+        <activity android:name="com.runye.express.activity.administrator.AdminAddCouriersActivity"></activity>
+        <activity android:name="com.runye.express.activity.administrator.AdminAddSiteActivity"></activity>
+        <activity android:name="com.runye.express.activity.administrator.AdminSiteActivity"></activity>
+        <activity android:name="com.runye.express.activity.administrator.AdminListActivity"></activity>
+        <activity android:name="com.runye.express.activity.administrator.AdminSiteInfoActivity"></activity>
+        <activity android:name="com.runye.express.activity.administrator.AdminChangeCouriersActivity"></activity>
+        <activity android:name="com.runye.express.activity.administrator.AdminChangeSiteNameActivity"></activity>
+        <activity android:name="com.runye.express.activity.administrator.AdminChangeWebMasterActivity"></activity>
+        <activity android:name="com.runye.express.activity.common.OrderInfoActivity"></activity>
+        <activity android:name="com.runye.express.activity.common.SelectCouriersActivity"></activity>
+        <activity android:name="com.runye.express.activity.webmaster.MasterMainActivity"></activity>
+        <activity android:name="com.runye.express.activity.webmaster.MasterBaseActivity"></activity>
+        <activity android:name="com.runye.express.activity.couriers.CouriersManActivity"></activity>
+        <activity android:name="com.runye.express.activity.couriers.CouriersBaseActivity"></activity>
     </application>
 
 </manifest>

@@ -19,10 +19,10 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.runye.express.activity.common.OrderInfoActivity;
 import com.runye.express.adapter.OrderModeAdapter;
 import com.runye.express.android.R;
 import com.runye.express.bean.OrderModeBean;
-import com.runye.express.commonactivity.OrderInfoActivity;
 import com.runye.express.listview.PullToRefreshView;
 import com.runye.express.listview.PullToRefreshView.OnFooterRefreshListener;
 import com.runye.express.listview.PullToRefreshView.OnHeaderRefreshListener;
@@ -61,7 +61,7 @@ public class FragmentOne extends Fragment implements OnHeaderRefreshListener,
 		spinner = (Spinner) getActivity().findViewById(
 				R.id.activity_admin_list_spinner);
 		spinner.setOnItemSelectedListener(new MySpinnerListener());
-		// 获取数据11
+		// 获取数据1111
 
 		mOrderModeList = getAllOrder("");
 		ListView listView = (ListView) mView.findViewById(R.id.list);

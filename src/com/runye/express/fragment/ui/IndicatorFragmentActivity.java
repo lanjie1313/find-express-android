@@ -1,6 +1,3 @@
-/*
- * @author http://blog.csdn.net/singwhatiwanna
- */
 package com.runye.express.fragment.ui;
 
 import java.lang.reflect.Constructor;

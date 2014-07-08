@@ -18,6 +18,15 @@ import android.widget.TextView;
 
 import com.runye.express.android.R;
 
+/**
+ * 
+ * @ClassName: PullToRefreshView
+ * @Description: 下拉刷新，上啦加载listview
+ * @author LanJie.Chen
+ * @date 2014-7-8 下午4:15:55
+ * @version V1.0
+ * @Company:山西润叶网络科技有限公司
+ */
 public class PullToRefreshView extends LinearLayout {
 	private static final String TAG = "PullToRefreshView";
 	// refresh states
@@ -251,7 +260,7 @@ public class PullToRefreshView extends LinearLayout {
 	private void measureView(View child) {
 		ViewGroup.LayoutParams p = child.getLayoutParams();
 		if (p == null) {
-			p = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.FILL_PARENT,
+			p = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
 					ViewGroup.LayoutParams.WRAP_CONTENT);
 		}
 

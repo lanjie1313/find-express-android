@@ -43,6 +43,15 @@ import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.Scroller;
 
+/**
+ * 
+ * @ClassName: HorizontalListView
+ * @Description: 水平滚动listview
+ * @author LanJie.Chen
+ * @date 2014-7-8 下午4:15:33
+ * @version V1.0
+ * @Company:山西润叶网络科技有限公司
+ */
 public class HorizontalListView extends AdapterView<ListAdapter> {
 
 	public boolean mAlwaysOverrideTouch = true;
