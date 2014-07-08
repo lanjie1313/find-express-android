@@ -81,6 +81,7 @@ public class MyAsyncTask extends AsyncTask<String, Integer, String> {
 
 	}
 
+	//
 	@Override
 	protected void onProgressUpdate(Integer... values) { // 可以与UI控件交互
 		proDialog.setProgress(values[0]);
