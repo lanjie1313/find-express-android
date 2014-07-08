@@ -61,7 +61,8 @@ public class FragmentOne extends Fragment implements OnHeaderRefreshListener,
 		spinner = (Spinner) getActivity().findViewById(
 				R.id.activity_admin_list_spinner);
 		spinner.setOnItemSelectedListener(new MySpinnerListener());
-		// 获取数据
+		// 获取数据11
+
 		mOrderModeList = getAllOrder("");
 		ListView listView = (ListView) mView.findViewById(R.id.list);
 		adapter = new OrderModeAdapter(getActivity(), mOrderModeList);
