@@ -1,17 +1,29 @@
 package com.runye.express.activity.common;
 
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
-import java.util.HashMap;
-import java.util.Map;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.protocol.HTTP;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,11 +33,13 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.runye.express.activity.administrator.AdminMainActivity;
 import com.runye.express.activity.couriers.CouriersManActivity;
-import com.runye.express.activity.webmaster.MasterMainActivity;
+import com.runye.express.activity.sitemaster.MasterMainActivity;
 import com.runye.express.android.R;
-import com.runye.express.http.MyAsyncTask;
+import com.runye.express.http.HttpUri;
 import com.runye.express.map.MapApplication;
 import com.runye.express.utils.LogUtil;
 import com.runye.express.utils.SysExitUtil;
@@ -41,6 +55,7 @@ import com.runye.express.utils.ToastUtil;
  * @Company:山西润叶网络科技有限公司
  */
 public class LoginActivity extends Activity {
+	private final String TAG = "LoginActivity";
 	/** 登陆按钮 */
 	private Button bt_login;
 	/** 注册按钮 */
@@ -53,6 +68,14 @@ public class LoginActivity extends Activity {
 	private TextView tv_identity;
 	/** 保存信息 */
 	private CheckBox cb_remberInfo;
+	/**
+	 * 登陆身份选择 admin sitemanager postman
+	 * */
+	private String identity;
+	/** 用户名 */
+	private String userName;
+	/** 密码 */
+	private String passWord;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,13 +87,14 @@ public class LoginActivity extends Activity {
 	}
 
 	private void initUI() {
+		boolean isRegister = getIntent().getBooleanExtra("ISREGISTER", false);
 		MapApplication.getInstance().setISADMIN(false);
 		MapApplication.getInstance().setISCOURIERS(false);
 		MapApplication.getInstance().setISMASTER(false);
 		bt_login = (Button) findViewById(R.id.activity_login);
 		bt_register = (Button) findViewById(R.id.activity_login_register);
-		et_passWord = (EditText) findViewById(R.id.activity_login_userName);
-		et_userName = (EditText) findViewById(R.id.activity_login_passWord);
+		et_userName = (EditText) findViewById(R.id.activity_login_userName);
+		et_passWord = (EditText) findViewById(R.id.activity_login_passWord);
 		tv_identity = (TextView) findViewById(R.id.activity_login_identity);
 		cb_remberInfo = (CheckBox) findViewById(R.id.activity_login_remberPwd);
 		cb_remberInfo.setOnCheckedChangeListener(new MyCheckChanged());
@@ -83,11 +107,15 @@ public class LoginActivity extends Activity {
 		String password = userInfo.getString("password", "").trim();
 		String identity = userInfo.getString("identity", "").trim();
 		if (!username.equals("") && !password.equals("")
-				&& !identity.equals("")) {
+				&& !identity.equals("") && isRegister == false) {
 
 			et_userName.setText(username);
 			et_passWord.setText(password);
 			tv_identity.setText(identity);
+		}
+		if (isRegister) {
+			et_userName.setText("");
+			et_passWord.setText("");
 		}
 	}
 
@@ -98,6 +126,7 @@ public class LoginActivity extends Activity {
 	 */
 	private void doLogin() {
 		if (checkInput()) {
+
 			if (cb_remberInfo.isChecked()) {
 				// 记住信息
 				SharedPreferences userInfo = getSharedPreferences("user_info",
@@ -113,22 +142,21 @@ public class LoginActivity extends Activity {
 						.commit();
 
 			}
-			// 联网登陆代码
-			if (MapApplication.getInstance().isISADMIN()) {
 
-				startActivity(new Intent(LoginActivity.this,
-						AdminMainActivity.class));
-			}
-			if (MapApplication.getInstance().isISMASTER()) {
-				startActivity(new Intent(LoginActivity.this,
-						MasterMainActivity.class));
-			}
-			if (MapApplication.getInstance().isISCOURIERS()) {
-				startActivity(new Intent(LoginActivity.this,
-						CouriersManActivity.class));
-			}
-		} else {
-			ToastUtil.showLongToast(LoginActivity.this, "请输入正确的账号或密码！");
+			// 登陆
+			List<NameValuePair> paramsList = new ArrayList<NameValuePair>();
+			paramsList.add(new BasicNameValuePair("grant_type", "password"));
+			// 判断身份
+			paramsList.add(new BasicNameValuePair("username", identity + "/"
+					+ userName));
+			LogUtil.d(TAG, "我的身份：" + identity);
+			LogUtil.d(TAG, "用户名：" + userName);
+			LogUtil.d(TAG, "密码：" + passWord);
+			paramsList.add(new BasicNameValuePair("password", passWord));
+			MyAsyncTaskPost post = new MyAsyncTaskPost(LoginActivity.this,
+					paramsList);
+			post.execute(HttpUri.LOGIN);
+
 		}
 	}
 
@@ -177,20 +205,23 @@ public class LoginActivity extends Activity {
 	 * @return boolean
 	 */
 	private boolean checkInput() {
-		String str1 = et_userName.getText().toString().trim();
-		String str2 = et_passWord.getText().toString().trim();
-		String str3 = tv_identity.getText().toString();
-		if (!str1.equals("") && !str2.equals("")) {
-			if (str3.equals(getResources().getStringArray(
-					R.array.login_identity)[0])) {
+		userName = et_userName.getText().toString().trim();
+		passWord = et_passWord.getText().toString().trim();
+		String str = tv_identity.getText().toString();
+		if (!userName.equals("") && !passWord.equals("")) {
+			if (str.equals(getResources()
+					.getStringArray(R.array.login_identity)[0])) {
 				MapApplication.getInstance().setISADMIN(true);
+				identity = "admin";
 			}
-			if (str3.equals(getResources().getStringArray(
-					R.array.login_identity)[1])) {
+			if (str.equals(getResources()
+					.getStringArray(R.array.login_identity)[1])) {
+				identity = "sitemanager";
 				MapApplication.getInstance().setISMASTER(true);
 			}
-			if (str3.equals(getResources().getStringArray(
-					R.array.login_identity)[2])) {
+			if (str.equals(getResources()
+					.getStringArray(R.array.login_identity)[2])) {
+				identity = "postman";
 				MapApplication.getInstance().setISCOURIERS(true);
 			}
 			return true;
@@ -204,8 +235,7 @@ public class LoginActivity extends Activity {
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.activity_login:
-				// doLogin();
-				textHttp();
+				doLogin();
 				break;
 			case R.id.activity_login_register:
 				doRegister();
@@ -234,39 +264,108 @@ public class LoginActivity extends Activity {
 
 	}
 
-	private void textHttp() {
-		params = new HashMap<String, String>();
-		params.put("merchant", "5355d0f424c610e42182bfa8");
-		params.put("featured", "false");
-		params.put("status", "succeed_verify");
-		params.put("sort", "sales");
-		params.put("limit", "10");
-		LogUtil.d("=======", getUri(uir, params));
-		MyAsyncTask asyncTask = new MyAsyncTask(LoginActivity.this);
-		asyncTask.execute("");
-	}
+	private class MyAsyncTaskPost extends AsyncTask<String, Integer, String> {
+		ProgressDialog proDialog;
+		List<NameValuePair> mPairs;
 
-	private Map<String, String> params;
-	private final String uir = "http://api.tyfind.com:8888/products";
-
-	private String getUri(String path, Map<String, String> params) {
-		// StringBuilder是用来组拼请求地址和参数
-		StringBuilder sb = new StringBuilder();
-		sb.append(path).append("?");
-		if (params != null && params.size() != 0) {
-			for (Map.Entry<String, String> entry : params.entrySet()) {
-				// 如果请求参数中有中文，需要进行URLEncoder编码 gbk/utf8
-				try {
-					sb.append(entry.getKey())
-							.append("=")
-							.append(URLEncoder.encode(entry.getValue(), "utf-8"));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-				sb.append("&");
-			}
-			sb.deleteCharAt(sb.length() - 1);
+		public MyAsyncTaskPost(Context context, List<NameValuePair> params) {
+			proDialog = new ProgressDialog(context, 0);
+			proDialog.setCancelable(true);
+			proDialog.setMax(100);
+			proDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+			proDialog.show();
+			mPairs = params;
 		}
-		return sb.toString();
+
+		@Override
+		protected void onPreExecute() {
+		}
+
+		@Override
+		protected String doInBackground(String... params) { // 在后台，下载url网页内容
+
+			try {
+
+				// 第一步，创建HttpPost对象
+				HttpPost post = new HttpPost(params[0]);
+
+				// 登陆时
+				post.addHeader("Authorization",
+						"Basic YW5kcm9pZENsaWVudDpOZXB0dW5l'");
+				/* 发出HTTP request */
+				post.setEntity(new UrlEncodedFormEntity(mPairs));
+				// 第二步，使用execute方法发送HTTP Post请求，并返回HttpResponse对象
+				HttpResponse response = new DefaultHttpClient().execute(post);
+				LogUtil.d(TAG, "响应码："
+						+ response.getStatusLine().getStatusCode());
+				if (response.getStatusLine().getStatusCode() == 200) { // 判断网络连接是否成功
+					// 第三步，使用getEntity方法活得返回结果
+					HttpEntity entity = response.getEntity();
+					long len = entity.getContentLength(); // 获取url网页内容总大小
+					InputStream is = entity.getContent();
+					ByteArrayOutputStream bos = new ByteArrayOutputStream();
+					byte[] buffer = new byte[1024];
+					int ch = -1;
+					int count = 0; // 统计已下载的url网页内容大小
+					while (is != null && (ch = is.read(buffer)) != -1) {
+						bos.write(buffer, 0, ch);
+						count += ch;
+						if (len > 0) {
+							float ratio = count / (float) len * 100; // 计算下载url网页内容百分比
+							publishProgress((int) ratio);
+						}
+						Thread.sleep(100);
+					}
+
+					String result = new String(bos.toString(HTTP.UTF_8));
+					return result;
+				} else {
+					LogUtil.d(TAG, "Error Response: "
+							+ response.getStatusLine().toString());
+				}
+			} catch (Exception e) {
+				LogUtil.d(TAG, "Error: " + e.getMessage().toString());
+				e.printStackTrace();
+			}
+
+			return "error";
+		}
+
+		@Override
+		protected void onProgressUpdate(Integer... values) { // 可以与UI控件交互
+			proDialog.setProgress(values[0]);
+		}
+
+		@Override
+		protected void onPostExecute(String result) {
+			LogUtil.d(TAG, result);
+			proDialog.dismiss();
+			if (result.equals("error")) {
+				ToastUtil.showShortToast(LoginActivity.this, "用户名或者密码错误");
+			} else {
+				// 获取token信息，并保存到全局，方便调用
+				JSONObject object = (JSONObject) JSON.parse(result);
+				String access_token = object.getString("access_token");
+				String token_type = object.getString("token_type");
+				MapApplication.getInstance().setAccess_token(access_token);
+				MapApplication.getInstance().setToken_type(token_type);
+				LogUtil.d(TAG, "获取到的access_token：" + access_token);
+				LogUtil.d(TAG, "获取到的token_typ：" + token_type);
+				if (MapApplication.getInstance().isISADMIN()) {
+
+					startActivity(new Intent(LoginActivity.this,
+							AdminMainActivity.class));
+				}
+				if (MapApplication.getInstance().isISMASTER()) {
+					startActivity(new Intent(LoginActivity.this,
+							MasterMainActivity.class));
+				}
+				if (MapApplication.getInstance().isISCOURIERS()) {
+					startActivity(new Intent(LoginActivity.this,
+							CouriersManActivity.class));
+				}
+			}
+		}
 	}
+
 }

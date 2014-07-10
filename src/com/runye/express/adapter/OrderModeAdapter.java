@@ -82,19 +82,23 @@ public class OrderModeAdapter extends BaseAdapter {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		holder.tv_orderNumber.setText(mData.get(position).getNumber());
-		holder.tv_couriersName.setText(mData.get(position).getCouriersName());
-		holder.tv_couriersNumber.setText(mData.get(position)
-				.getCouriersNumber());
-		holder.tv_deliveryAddress.setText(mData.get(position).getAddress());
-		holder.tv_orderCharge.setText(mData.get(position).getCharge());
-		holder.tv_orderShop.setText(mData.get(position).getShopName());
-		holder.tv_orderTime.setText(mData.get(position).getTime());
+		holder.tv_orderTime.setText(mData.get(position).getCreation_date());
+		holder.tv_orderCharge.setText("￥" + mData.get(position).getTotal());
+		holder.tv_deliveryAddress.setText(mData.get(position)
+				.getRecipient_address());
+		// holder.tv_couriersName.setText(mData.get(position).getCouriersName());
+		// holder.tv_couriersNumber.setText(mData.get(position)
+		// .getCouriersNumber());
+		// holder.tv_orderCharge.setText(mData.get(position).getCharge());
+		// holder.tv_orderShop.setText(mData.get(position).getShopName());
+		// holder.tv_orderTime.setText(mData.get(position).getTime());
 		holder.bt_change.setOnClickListener(new MyButtonListener());
-		holder.rb_rating.setRating(Float.valueOf(mData.get(position)
-				.getRating()));
+		// holder.rb_rating.setRating(Float.valueOf(mData.get(position)
+		// .getRating()));
+
 		holder.bt_change.setText(mData.get(position).getStatus());
 		String status = mData.get(position).getStatus();
-		if (status.equals("待分配")) {
+		if (status.equals("new")) {
 			holder.bt_change.setBackgroundResource(R.drawable.waiting);
 
 		} else if (status.equals("已分配")) {

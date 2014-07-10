@@ -63,9 +63,12 @@ public class OrderInfoAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.tv_goodsCharge.setText(mData.get(position).getGoodsPrice());
-		holder.tv_goodsName.setText(mData.get(position).getGoodsName());
-		holder.tv_goodsNumber.setText(mData.get(position).getGoodsNumber());
+		// holder.tv_goodsCharge.setText(mData.get(position).getItemsBean()
+		// .getUnit_price());
+		// holder.tv_goodsName.setText(mData.get(position).getItemsBean()
+		// .getProduct());
+		// holder.tv_goodsNumber.setText(mData.get(position).getItemsBean()
+		// .getCount());
 		return convertView;
 	}
 

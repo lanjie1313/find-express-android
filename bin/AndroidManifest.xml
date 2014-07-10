@@ -84,8 +84,8 @@
         <activity android:name="com.runye.express.activity.administrator.AdminChangeWebMasterActivity"></activity>
         <activity android:name="com.runye.express.activity.common.OrderInfoActivity"></activity>
         <activity android:name="com.runye.express.activity.common.SelectCouriersActivity"></activity>
-        <activity android:name="com.runye.express.activity.webmaster.MasterMainActivity"></activity>
-        <activity android:name="com.runye.express.activity.webmaster.MasterBaseActivity"></activity>
+        <activity android:name="com.runye.express.activity.sitemaster.MasterMainActivity"></activity>
+        <activity android:name="com.runye.express.activity.sitemaster.MasterBaseActivity"></activity>
         <activity android:name="com.runye.express.activity.couriers.CouriersManActivity"></activity>
         <activity android:name="com.runye.express.activity.couriers.CouriersBaseActivity"></activity>
     </application>

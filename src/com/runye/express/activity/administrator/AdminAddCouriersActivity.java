@@ -16,9 +16,9 @@ import com.runye.express.utils.SysExitUtil;
  * @Company:山西润叶网络科技有限公司
  */
 public class AdminAddCouriersActivity extends Activity {
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_admin_addcouriers);
 		SysExitUtil.activityList.add(AdminAddCouriersActivity.this);

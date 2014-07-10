@@ -1,4 +1,4 @@
-package com.runye.express.activity.webmaster;
+package com.runye.express.activity.sitemaster;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -92,7 +92,7 @@ public class MasterMainActivity extends Activity {
 				LogUtil.d(TAG, "待分配订单 ");
 				Intent noAllocation = new Intent(MasterMainActivity.this,
 						MasterBaseActivity.class);
-				noAllocation.putExtra("STATUS", "待分配订单");
+				noAllocation.putExtra("STATUS", "new");
 				startActivity(noAllocation);
 				break;
 			case R.id.activity_master_main_yesAllocation:

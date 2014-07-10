@@ -79,19 +79,19 @@ public class FragmentOne extends Fragment implements OnHeaderRefreshListener,
 	 */
 	private List<OrderModeBean> getAllOrder(String status) {
 		List<OrderModeBean> list = new ArrayList<OrderModeBean>();
-		for (int i = 0; i < 10; i++) {
-			OrderModeBean bean = new OrderModeBean();
-			bean.setNumber(i + "");
-			bean.setTime("2014年7月4日14:32:51");
-			bean.setShopName("美特好");
-			bean.setAddress("华顿实业8层");
-			bean.setRating(3 + "");
-			bean.setCharge("" + i);
-			bean.setCouriersName("sss");
-			bean.setCouriersNumber(i + "");
-			bean.setStatus("待分配订单");
-			list.add(bean);
-		}
+		// for (int i = 0; i < 10; i++) {
+		// OrderModeBean bean = new OrderModeBean();
+		// bean.setNumber(i + "");
+		// bean.setTime("2014年7月4日14:32:51");
+		// bean.setShopName("美特好");
+		// bean.setAddress("华顿实业8层");
+		// bean.setRating(3 + "");
+		// bean.setCharge("" + i);
+		// bean.setCouriersName("sss");
+		// bean.setCouriersNumber(i + "");
+		// bean.setStatus("待分配订单");
+		// list.add(bean);
+		// }
 		return list;
 	}
 

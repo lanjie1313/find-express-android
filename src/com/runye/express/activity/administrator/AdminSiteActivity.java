@@ -78,7 +78,7 @@ public class AdminSiteActivity extends Activity implements
 		List<SiteBean> list = new ArrayList<SiteBean>();
 		for (int i = 0; i < dataObjects.length; i++) {
 			SiteBean bean = new SiteBean();
-			bean.setSiteName(dataObjects[i]);
+			bean.setName(dataObjects[i]);
 			list.add(bean);
 		}
 		return list;

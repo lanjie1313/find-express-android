@@ -94,11 +94,10 @@ public class OrderInfoActivity extends Activity {
 		tv_shopName = (TextView) findViewById(R.id.activity_order_infos_shopName);
 		tv_message = (TextView) findViewById(R.id.activity_order_infos_message);
 		tv_time = (TextView) findViewById(R.id.activity_order_infos_time);
-		tv_time.setText(mOrderModeBean.getTime());
-		tv_deliveryAddress.setText(mOrderModeBean.getAddress());
-		tv_shopAdress.setText(mOrderModeBean.getShopAddress());
-		tv_shopName.setText(mOrderModeBean.getShopName());
-		tv_message.setText(mOrderModeBean.getMessage());
+		tv_time.setText(mOrderModeBean.getCreation_date());
+		tv_shopAdress.setText(mOrderModeBean.getMerchant());
+		tv_shopName.setText(mOrderModeBean.getStatus());
+		tv_message.setText(mOrderModeBean.getNotes());
 	}
 
 	/**
@@ -109,11 +108,11 @@ public class OrderInfoActivity extends Activity {
 	private List<OrderModeBean> getOrderInfo() {
 		List<OrderModeBean> list = new ArrayList<OrderModeBean>();
 		for (int i = 0; i < 3; i++) {
-			OrderModeBean bean = new OrderModeBean();
-			bean.setGoodsName("商品" + i);
-			bean.setGoodsNumber("" + i);
-			bean.setGoodsPrice("" + i);
-			list.add(bean);
+			// OrderModeBean bean = new OrderModeBean();
+			// bean.setCreation_date("2014年7月10日12:59:25");
+			// bean.setNumber("" + i);
+			// bean.setDiscount(discount)("" + i);
+			// list.add(bean);
 		}
 		return list;
 	}

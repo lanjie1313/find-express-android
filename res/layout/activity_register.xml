@@ -42,6 +42,36 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:gravity="center"
+                    android:text="@string/register_site" />
+            </LinearLayout>
+
+            <requestFocus />
+
+            <Spinner
+                android:id="@+id/activity_register_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_top_background"
+            android:gravity="center"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="70dp"
+                android:layout_height="match_parent"
+                android:gravity="center" >
+
+                <TextView
+                    style="@style/login_textStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
                     android:text="@string/register_nickName" />
             </LinearLayout>
 
@@ -52,30 +82,6 @@
                 android:background="@null" />
 
             <requestFocus />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/login_bottom_background" >
-
-            <LinearLayout
-                android:layout_width="70dp"
-                android:layout_height="match_parent"
-                android:gravity="center" >
-
-                <TextView
-                    style="@style/login_textStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/register_promotionCode" />
-            </LinearLayout>
-
-            <EditText
-                android:id="@+id/activity_register_promotionCode"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@null" />
         </LinearLayout>
 
         <LinearLayout
@@ -99,7 +105,8 @@
                 android:id="@+id/activity_register_phone"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@null" />
+                android:background="@null"
+                android:inputType="phone" />
         </LinearLayout>
 
         <LinearLayout
@@ -123,7 +130,8 @@
                 android:id="@+id/activity_register_email"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@null" />
+                android:background="@null"
+                android:inputType="textEmailAddress" />
         </LinearLayout>
 
         <LinearLayout
@@ -147,7 +155,9 @@
                 android:id="@+id/activity_register_password"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@null" />
+                android:background="@null"
+                android:inputType="textPassword"
+                android:singleLine="true" />
         </LinearLayout>
 
         <LinearLayout
@@ -171,7 +181,9 @@
                 android:id="@+id/activity_register_password2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@null" />
+                android:background="@null"
+                android:inputType="textPassword"
+                android:singleLine="true" />
         </LinearLayout>
 
         <RadioGroup
@@ -182,22 +194,18 @@
             android:orientation="horizontal" >
 
             <RadioButton
-                android:id="@+id/activity_register_man"
+                android:id="@+id/activity_register_master"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/register_man" />
+                android:text="@string/register_master" />
+
+            <requestFocus />
 
             <RadioButton
-                android:id="@+id/activity_register_woman"
+                android:id="@+id/activity_register_couriers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/register_woman" />
-
-            <RadioButton
-                android:id="@+id/activity_register_secrecy"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/register_secrecy" />
+                android:text="@string/register_couriers" />
         </RadioGroup>
 
         <LinearLayout

@@ -139,7 +139,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" 
             android:layout_weight="1"
-            android:text="xx" />
+            android:text="xx" 
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/item_order_listview_orderCharge"

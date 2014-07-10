@@ -20,6 +20,29 @@ public class MapApplication extends Application {
 	/** 是否快递员 */
 	private boolean ISCOURIERS = false;
 
+	/** 保存登陆access_token */
+	private String access_token;
+
+	/** 保存token类型 */
+
+	private String token_type;
+
+	public String getAccess_token() {
+		return access_token;
+	}
+
+	public void setAccess_token(String access_token) {
+		this.access_token = access_token;
+	}
+
+	public String getToken_type() {
+		return token_type;
+	}
+
+	public void setToken_type(String token_type) {
+		this.token_type = token_type;
+	}
+
 	/** 是否管理员 */
 	public boolean isISADMIN() {
 		return ISADMIN;

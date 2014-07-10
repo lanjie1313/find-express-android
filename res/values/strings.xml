@@ -13,14 +13,14 @@
     <string name="login_register">新用户注册</string>
     <string name="login_remeberInfo">记住信息</string>
     <!-- 注册界面 -->
-    <string name="register_nickName">填写昵称</string>
+    <string name="register_nickName">填写姓名</string>
     <string name="register_email">邮&#160;&#160;&#160;&#160;&#160;&#160;&#160;箱</string>
     <string name="register_phone">手&#160;&#160;&#160;&#160;&#160;&#160;&#160;机</string>
     <string name="register_password">密&#160;&#160;&#160;&#160;&#160;&#160;&#160;码</string>
     <string name="register_password2">确认密码</string>
-    <string name="register_promotionCode">推广代码</string>
-    <string name="register_man">男</string>
-    <string name="register_woman">女</string>
+    <string name="register_site">选择站点</string>
+    <string name="register_master">站长</string>
+    <string name="register_couriers">快递员</string>
     <string name="register_secrecy">保密</string>
     <string name="register_commit">注册</string>
     <string name="register_remind">邮箱和手机至少填写一个</string>
@@ -40,7 +40,7 @@
     <string name="order_complete">已完成</string>
     <!-- 订单item -->
     <string name="order_number">订单号:</string>
-    <string name="order_time">成交时间:</string>
+    <string name="order_time">下单时间:</string>
     <string name="order_shop">店铺:</string>
     <string name="order_delivery_address">收货地址:</string>
     <!-- 订单详细 -->

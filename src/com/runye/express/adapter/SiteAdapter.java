@@ -57,7 +57,7 @@ public class SiteAdapter extends BaseAdapter {
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.tv_title.setText(mData.get(position).getSiteName());
+		holder.tv_title.setText(mData.get(position).getName());
 		return convertView;
 	}
 
