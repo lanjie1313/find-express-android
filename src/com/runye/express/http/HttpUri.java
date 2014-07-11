@@ -10,6 +10,8 @@ package com.runye.express.http;
  * @Company:山西润叶网络科技有限公司
  */
 public class HttpUri {
+	/** 正式api */
+	public static final String IP = "http://api.tyfind.com:8888/";
 	/** 测试api */
 	public static final String TEST_IP = "http://api.tyfind.cn:8008/";
 	/** 站长注册 */
@@ -17,9 +19,12 @@ public class HttpUri {
 	/** 快递员 */
 	public static final String REGISTER_COURIERS = "exppostmans";
 	/** 登陆 */
-	public static final String LOGIN = "token";
+	public static final String LOGIN = TEST_IP + "token";
 	/** 站点 */
-	public static final String SITE = "expsites";
+	public static final String SITE = TEST_IP + "expsites";
 	/** 订单 */
-	public static final String ORDERS = "orders";
+	public static final String ORDERS = TEST_IP + "orders";
+
+	/** 用户session */
+	public static final String USERINFO = TEST_IP + "/session";
 }

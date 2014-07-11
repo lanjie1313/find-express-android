@@ -42,10 +42,8 @@ public class MasterMainActivity extends Activity {
 	}
 
 	private void initUI() {
-		ids = new int[] { R.id.activity_master_main_noAllocation,
-				R.id.activity_master_main_yesAllocation,
-				R.id.activity_master_main_compeleted,
-				R.id.activity_master_main_previous,
+		ids = new int[] { R.id.activity_master_main_noAllocation, R.id.activity_master_main_yesAllocation,
+				R.id.activity_master_main_compeleted, R.id.activity_master_main_previous,
 				R.id.activity_master_main_evaluate };
 		layouts = new LinearLayout[ids.length];
 		for (int i = 0; i < ids.length; i++) {
@@ -57,25 +55,22 @@ public class MasterMainActivity extends Activity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			Builder alertDialog = new AlertDialog.Builder(
-					MasterMainActivity.this);
+			Builder alertDialog = new AlertDialog.Builder(MasterMainActivity.this);
 			alertDialog.setMessage("确定退出？");
-			alertDialog.setPositiveButton("确定",
-					new android.content.DialogInterface.OnClickListener() {
+			alertDialog.setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
 
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							SysExitUtil.exit();
-						}
-					});
-			alertDialog.setNegativeButton("取消",
-					new android.content.DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					SysExitUtil.exit();
+				}
+			});
+			alertDialog.setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {
 
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
 
-						}
-					});
+				}
+			});
 			alertDialog.create();
 			alertDialog.show();
 
@@ -90,36 +85,31 @@ public class MasterMainActivity extends Activity {
 			switch (v.getId()) {
 			case R.id.activity_master_main_noAllocation:
 				LogUtil.d(TAG, "待分配订单 ");
-				Intent noAllocation = new Intent(MasterMainActivity.this,
-						MasterBaseActivity.class);
+				Intent noAllocation = new Intent(MasterMainActivity.this, MasterBaseActivity.class);
 				noAllocation.putExtra("STATUS", "new");
 				startActivity(noAllocation);
 				break;
 			case R.id.activity_master_main_yesAllocation:
 				LogUtil.d(TAG, " 已分配订单");
-				Intent yesAllocation = new Intent(MasterMainActivity.this,
-						MasterBaseActivity.class);
+				Intent yesAllocation = new Intent(MasterMainActivity.this, MasterBaseActivity.class);
 				yesAllocation.putExtra("STATUS", " 已分配订单");
 				startActivity(yesAllocation);
 				break;
 			case R.id.activity_master_main_compeleted:
 				LogUtil.d(TAG, "当日处理订单");
-				Intent compeleted = new Intent(MasterMainActivity.this,
-						MasterBaseActivity.class);
+				Intent compeleted = new Intent(MasterMainActivity.this, MasterBaseActivity.class);
 				compeleted.putExtra("STATUS", "当日处理订单");
 				startActivity(compeleted);
 				break;
 			case R.id.activity_master_main_previous:
 				LogUtil.d(TAG, "以往处理订单");
-				Intent previous = new Intent(MasterMainActivity.this,
-						MasterBaseActivity.class);
+				Intent previous = new Intent(MasterMainActivity.this, MasterBaseActivity.class);
 				previous.putExtra("STATUS", "以往处理订单");
 				startActivity(previous);
 				break;
 			case R.id.activity_master_main_evaluate:
 				LogUtil.d(TAG, "查看评价");
-				Intent evaluate = new Intent(MasterMainActivity.this,
-						MasterBaseActivity.class);
+				Intent evaluate = new Intent(MasterMainActivity.this, MasterBaseActivity.class);
 				evaluate.putExtra("STATUS", "查看评价");
 				startActivity(evaluate);
 				break;

@@ -68,7 +68,7 @@ public class OrderInfoActivity extends Activity {
 
 	private void initUI() {
 		// 获取上个页面装载完成的数据
-		mOrderModeBean = getIntent().getParcelableExtra("ORDERINFO");
+		mOrderModeBean = (OrderModeBean) getIntent().getSerializableExtra("ORDERINFO");
 		mListView = (ListView) findViewById(R.id.activity_order_infos_listview);
 		bt_confim = (Button) findViewById(R.id.activity_order_infos_confim);
 		bt_map = (Button) findViewById(R.id.activity_order_infos_map);
@@ -85,8 +85,7 @@ public class OrderInfoActivity extends Activity {
 		bt_confim.setOnClickListener(new MyButtonListener());
 		bt_map.setOnClickListener(new MyButtonListener());
 		orderList = getOrderInfo();
-		OrderInfoAdapter adapter = new OrderInfoAdapter(OrderInfoActivity.this,
-				orderList);
+		OrderInfoAdapter adapter = new OrderInfoAdapter(OrderInfoActivity.this, orderList);
 		mListView.setAdapter(adapter);
 
 		tv_deliveryAddress = (TextView) findViewById(R.id.activity_order_infos_deliveryAdress);
@@ -145,12 +144,9 @@ public class OrderInfoActivity extends Activity {
 	private Dialog setDialog() {
 		couriersList = getCouriersInfo();
 		Dialog dialog = new Dialog(OrderInfoActivity.this);
-		View view = LayoutInflater.from(OrderInfoActivity.this).inflate(
-				R.layout.select_couriers_dialog, null);
-		ListView listView = (ListView) view
-				.findViewById(R.id.select_couriers_dialog_listview);
-		SelectCouriersAdapter adapter = new SelectCouriersAdapter(
-				OrderInfoActivity.this, couriersList);
+		View view = LayoutInflater.from(OrderInfoActivity.this).inflate(R.layout.select_couriers_dialog, null);
+		ListView listView = (ListView) view.findViewById(R.id.select_couriers_dialog_listview);
+		SelectCouriersAdapter adapter = new SelectCouriersAdapter(OrderInfoActivity.this, couriersList);
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(new MyListListener());
 		dialog.setContentView(view);
@@ -167,23 +163,21 @@ public class OrderInfoActivity extends Activity {
 	private void setConfimDialog(final String message) {
 		Builder alertDialog = new AlertDialog.Builder(OrderInfoActivity.this);
 		alertDialog.setMessage(message);
-		alertDialog.setPositiveButton("确定",
-				new android.content.DialogInterface.OnClickListener() {
+		alertDialog.setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
 
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						mDialog.dismiss();
-						bt_select.setText(message);
-					}
-				});
-		alertDialog.setNegativeButton("取消",
-				new android.content.DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				mDialog.dismiss();
+				bt_select.setText(message);
+			}
+		});
+		alertDialog.setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {
 
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
 
-					}
-				});
+			}
+		});
 		alertDialog.create();
 		alertDialog.show();
 
@@ -192,10 +186,8 @@ public class OrderInfoActivity extends Activity {
 	private class MyListListener implements OnItemClickListener {
 
 		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position,
-				long id) {
-			TextView textView = (TextView) view
-					.findViewById(R.id.item_select_couriers_dialog_name);
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			TextView textView = (TextView) view.findViewById(R.id.item_select_couriers_dialog_name);
 			String message = textView.getText().toString();
 			setConfimDialog(message);
 		}
@@ -209,23 +201,19 @@ public class OrderInfoActivity extends Activity {
 			case R.id.activity_order_infos_confim:
 				if (MapApplication.getInstance().isISCOURIERS()) {
 
-					ToastUtil.showShortToast(OrderInfoActivity.this,
-							"i am couriers，i send");
+					ToastUtil.showShortToast(OrderInfoActivity.this, "i am couriers，i send");
 				} else {
 
-					ToastUtil.showShortToast(OrderInfoActivity.this,
-							"i am master or admin,i manage");
+					ToastUtil.showShortToast(OrderInfoActivity.this, "i am master or admin,i manage");
 				}
 				break;
 			case R.id.activity_order_infos_map:
 				// admin or master scan couriers couriers scan user location
 				if (MapApplication.getInstance().isISCOURIERS()) {
 
-					ToastUtil.showShortToast(OrderInfoActivity.this,
-							"user location");
+					ToastUtil.showShortToast(OrderInfoActivity.this, "user location");
 				} else {
-					ToastUtil.showShortToast(OrderInfoActivity.this,
-							"couriers location");
+					ToastUtil.showShortToast(OrderInfoActivity.this, "couriers location");
 				}
 				break;
 			case R.id.activity_order_infos_select:

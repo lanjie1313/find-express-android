@@ -227,7 +227,7 @@ containing a value of this type.
         public static final int waiting=0x7f02003c;
     }
     public static final class id {
-        public static final int action_settings=0x7f0a0088;
+        public static final int action_settings=0x7f0a0087;
         public static final int activity_admin_addsite_confim=0x7f0a0002;
         public static final int activity_admin_addsite_site=0x7f0a0000;
         public static final int activity_admin_addsite_webmasterName=0x7f0a0001;
@@ -317,20 +317,19 @@ containing a value of this type.
         public static final int item_order_info_listview_goodsCharge=0x7f0a0065;
         public static final int item_order_info_listview_goodsName=0x7f0a0064;
         public static final int item_order_info_listview_goodsNumber=0x7f0a0066;
-        public static final int item_order_listview_couriersImage=0x7f0a0069;
-        public static final int item_order_listview_couriresName=0x7f0a006e;
-        public static final int item_order_listview_couriresNumber=0x7f0a006d;
+        public static final int item_order_listview_couriresName=0x7f0a006d;
+        public static final int item_order_listview_couriresNumber=0x7f0a006c;
         public static final int item_order_listview_deliveryAddress=0x7f0a006b;
-        public static final int item_order_listview_orderCharge=0x7f0a006f;
+        public static final int item_order_listview_orderCharge=0x7f0a006e;
         public static final int item_order_listview_orderNumber=0x7f0a0067;
-        public static final int item_order_listview_orderShop=0x7f0a006a;
+        public static final int item_order_listview_orderShop=0x7f0a0069;
         public static final int item_order_listview_orderTime=0x7f0a0068;
-        public static final int item_order_listview_rating=0x7f0a006c;
-        public static final int item_order_listview_status=0x7f0a0070;
-        public static final int item_select_couriers_dialog_name=0x7f0a0072;
-        public static final int item_select_couriers_dialog_number=0x7f0a0071;
-        public static final int item_select_couriers_dialog_phone=0x7f0a0074;
-        public static final int item_select_couriers_dialog_status=0x7f0a0073;
+        public static final int item_order_listview_rating=0x7f0a006a;
+        public static final int item_order_listview_status=0x7f0a006f;
+        public static final int item_select_couriers_dialog_name=0x7f0a0071;
+        public static final int item_select_couriers_dialog_number=0x7f0a0070;
+        public static final int item_select_couriers_dialog_phone=0x7f0a0073;
+        public static final int item_select_couriers_dialog_status=0x7f0a0072;
         public static final int linear1=0x7f0a0028;
         public static final int linearLayout1=0x7f0a0013;
         public static final int linearLayout2=0x7f0a0017;
@@ -339,30 +338,30 @@ containing a value of this type.
         public static final int list3=0x7f0a0057;
         public static final int list4=0x7f0a0053;
         public static final int list5=0x7f0a0051;
-        public static final int pop_car_view_down=0x7f0a0078;
-        public static final int pop_car_view_info=0x7f0a0076;
-        public static final int pop_car_view_left=0x7f0a0075;
-        public static final int pop_car_view_text=0x7f0a0077;
-        public static final int pop_loc_view_down=0x7f0a007b;
-        public static final int pop_loc_view_info=0x7f0a0079;
-        public static final int pop_loc_view_text=0x7f0a007a;
+        public static final int pop_car_view_down=0x7f0a0077;
+        public static final int pop_car_view_info=0x7f0a0075;
+        public static final int pop_car_view_left=0x7f0a0074;
+        public static final int pop_car_view_text=0x7f0a0076;
+        public static final int pop_loc_view_down=0x7f0a007a;
+        public static final int pop_loc_view_info=0x7f0a0078;
+        public static final int pop_loc_view_text=0x7f0a0079;
         public static final int pullToRefreshView1=0x7f0a0054;
         public static final int pullToRefreshView2=0x7f0a0058;
         public static final int pullToRefreshView3=0x7f0a0056;
         public static final int pullToRefreshView4=0x7f0a0052;
         public static final int pullToRefreshView5=0x7f0a0050;
-        public static final int pull_to_load_image=0x7f0a007e;
-        public static final int pull_to_load_progress=0x7f0a007d;
-        public static final int pull_to_load_text=0x7f0a007f;
-        public static final int pull_to_refresh_header=0x7f0a007c;
-        public static final int pull_to_refresh_image=0x7f0a0081;
-        public static final int pull_to_refresh_progress=0x7f0a0080;
-        public static final int pull_to_refresh_text=0x7f0a0082;
-        public static final int pull_to_refresh_updated_at=0x7f0a0083;
-        public static final int select_couriers_dialog_listview=0x7f0a0084;
-        public static final int tab_title=0x7f0a0085;
-        public static final int tab_title_sum=0x7f0a0086;
-        public static final int tab_title_tips=0x7f0a0087;
+        public static final int pull_to_load_image=0x7f0a007d;
+        public static final int pull_to_load_progress=0x7f0a007c;
+        public static final int pull_to_load_text=0x7f0a007e;
+        public static final int pull_to_refresh_header=0x7f0a007b;
+        public static final int pull_to_refresh_image=0x7f0a0080;
+        public static final int pull_to_refresh_progress=0x7f0a007f;
+        public static final int pull_to_refresh_text=0x7f0a0081;
+        public static final int pull_to_refresh_updated_at=0x7f0a0082;
+        public static final int select_couriers_dialog_listview=0x7f0a0083;
+        public static final int tab_title=0x7f0a0084;
+        public static final int tab_title_sum=0x7f0a0085;
+        public static final int tab_title_tips=0x7f0a0086;
         public static final int titlebar=0x7f0a000c;
     }
     public static final class layout {
@@ -409,12 +408,12 @@ containing a value of this type.
     public static final class string {
         public static final int action_settings=0x7f070001;
         public static final int app_name=0x7f070000;
-        public static final int couriers_main_compeleted=0x7f07003a;
-        public static final int couriers_main_evaluate=0x7f07003c;
+        public static final int couriers_main_compeleted=0x7f07003b;
+        public static final int couriers_main_evaluate=0x7f07003d;
         /**  快递员主界面 
          */
-        public static final int couriers_main_noAllocation=0x7f070039;
-        public static final int couriers_main_previous=0x7f07003b;
+        public static final int couriers_main_noAllocation=0x7f07003a;
+        public static final int couriers_main_previous=0x7f07003c;
         public static final int hello_world=0x7f070002;
         /**  登陆界面 
          */
@@ -425,47 +424,48 @@ containing a value of this type.
         public static final int login_remeberInfo=0x7f070009;
         public static final int login_remindName=0x7f070005;
         public static final int login_remindPwd=0x7f070006;
-        public static final int master_main_compeleted=0x7f070036;
-        public static final int master_main_evaluate=0x7f070038;
+        public static final int master_main_compeleted=0x7f070037;
+        public static final int master_main_evaluate=0x7f070039;
         /**  站长主界面 
          */
-        public static final int master_main_noAllocation=0x7f070034;
-        public static final int master_main_previous=0x7f070037;
-        public static final int master_main_yesAllocation=0x7f070035;
+        public static final int master_main_noAllocation=0x7f070035;
+        public static final int master_main_previous=0x7f070038;
+        public static final int master_main_yesAllocation=0x7f070036;
         /**  订单状态 
          */
-        public static final int order_all=0x7f07001b;
-        public static final int order_complete=0x7f07001f;
-        public static final int order_delivery_address=0x7f070023;
-        public static final int order_done=0x7f07001d;
+        public static final int order_all=0x7f07001c;
+        public static final int order_complete=0x7f070020;
+        public static final int order_delivery_address=0x7f070024;
+        public static final int order_done=0x7f07001e;
         /**  订单详细 
          */
-        public static final int order_info_buyer_name=0x7f070024;
-        public static final int order_info_confim=0x7f070032;
-        public static final int order_info_delivery_adress=0x7f070027;
-        public static final int order_info_description=0x7f07002c;
-        public static final int order_info_done=0x7f070030;
-        public static final int order_info_freight=0x7f07002d;
-        public static final int order_info_goods_charge=0x7f07002a;
-        public static final int order_info_goods_number=0x7f07002b;
-        public static final int order_info_goodslist=0x7f070029;
-        public static final int order_info_message=0x7f07002f;
-        public static final int order_info_order_number=0x7f070025;
-        public static final int order_info_order_time=0x7f070026;
-        public static final int order_info_scanmap=0x7f070031;
-        public static final int order_info_select=0x7f070033;
-        public static final int order_info_shop_name=0x7f070028;
-        public static final int order_info_total=0x7f07002e;
+        public static final int order_info_buyer_name=0x7f070025;
+        public static final int order_info_confim=0x7f070033;
+        public static final int order_info_delivery_adress=0x7f070028;
+        public static final int order_info_description=0x7f07002d;
+        public static final int order_info_done=0x7f070031;
+        public static final int order_info_freight=0x7f07002e;
+        public static final int order_info_goods_charge=0x7f07002b;
+        public static final int order_info_goods_number=0x7f07002c;
+        public static final int order_info_goodslist=0x7f07002a;
+        public static final int order_info_message=0x7f070030;
+        public static final int order_info_order_number=0x7f070026;
+        public static final int order_info_order_time=0x7f070027;
+        public static final int order_info_scanmap=0x7f070032;
+        public static final int order_info_select=0x7f070034;
+        public static final int order_info_shop_name=0x7f070029;
+        public static final int order_info_total=0x7f07002f;
         /**  订单item 
          */
-        public static final int order_number=0x7f070020;
-        public static final int order_sending=0x7f07001e;
-        public static final int order_shop=0x7f070022;
-        public static final int order_time=0x7f070021;
-        public static final int order_waiting=0x7f07001c;
-        public static final int pull_to_refresh_footer_pull_label=0x7f070019;
-        public static final int pull_to_refresh_footer_refreshing_label=0x7f07001a;
-        public static final int pull_to_refresh_footer_release_label=0x7f070018;
+        public static final int order_number=0x7f070021;
+        public static final int order_sending=0x7f07001f;
+        public static final int order_shop=0x7f070023;
+        public static final int order_time=0x7f070022;
+        public static final int order_waiting=0x7f07001d;
+        public static final int pull_to_refresh_first_label=0x7f070018;
+        public static final int pull_to_refresh_footer_pull_label=0x7f07001a;
+        public static final int pull_to_refresh_footer_refreshing_label=0x7f07001b;
+        public static final int pull_to_refresh_footer_release_label=0x7f070019;
         /**  刷新listview 
          */
         public static final int pull_to_refresh_pull_label=0x7f070015;

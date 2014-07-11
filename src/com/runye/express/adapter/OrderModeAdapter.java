@@ -8,7 +8,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
@@ -54,28 +53,16 @@ public class OrderModeAdapter extends BaseAdapter {
 		ViewHolder holder = null;
 		if (convertView == null) {
 			holder = new ViewHolder();
-			convertView = View.inflate(mContext, R.layout.item_order_listview,
-					null);
-			holder.tv_couriersName = (TextView) convertView
-					.findViewById(R.id.item_order_listview_couriresName);
-			holder.tv_couriersNumber = (TextView) convertView
-					.findViewById(R.id.item_order_listview_couriresNumber);
-			holder.tv_orderCharge = (TextView) convertView
-					.findViewById(R.id.item_order_listview_orderCharge);
-			holder.tv_orderNumber = (TextView) convertView
-					.findViewById(R.id.item_order_listview_orderNumber);
-			holder.tv_orderShop = (TextView) convertView
-					.findViewById(R.id.item_order_listview_orderShop);
-			holder.tv_orderTime = (TextView) convertView
-					.findViewById(R.id.item_order_listview_orderTime);
-			holder.tv_deliveryAddress = (TextView) convertView
-					.findViewById(R.id.item_order_listview_deliveryAddress);
-			holder.iv_couriersImage = (ImageView) convertView
-					.findViewById(R.id.item_order_listview_couriersImage);
-			holder.bt_change = (Button) convertView
-					.findViewById(R.id.item_order_listview_status);
-			holder.rb_rating = (RatingBar) convertView
-					.findViewById(R.id.item_order_listview_rating);
+			convertView = View.inflate(mContext, R.layout.item_order_listview, null);
+			holder.tv_couriersName = (TextView) convertView.findViewById(R.id.item_order_listview_couriresName);
+			holder.tv_couriersNumber = (TextView) convertView.findViewById(R.id.item_order_listview_couriresNumber);
+			holder.tv_orderCharge = (TextView) convertView.findViewById(R.id.item_order_listview_orderCharge);
+			holder.tv_orderNumber = (TextView) convertView.findViewById(R.id.item_order_listview_orderNumber);
+			holder.tv_orderShop = (TextView) convertView.findViewById(R.id.item_order_listview_orderShop);
+			holder.tv_orderTime = (TextView) convertView.findViewById(R.id.item_order_listview_orderTime);
+			holder.tv_deliveryAddress = (TextView) convertView.findViewById(R.id.item_order_listview_deliveryAddress);
+			holder.bt_change = (Button) convertView.findViewById(R.id.item_order_listview_status);
+			holder.rb_rating = (RatingBar) convertView.findViewById(R.id.item_order_listview_rating);
 
 			convertView.setTag(holder);
 		} else {
@@ -84,11 +71,9 @@ public class OrderModeAdapter extends BaseAdapter {
 		holder.tv_orderNumber.setText(mData.get(position).getNumber());
 		holder.tv_orderTime.setText(mData.get(position).getCreation_date());
 		holder.tv_orderCharge.setText("￥" + mData.get(position).getTotal());
-		holder.tv_deliveryAddress.setText(mData.get(position)
-				.getRecipient_address());
+		holder.tv_deliveryAddress.setText(mData.get(position).getRecipient_address());
 		// holder.tv_couriersName.setText(mData.get(position).getCouriersName());
-		// holder.tv_couriersNumber.setText(mData.get(position)
-		// .getCouriersNumber());
+		holder.tv_couriersNumber.setText(position + 1 + "");
 		// holder.tv_orderCharge.setText(mData.get(position).getCharge());
 		// holder.tv_orderShop.setText(mData.get(position).getShopName());
 		// holder.tv_orderTime.setText(mData.get(position).getTime());
@@ -129,8 +114,6 @@ public class OrderModeAdapter extends BaseAdapter {
 		TextView tv_couriersName;
 		/** 订单金额 */
 		TextView tv_orderCharge;
-		/** 快递员头像 */
-		ImageView iv_couriersImage;
 		/** 评分 */
 		RatingBar rb_rating;
 		/** button */

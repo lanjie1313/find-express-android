@@ -1,5 +1,6 @@
 package com.runye.express.bean;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,7 +19,7 @@ import com.alibaba.fastjson.JSONObject;
  * @Company:山西润叶网络科技有限公司
  */
 
-public class OrderModeBean {
+public class OrderModeBean implements Serializable {
 	private String id;
 	private String number;
 	private String user;
@@ -43,8 +44,8 @@ public class OrderModeBean {
 	private String recipient_address;
 
 	public String getRecipient_address() {
-		this.recipient_address = this.recipient_city + this.recipient_district
-				+ this.recipient_street + this.recipient_street2;
+		this.recipient_address = this.recipient_city + this.recipient_district + this.recipient_street
+				+ this.recipient_street2;
 		return recipient_address;
 	}
 
@@ -325,8 +326,7 @@ public class OrderModeBean {
 
 	public void setCreation_date(String creation_date) {
 		// utc时间
-		SimpleDateFormat utcFormat = new SimpleDateFormat(
-				"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+		SimpleDateFormat utcFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
 		utcFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 		Date utcDate = null;
 		try {
@@ -336,8 +336,7 @@ public class OrderModeBean {
 			e.printStackTrace();
 		}
 		// 本地时间
-		SimpleDateFormat localFormat = new SimpleDateFormat(
-				"yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat localFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		localFormat.setTimeZone(TimeZone.getDefault());
 		this.creation_date = localFormat.format(utcDate.getTime());
 	}

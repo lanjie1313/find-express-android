@@ -20,29 +20,6 @@ public class MapApplication extends Application {
 	/** 是否快递员 */
 	private boolean ISCOURIERS = false;
 
-	/** 保存登陆access_token */
-	private String access_token;
-
-	/** 保存token类型 */
-
-	private String token_type;
-
-	public String getAccess_token() {
-		return access_token;
-	}
-
-	public void setAccess_token(String access_token) {
-		this.access_token = access_token;
-	}
-
-	public String getToken_type() {
-		return token_type;
-	}
-
-	public void setToken_type(String token_type) {
-		this.token_type = token_type;
-	}
-
 	/** 是否管理员 */
 	public boolean isISADMIN() {
 		return ISADMIN;
@@ -83,9 +60,8 @@ public class MapApplication extends Application {
 		}
 
 		if (!mBMapManager.init(new MyGeneralListener())) {
-			Toast.makeText(
-					MapApplication.getInstance().getApplicationContext(),
-					"BMapManager  初始化错误!", Toast.LENGTH_LONG).show();
+			Toast.makeText(MapApplication.getInstance().getApplicationContext(), "BMapManager  初始化错误!",
+					Toast.LENGTH_LONG).show();
 		}
 	}
 
@@ -99,13 +75,11 @@ public class MapApplication extends Application {
 		@Override
 		public void onGetNetworkState(int iError) {
 			if (iError == MKEvent.ERROR_NETWORK_CONNECT) {
-				Toast.makeText(
-						MapApplication.getInstance().getApplicationContext(),
-						"您的网络出错啦！", Toast.LENGTH_LONG).show();
+				Toast.makeText(MapApplication.getInstance().getApplicationContext(), "您的网络出错啦！", Toast.LENGTH_LONG)
+						.show();
 			} else if (iError == MKEvent.ERROR_NETWORK_DATA) {
-				Toast.makeText(
-						MapApplication.getInstance().getApplicationContext(),
-						"输入正确的检索条件！", Toast.LENGTH_LONG).show();
+				Toast.makeText(MapApplication.getInstance().getApplicationContext(), "输入正确的检索条件！", Toast.LENGTH_LONG)
+						.show();
 			}
 		}
 

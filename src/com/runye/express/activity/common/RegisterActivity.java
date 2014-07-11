@@ -85,10 +85,8 @@ public class RegisterActivity extends Activity {
 
 	private void initUI() {
 		// 6个et的id
-		int[] etID = new int[] { R.id.activity_register_nickname,
-				R.id.activity_register_phone, R.id.activity_register_email,
-				R.id.activity_register_password,
-				R.id.activity_register_password2 };
+		int[] etID = new int[] { R.id.activity_register_nickname, R.id.activity_register_phone,
+				R.id.activity_register_email, R.id.activity_register_password, R.id.activity_register_password2 };
 		et_registers = new EditText[etID.length];
 		et_values = new String[etID.length];
 		for (int i = 0; i < etID.length; i++) {
@@ -117,46 +115,42 @@ public class RegisterActivity extends Activity {
 	 */
 	private void getSite() {
 
-		MyHttpClient.getSite(HttpUri.TEST_IP + HttpUri.SITE,
-				new JsonHttpResponseHandler() {
-					@Override
-					public void onStart() {
-						LogUtil.d(TAG, "获取站点中");
-						super.onStart();
-					}
+		MyHttpClient.getSite(HttpUri.TEST_IP + HttpUri.SITE, new JsonHttpResponseHandler() {
+			@Override
+			public void onStart() {
+				LogUtil.d(TAG, "获取站点中");
+				super.onStart();
+			}
 
-					@Override
-					public void onSuccess(int statusCode, JSONObject response) {
-						super.onSuccess(statusCode, response);
-						LogUtil.d(TAG, response.toString());
-						// 根据Bean类的到每一个json数组的项
-						mList = new ArrayList<SiteBean>();
-						String replaceAfter = null;
-						try {
-							replaceAfter = response.getJSONArray("records")
-									.toString().replaceAll("\"__v\"", "\"v\"")
-									.replaceAll("\"_id\"", "\"id\"");
-						} catch (JSONException e) {
-							e.printStackTrace();
-						}
-						mList.addAll(JSON.parseArray(replaceAfter,
-								SiteBean.class));
-						for (int i = 0; i < mList.size(); i++) {
-							sites = new String[mList.size()];
-							sites[i] = mList.get(i).getName();
-						}
-						ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-								RegisterActivity.this,
-								android.R.layout.simple_spinner_item, sites);
-						// 设置下拉列表的风格
-						adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-						webSite.setAdapter(adapter);
-						webSite.setOnItemSelectedListener(new MySpinnerListener());
-						super.onSuccess(statusCode, response);
+			@Override
+			public void onSuccess(int statusCode, JSONObject response) {
+				super.onSuccess(statusCode, response);
+				LogUtil.d(TAG, response.toString());
+				// 根据Bean类的到每一个json数组的项
+				mList = new ArrayList<SiteBean>();
+				String replaceAfter = "";
+				try {
+					replaceAfter = response.getJSONArray("records").toString().replaceAll("\"__v\"", "\"v\"")
+							.replaceAll("\"_id\"", "\"id\"");
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				mList.addAll(JSON.parseArray(replaceAfter, SiteBean.class));
+				sites = new String[mList.size()];
+				for (int i = 0; i < mList.size(); i++) {
+					sites[i] = mList.get(i).getName();
+				}
+				ArrayAdapter<String> adapter = new ArrayAdapter<String>(RegisterActivity.this,
+						android.R.layout.simple_spinner_item, sites);
+				// 设置下拉列表的风格
+				adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+				webSite.setAdapter(adapter);
+				webSite.setOnItemSelectedListener(new MySpinnerListener());
+				super.onSuccess(statusCode, response);
 
-					}
+			}
 
-				});
+		});
 	}
 
 	// private List<E>
@@ -177,8 +171,7 @@ public class RegisterActivity extends Activity {
 			if (i == 1) {
 
 				if (MyVerification.isMobile(et_values[1]) == false) {
-					ToastUtil
-							.showShortToast(RegisterActivity.this, "请输入正确的手机号");
+					ToastUtil.showShortToast(RegisterActivity.this, "请输入正确的手机号");
 					return false;
 				}
 			}
@@ -224,64 +217,52 @@ public class RegisterActivity extends Activity {
 	 */
 	private void confimRegister() {
 		Builder alertDialog = new AlertDialog.Builder(RegisterActivity.this);
-		alertDialog.setMessage("即将注册：" + "\n" + "站点：" + choiceSite + "\n"
-				+ "身份：" + choiceIdentity);
-		alertDialog.setPositiveButton("确定",
-				new android.content.DialogInterface.OnClickListener() {
+		alertDialog.setMessage("即将注册：" + "\n" + "站点：" + choiceSite + "\n" + "身份：" + choiceIdentity);
+		alertDialog.setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
 
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// 联网代码，提交参数 注册
+				LogUtil.d(TAG, "名称:" + et_values[0] + "密码" + et_values[3] + "电话" + et_values[1] + "邮箱" + et_values[2]
+						+ "站ID" + siteId);
+				RequestParams params = new RequestParams();
+				params.put("nickName", et_values[0]);
+				params.put("phone_num", et_values[1]);
+				params.put("email", et_values[2]);
+				params.put("password", et_values[3]);
+				params.put("siteId", siteId);
+				if (choiceIdentity.equals("站长")) {
+					mUri = HttpUri.TEST_IP + HttpUri.REGISTER_MASTER;
+				} else if (choiceIdentity.equals("快递员")) {
+					mUri = HttpUri.TEST_IP + HttpUri.REGISTER_COURIERS;
+				}
+				MyHttpClient.postRegister(mUri, params, new JsonHttpResponseHandler() {
 					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						// 联网代码，提交参数 注册
-						LogUtil.d(TAG, "名称:" + et_values[0] + "密码"
-								+ et_values[3] + "电话" + et_values[1] + "邮箱"
-								+ et_values[2] + "站ID" + siteId);
-						RequestParams params = new RequestParams();
-						params.put("nickName", et_values[0]);
-						params.put("phone_num", et_values[1]);
-						params.put("email", et_values[2]);
-						params.put("password", et_values[3]);
-						params.put("siteId", siteId);
-						if (choiceIdentity.equals("站长")) {
-							mUri = HttpUri.TEST_IP + HttpUri.REGISTER_MASTER;
-						} else if (choiceIdentity.equals("快递员")) {
-							mUri = HttpUri.TEST_IP + HttpUri.REGISTER_COURIERS;
-						}
-						MyHttpClient.postRegister(mUri, params,
-								new JsonHttpResponseHandler() {
-									@Override
-									public void onSuccess(int statusCode,
-											JSONObject response) {
-										super.onSuccess(statusCode, response);
-										ToastUtil.showShortToast(
-												RegisterActivity.this, "注册成功");
-										Intent intent = new Intent(
-												RegisterActivity.this,
-												LoginActivity.class);
-										intent.putExtra("ISREGISTER", true);
-										startActivity(intent);
-										finish();
-
-									}
-
-									@Override
-									public void onFailure(Throwable e,
-											JSONObject errorResponse) {
-										super.onFailure(e, errorResponse);
-										ToastUtil.showShortToast(
-												RegisterActivity.this,
-												"当前的手机号或者邮箱已被注册了");
-									}
-								});
-					}
-				});
-		alertDialog.setNegativeButton("取消",
-				new android.content.DialogInterface.OnClickListener() {
-
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
+					public void onSuccess(int statusCode, JSONObject response) {
+						super.onSuccess(statusCode, response);
+						ToastUtil.showShortToast(RegisterActivity.this, "注册成功");
+						Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+						intent.putExtra("ISREGISTER", true);
+						startActivity(intent);
+						finish();
 
 					}
+
+					@Override
+					public void onFailure(Throwable e, JSONObject errorResponse) {
+						super.onFailure(e, errorResponse);
+						ToastUtil.showShortToast(RegisterActivity.this, "当前的手机号或者邮箱已被注册了");
+					}
 				});
+			}
+		});
+		alertDialog.setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {
+
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+
+			}
+		});
 		alertDialog.create();
 		alertDialog.show();
 	}
@@ -324,10 +305,11 @@ public class RegisterActivity extends Activity {
 	private class MySpinnerListener implements OnItemSelectedListener {
 
 		@Override
-		public void onItemSelected(AdapterView<?> parent, View view,
-				int position, long id) {
+		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 			choiceSite = mList.get(position).getName();
 			siteId = mList.get(position).getId();
+			LogUtil.d(TAG, "选择的站点：" + choiceSite);
+			LogUtil.d(TAG, "该站点id:" + siteId);
 
 		}
 

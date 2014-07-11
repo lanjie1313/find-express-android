@@ -1,5 +1,14 @@
 package com.runye.express.bean;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+
 /**
  * 
  * @ClassName: SiteBean
@@ -22,6 +31,15 @@ public class SiteBean {
 	 * ": 30.000 }, {"lng": 120.0000,"lat": 32.000}]
 	 */
 	private String range;
+	private List<Map<String, String>> rangeList;
+
+	public List<Map<String, String>> getRangeList() {
+		return rangeList;
+	}
+
+	public void setRangeList(List<Map<String, String>> rangeList) {
+		this.rangeList = rangeList;
+	}
 
 	public String getName() {
 		return name;
@@ -36,6 +54,17 @@ public class SiteBean {
 	}
 
 	public void setRange(String range) {
+		this.rangeList = new ArrayList<Map<String, String>>();
+		JSONArray array = JSON.parseArray(range);
+		for (int i = 0; i < array.size(); i++) {
+			JSONObject jsonObject = array.getJSONObject(i);
+			String lng = jsonObject.getString("lng");
+			String lat = jsonObject.getString("lat");
+			Map<String, String> map = new HashMap<String, String>();
+			map.put("lng", lng);
+			map.put("lat", lat);
+			this.rangeList.add(map);
+		}
 		this.range = range;
 	}
 

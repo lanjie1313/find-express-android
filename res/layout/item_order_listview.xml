@@ -58,14 +58,6 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" >
-
-            <ImageView
-                android:id="@+id/item_order_listview_couriersImage"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:scaleType="fitXY"
-                android:src="@drawable/dx_new_bkg" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -77,16 +69,37 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/order_shop" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" >
 
-                <TextView
-                    android:id="@+id/item_order_listview_orderShop"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/order_shop" />
+
+                    <TextView
+                        android:id="@+id/item_order_listview_orderShop"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="xxxxxxx金虎" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="xxxxxxx金虎" />
+                    android:layout_marginLeft="5dp"
+                    android:layout_weight="1"
+                    android:gravity="right" >
+
+                    <RatingBar
+                        android:id="@+id/item_order_listview_rating"
+                        style="?android:attr/ratingBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:rating="4" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -103,25 +116,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="xxxxxxxxxxxxxxxxx" />
-
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-
-                <RatingBar
-                    android:id="@+id/item_order_listview_rating"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" 
-                    style="?android:attr/ratingBarStyleSmall"
-                    android:rating="4"
-                    />
-
-            </LinearLayout>
-
         </LinearLayout>
-
     </LinearLayout>
 
     <LinearLayout
@@ -131,37 +127,35 @@
         <TextView
             android:id="@+id/item_order_listview_couriresNumber"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:text="01" />
 
         <TextView
             android:id="@+id/item_order_listview_couriresName"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
+            android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="xx" 
-            android:visibility="gone"/>
+            android:text="xx"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/item_order_listview_orderCharge"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="￥9999" 
-            android:textColor="#ff0000"/>
+            android:text="￥9999"
+            android:textColor="#ff0000" />
 
         <Button
             android:id="@+id/item_order_listview_status"
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" 
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:background="@drawable/btn_login_selector"
             android:text="状态" />
-
     </LinearLayout>
 
 </LinearLayout>
-
-
