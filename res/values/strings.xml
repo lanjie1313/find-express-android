@@ -42,7 +42,7 @@
     <!-- 订单item -->
     <string name="order_number">订单号:</string>
     <string name="order_time">下单时间:</string>
-    <string name="order_shop">店铺:</string>
+    <string name="order_shop">收货人:</string>
     <string name="order_delivery_address">收货地址:</string>
     <!-- 订单详细 -->
     <string name="order_info_buyer_name">买家姓名</string>

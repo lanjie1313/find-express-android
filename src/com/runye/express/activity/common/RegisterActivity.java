@@ -31,6 +31,7 @@ import com.runye.express.async.RequestParams;
 import com.runye.express.bean.SiteBean;
 import com.runye.express.http.HttpUri;
 import com.runye.express.http.MyHttpClient;
+import com.runye.express.utils.LoadingDialog;
 import com.runye.express.utils.LogUtil;
 import com.runye.express.utils.MyVerification;
 import com.runye.express.utils.SysExitUtil;
@@ -115,10 +116,12 @@ public class RegisterActivity extends Activity {
 	 */
 	private void getSite() {
 
-		MyHttpClient.getSite(HttpUri.TEST_IP + HttpUri.SITE, new JsonHttpResponseHandler() {
+		final LoadingDialog dialog = new LoadingDialog(RegisterActivity.this, "正在获取站点");
+		MyHttpClient.getSite(HttpUri.SITE, new JsonHttpResponseHandler() {
 			@Override
 			public void onStart() {
 				LogUtil.d(TAG, "获取站点中");
+				dialog.show();
 				super.onStart();
 			}
 
@@ -146,8 +149,16 @@ public class RegisterActivity extends Activity {
 				adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 				webSite.setAdapter(adapter);
 				webSite.setOnItemSelectedListener(new MySpinnerListener());
+				dialog.dismiss();
 				super.onSuccess(statusCode, response);
 
+			}
+
+			@Override
+			public void onFailure(Throwable e, JSONObject errorResponse) {
+				LogUtil.d(TAG, errorResponse.toString());
+				ToastUtil.showShortToast(RegisterActivity.this, "获取站点失败！请稍后重试");
+				super.onFailure(e, errorResponse);
 			}
 
 		});

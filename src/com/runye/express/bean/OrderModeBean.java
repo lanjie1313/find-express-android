@@ -20,10 +20,12 @@ import com.alibaba.fastjson.JSONObject;
  */
 
 public class OrderModeBean implements Serializable {
+
+	private final String TAG = "OrderModeBean";
 	private String id;
 	private String number;
 	private String user;
-	private String merchant;
+
 	private String status;
 	private String notes;
 	private String os_notes;
@@ -42,17 +44,6 @@ public class OrderModeBean implements Serializable {
 	/** recipient */
 	private String recipient;
 	private String recipient_address;
-
-	public String getRecipient_address() {
-		this.recipient_address = this.recipient_city + this.recipient_district + this.recipient_street
-				+ this.recipient_street2;
-		return recipient_address;
-	}
-
-	public void setRecipient_address(String recipient_address) {
-		this.recipient_address = recipient_address;
-	}
-
 	private String recipient_city;
 	private String recipient_district;
 	private String recipient_street;
@@ -70,6 +61,55 @@ public class OrderModeBean implements Serializable {
 	private String items_count;
 	private String items_unit_price;
 	private String items_id;
+	/**
+	 * merchant
+	 */
+	private String merchant;
+	private String merchant_name;
+	private String merchant_phone;
+	private String merchant_address;
+
+	public String getMerchant_name() {
+		return merchant_name;
+	}
+
+	public void setMerchant_name(String merchant_name) {
+		this.merchant_name = merchant_name;
+	}
+
+	public String getMerchant_phone() {
+		return merchant_phone;
+	}
+
+	public void setMerchant_phone(String merchant_phone) {
+		this.merchant_phone = merchant_phone;
+	}
+
+	public String getMerchant_address() {
+		return merchant_address;
+	}
+
+	public void setMerchant_address(String merchant_address) {
+		this.merchant_address = merchant_address;
+	}
+
+	public String getRecipient_location() {
+		return recipient_location;
+	}
+
+	public void setRecipient_location(String recipient_location) {
+		this.recipient_location = recipient_location;
+	}
+
+	public String getRecipient_address() {
+		this.recipient_address = this.recipient_city + this.recipient_district + this.recipient_street
+				+ this.recipient_street2;
+		return recipient_address;
+	}
+
+	public void setRecipient_address(String recipient_address) {
+		this.recipient_address = recipient_address;
+	}
 
 	public String getRecipient() {
 
@@ -220,7 +260,32 @@ public class OrderModeBean implements Serializable {
 		return merchant;
 	}
 
-	public void setMerchant(String merchant) {
+	/**
+	 * 
+	 * @Description: 获取商户信息
+	 * @param merchant
+	 * @return void
+	 */
+	public void setMerchant(final String merchant) {
+		// MyHttpClient.getMerchant(merchant, new JsonHttpResponseHandler() {
+		// @Override
+		// public void onSuccess(int statusCode, org.json.JSONObject response) {
+		// super.onSuccess(statusCode, response);
+		// LogUtil.d(TAG, "获取商户信息成功" + response.toString());
+		// JSONObject jo = JSON.parseObject(response.toString());
+		// merchant_name = jo.getString("company_name") + "-" +
+		// jo.getString("name");
+		// LogUtil.d(TAG, merchant_name);
+		//
+		// }
+		//
+		// @Override
+		// public void onFailure(Throwable e, org.json.JSONObject errorResponse)
+		// {
+		// super.onFailure(e, errorResponse);
+		// LogUtil.d(TAG, "获取商户信息失败" + errorResponse.toString());
+		// }
+		// });
 		this.merchant = merchant;
 	}
 

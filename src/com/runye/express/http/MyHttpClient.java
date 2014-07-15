@@ -76,11 +76,15 @@ public class MyHttpClient {
 		client.get(url, params, responseHandler);
 	}
 
-	public static void delete(String url, RequestParams params, JsonHttpResponseHandler responseHandler) {
-		client.delete(url, responseHandler);
-	}
-
-	public static void patch(String url, RequestParams params, JsonHttpResponseHandler responseHandler) {
-		client.patch(url, params, responseHandler);
+	/**
+	 * 
+	 * @Description: 获取商户
+	 * @param id
+	 * @param params
+	 * @param responseHandler
+	 * @return void
+	 */
+	public static void getMerchant(String id, JsonHttpResponseHandler responseHandler) {
+		client.get(HttpUri.MERCHANT + id, responseHandler);
 	}
 }

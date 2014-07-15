@@ -92,25 +92,25 @@ public class MasterMainActivity extends Activity {
 			case R.id.activity_master_main_yesAllocation:
 				LogUtil.d(TAG, " 已分配订单");
 				Intent yesAllocation = new Intent(MasterMainActivity.this, MasterBaseActivity.class);
-				yesAllocation.putExtra("STATUS", " 已分配订单");
+				yesAllocation.putExtra("STATUS", "confirmed");
 				startActivity(yesAllocation);
 				break;
 			case R.id.activity_master_main_compeleted:
 				LogUtil.d(TAG, "当日处理订单");
 				Intent compeleted = new Intent(MasterMainActivity.this, MasterBaseActivity.class);
-				compeleted.putExtra("STATUS", "当日处理订单");
+				compeleted.putExtra("STATUS", "delivering");
 				startActivity(compeleted);
 				break;
 			case R.id.activity_master_main_previous:
 				LogUtil.d(TAG, "以往处理订单");
 				Intent previous = new Intent(MasterMainActivity.this, MasterBaseActivity.class);
-				previous.putExtra("STATUS", "以往处理订单");
+				previous.putExtra("STATUS", "complete");
 				startActivity(previous);
 				break;
 			case R.id.activity_master_main_evaluate:
 				LogUtil.d(TAG, "查看评价");
 				Intent evaluate = new Intent(MasterMainActivity.this, MasterBaseActivity.class);
-				evaluate.putExtra("STATUS", "查看评价");
+				evaluate.putExtra("STATUS", "cancelled");
 				startActivity(evaluate);
 				break;
 			default:

@@ -26,5 +26,7 @@ public class HttpUri {
 	public static final String ORDERS = TEST_IP + "orders";
 
 	/** 用户session */
-	public static final String USERINFO = TEST_IP + "/session";
+	public static final String USERINFO = TEST_IP + "session";
+	/** merchant */
+	public static final String MERCHANT = TEST_IP + "merchants/";
 }

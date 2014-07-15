@@ -18,12 +18,17 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.runye.express.adapter.OrderInfoAdapter;
 import com.runye.express.adapter.SelectCouriersAdapter;
 import com.runye.express.android.R;
+import com.runye.express.async.JsonHttpResponseHandler;
 import com.runye.express.bean.CouriersModeBean;
+import com.runye.express.bean.MerchantBean;
 import com.runye.express.bean.OrderModeBean;
+import com.runye.express.http.MyHttpClient;
 import com.runye.express.map.MapApplication;
+import com.runye.express.utils.LogUtil;
 import com.runye.express.utils.SysExitUtil;
 import com.runye.express.utils.ToastUtil;
 
@@ -37,6 +42,7 @@ import com.runye.express.utils.ToastUtil;
  * @Company:山西润叶网络科技有限公司
  */
 public class OrderInfoActivity extends Activity {
+	protected static final String TAG = "OrderInfoActivity";
 	private OrderModeBean mOrderModeBean;
 	private List<OrderModeBean> orderList;
 	private List<CouriersModeBean> couriersList;
@@ -54,6 +60,8 @@ public class OrderInfoActivity extends Activity {
 	private TextView tv_shopAdress;
 	/** 店铺名称 */
 	private TextView tv_shopName;
+	/** 店铺名称 */
+	private TextView tv_shopPhone;
 	/** 留言地址 */
 	private TextView tv_message;
 	private TextView tv_time;
@@ -92,11 +100,11 @@ public class OrderInfoActivity extends Activity {
 		tv_shopAdress = (TextView) findViewById(R.id.activity_order_infos_shopAdress);
 		tv_shopName = (TextView) findViewById(R.id.activity_order_infos_shopName);
 		tv_message = (TextView) findViewById(R.id.activity_order_infos_message);
+		tv_shopPhone = (TextView) findViewById(R.id.activity_order_infos_shopPhone);
 		tv_time = (TextView) findViewById(R.id.activity_order_infos_time);
 		tv_time.setText(mOrderModeBean.getCreation_date());
-		tv_shopAdress.setText(mOrderModeBean.getMerchant());
-		tv_shopName.setText(mOrderModeBean.getStatus());
 		tv_message.setText(mOrderModeBean.getNotes());
+		getMerchantInfo();
 	}
 
 	/**
@@ -114,6 +122,27 @@ public class OrderInfoActivity extends Activity {
 			// list.add(bean);
 		}
 		return list;
+	}
+
+	private void getMerchantInfo() {
+		MyHttpClient.getMerchant(mOrderModeBean.getMerchant(), new JsonHttpResponseHandler() {
+			@Override
+			public void onSuccess(int statusCode, org.json.JSONObject response) {
+				super.onSuccess(statusCode, response);
+				LogUtil.d(TAG, "获取商户信息成功" + response.toString());
+				MerchantBean bean = new MerchantBean();
+				bean = JSON.parseObject(response.toString(), MerchantBean.class);
+				tv_shopAdress.setText(bean.getAddress());
+				tv_shopPhone.setText(bean.getPhone_num());
+				tv_shopName.setText(bean.getName());
+			}
+
+			@Override
+			public void onFailure(Throwable e, org.json.JSONObject errorResponse) {
+				super.onFailure(e, errorResponse);
+				LogUtil.d(TAG, "获取商户信息失败" + errorResponse.toString());
+			}
+		});
 	}
 
 	/**

@@ -27,7 +27,9 @@ import com.runye.express.async.RequestParams;
 import com.runye.express.http.HttpUri;
 import com.runye.express.http.MyHttpClient;
 import com.runye.express.map.MapApplication;
+import com.runye.express.utils.LoadingDialog;
 import com.runye.express.utils.LogUtil;
+import com.runye.express.utils.NetWork;
 import com.runye.express.utils.SysExitUtil;
 import com.runye.express.utils.ToastUtil;
 
@@ -140,6 +142,8 @@ public class LoginActivity extends Activity {
 			params.put("username", identity + "/" + userName);
 			params.put("password", passWord);
 			LogUtil.d(TAG, "请求地址：" + HttpUri.LOGIN);
+			final LoadingDialog dialog = new LoadingDialog(LoginActivity.this, "正在登录");
+			dialog.show();
 			MyHttpClient.postLogin(HttpUri.LOGIN, params, new JsonHttpResponseHandler() {
 				@Override
 				public void onSuccess(int statusCode, org.json.JSONObject response) {
@@ -166,15 +170,15 @@ public class LoginActivity extends Activity {
 							userInfo.edit().putString("verifyStatus", response.optString("verifyStatus")).commit();
 							userInfo.edit().putString("access_token", access_token).commit();
 							userInfo.edit().putString("token_type", token_type).commit();
+							dialog.dismiss();
+							if (MapApplication.getInstance().isISMASTER()) {
+								startActivity(new Intent(LoginActivity.this, MasterMainActivity.class));
+							}
+							if (MapApplication.getInstance().isISCOURIERS()) {
+								startActivity(new Intent(LoginActivity.this, CouriersManActivity.class));
+							}
 						}
 					});
-
-					if (MapApplication.getInstance().isISMASTER()) {
-						startActivity(new Intent(LoginActivity.this, MasterMainActivity.class));
-					}
-					if (MapApplication.getInstance().isISCOURIERS()) {
-						startActivity(new Intent(LoginActivity.this, CouriersManActivity.class));
-					}
 
 				}
 
@@ -185,6 +189,8 @@ public class LoginActivity extends Activity {
 				}
 			});
 
+		} else {
+			ToastUtil.showShortToast(LoginActivity.this, "请填写账号和密码");
 		}
 	}
 
@@ -257,10 +263,21 @@ public class LoginActivity extends Activity {
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.activity_login:
-				doLogin();
+				if (NetWork.isNetworkConnected(LoginActivity.this)) {
+
+					doLogin();
+				} else {
+					ToastUtil.showShortToast(LoginActivity.this, "请检查网络配置");
+				}
 				break;
 			case R.id.activity_login_register:
-				doRegister();
+				if (NetWork.isNetworkConnected(LoginActivity.this)) {
+
+					doRegister();
+				} else {
+					ToastUtil.showShortToast(LoginActivity.this, "请检查网络配置");
+				}
+
 				break;
 			case R.id.activity_login_identity:
 				selectIdentity();

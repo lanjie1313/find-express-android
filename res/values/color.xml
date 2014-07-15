@@ -42,5 +42,6 @@
     <color name="tab_indicator_text_selected">#ffffff</color>
     <color name="tab_indicator_text_unselected">#aac5d7</color>
     <color name="page_viewer_margin_color">#007800</color>
+     <color name="transparent">#00000000</color>
       
 </resources>

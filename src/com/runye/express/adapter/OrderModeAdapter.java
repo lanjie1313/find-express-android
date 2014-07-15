@@ -75,7 +75,7 @@ public class OrderModeAdapter extends BaseAdapter {
 		// holder.tv_couriersName.setText(mData.get(position).getCouriersName());
 		holder.tv_couriersNumber.setText(position + 1 + "");
 		// holder.tv_orderCharge.setText(mData.get(position).getCharge());
-		// holder.tv_orderShop.setText(mData.get(position).getShopName());
+		holder.tv_orderShop.setText(mData.get(position).getRecipient_name());
 		// holder.tv_orderTime.setText(mData.get(position).getTime());
 		holder.bt_change.setOnClickListener(new MyButtonListener());
 		// holder.rb_rating.setRating(Float.valueOf(mData.get(position)
