@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.runye.express.activity.administrator.AdminMainActivity;
+import com.runye.express.activity.administrator.AdminSiteActivity;
 import com.runye.express.activity.couriers.CouriersManActivity;
 import com.runye.express.activity.sitemaster.MasterMainActivity;
 import com.runye.express.android.R;
@@ -110,6 +110,8 @@ public class LoginActivity extends Activity {
 		}
 	}
 
+	LoadingDialog dialog;
+
 	/**
 	 * 
 	 * @Description: 登陆
@@ -132,7 +134,7 @@ public class LoginActivity extends Activity {
 			}
 			if (MapApplication.getInstance().isISADMIN()) {
 
-				startActivity(new Intent(LoginActivity.this, AdminMainActivity.class));
+				startActivity(new Intent(LoginActivity.this, AdminSiteActivity.class));
 			}
 			LogUtil.d(TAG, "我的身份：" + identity);
 			LogUtil.d(TAG, "用户名：" + userName);
@@ -142,7 +144,7 @@ public class LoginActivity extends Activity {
 			params.put("username", identity + "/" + userName);
 			params.put("password", passWord);
 			LogUtil.d(TAG, "请求地址：" + HttpUri.LOGIN);
-			final LoadingDialog dialog = new LoadingDialog(LoginActivity.this, "正在登录");
+			dialog = new LoadingDialog(LoginActivity.this, "正在登录");
 			dialog.show();
 			MyHttpClient.postLogin(HttpUri.LOGIN, params, new JsonHttpResponseHandler() {
 				@Override
@@ -185,6 +187,7 @@ public class LoginActivity extends Activity {
 				@Override
 				public void onFailure(Throwable e, org.json.JSONObject errorResponse) {
 					super.onFailure(e, errorResponse);
+					dialog.dismiss();
 					ToastUtil.showShortToast(LoginActivity.this, "用户名或者密码错误");
 				}
 			});
@@ -242,15 +245,21 @@ public class LoginActivity extends Activity {
 		if (!userName.equals("") && !passWord.equals("")) {
 			if (str.equals(getResources().getStringArray(R.array.login_identity)[0])) {
 				MapApplication.getInstance().setISADMIN(true);
+				MapApplication.getInstance().setISCOURIERS(false);
+				MapApplication.getInstance().setISMASTER(false);
 				identity = "admin";
 			}
 			if (str.equals(getResources().getStringArray(R.array.login_identity)[1])) {
 				identity = "sitemanager";
 				MapApplication.getInstance().setISMASTER(true);
+				MapApplication.getInstance().setISADMIN(false);
+				MapApplication.getInstance().setISCOURIERS(false);
 			}
 			if (str.equals(getResources().getStringArray(R.array.login_identity)[2])) {
 				identity = "postman";
 				MapApplication.getInstance().setISCOURIERS(true);
+				MapApplication.getInstance().setISMASTER(false);
+				MapApplication.getInstance().setISADMIN(false);
 			}
 			return true;
 		}

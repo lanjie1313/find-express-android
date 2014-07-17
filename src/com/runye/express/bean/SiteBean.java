@@ -1,5 +1,6 @@
 package com.runye.express.bean;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +19,8 @@ import com.alibaba.fastjson.JSONObject;
  * @version V1.0
  * @Company:山西润叶网络科技有限公司
  */
-public class SiteBean {
+@SuppressWarnings("serial")
+public class SiteBean implements Serializable {
 	/** 名称 */
 	private String name;
 

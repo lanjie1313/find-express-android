@@ -13,7 +13,6 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.runye.express.adapter.CouriersAdapter;
 import com.runye.express.android.R;
 import com.runye.express.listview.PullToRefreshView;
 import com.runye.express.listview.PullToRefreshView.OnFooterRefreshListener;
@@ -29,8 +28,7 @@ import com.runye.express.utils.SysExitUtil;
  * @version V1.0
  * @Company:山西润叶网络科技有限公司
  */
-public class AdminChangeCouriersActivity extends Activity implements
-		OnHeaderRefreshListener, OnFooterRefreshListener {
+public class AdminChangeCouriersActivity extends Activity implements OnHeaderRefreshListener, OnFooterRefreshListener {
 	/** 刷新listview */
 	private PullToRefreshView mPullToRefreshView;
 	private ListView mListView;
@@ -51,9 +49,9 @@ public class AdminChangeCouriersActivity extends Activity implements
 		mPullToRefreshView.setOnFooterRefreshListener(this);
 		mListView = (ListView) findViewById(R.id.activity_admin_change_couriers_listView);
 		List<String> mList = new ArrayList<String>();
-		mList = getCouriers();
-		mListView.setAdapter(new CouriersAdapter(
-				AdminChangeCouriersActivity.this, mList));
+		// mList = getCouriers();
+		// mListView.setAdapter(new CouriersAdapter(
+		// AdminChangeCouriersActivity.this, mList));
 		bt_addCouriers = (Button) findViewById(R.id.activity_admin_change_couriers_addcouriers);
 		bt_addCouriers.setOnClickListener(new MyButtonListener());
 
@@ -65,8 +63,7 @@ public class AdminChangeCouriersActivity extends Activity implements
 	 * @return List<String>
 	 */
 	private List<String> getCouriers() {
-		String[] dataObjects = new String[] { "快递员1", "快递员2", "快递员3", "快递员4",
-				"快递员5", "快递员6", "快递员7", "快递员8", "快递员9" };
+		String[] dataObjects = new String[] { "快递员1", "快递员2", "快递员3", "快递员4", "快递员5", "快递员6", "快递员7", "快递员8", "快递员9" };
 		List<String> list = new ArrayList<String>();
 		for (int i = 0; i < dataObjects.length; i++) {
 			list.add(dataObjects[i]);
@@ -93,8 +90,7 @@ public class AdminChangeCouriersActivity extends Activity implements
 			@Override
 			public void run() {
 
-				SimpleDateFormat formatter = new SimpleDateFormat(
-						"yyyy年MM月dd日   HH:mm:ss     ");
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日   HH:mm:ss     ");
 				Date curDate = new Date(System.currentTimeMillis());
 				// 获取当前时间
 				String str = formatter.format(curDate);

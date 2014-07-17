@@ -4,14 +4,12 @@ import java.util.List;
 
 import android.content.Context;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.runye.express.android.R;
-import com.runye.express.utils.ToastUtil;
+import com.runye.express.bean.CouriersBean;
 
 /**
  * 
@@ -24,9 +22,9 @@ import com.runye.express.utils.ToastUtil;
  */
 public class CouriersAdapter extends BaseAdapter {
 	Context mContext;
-	private final List<String> mData;
+	private final List<CouriersBean> mData;
 
-	public CouriersAdapter(Context context, List<String> data) {
+	public CouriersAdapter(Context context, List<CouriersBean> data) {
 		this.mContext = context;
 		this.mData = data;
 	}
@@ -51,29 +49,19 @@ public class CouriersAdapter extends BaseAdapter {
 		ViewHolder holder = null;
 		if (convertView == null) {
 			holder = new ViewHolder();
-			convertView = View.inflate(mContext,
-					R.layout.item_couriers_listview, null);
-			holder.tv_title = (TextView) convertView
-					.findViewById(R.id.item_couriers_listview_title);
-			holder.bt_change = (Button) convertView
-					.findViewById(R.id.item_couriers_listview_change);
-			holder.bt_del = (Button) convertView
-					.findViewById(R.id.item_couriers_listview_del);
-			holder.tv_number = (TextView) convertView
-					.findViewById(R.id.item_couriers_listview_number);
+			convertView = View.inflate(mContext, R.layout.item_couriers_listview, null);
+			holder.tv_name = (TextView) convertView.findViewById(R.id.item_couriers_listview_name);
+			holder.tv_number = (TextView) convertView.findViewById(R.id.item_couriers_listview_number);
+			holder.tv_phone = (TextView) convertView.findViewById(R.id.item_couriers_listview_phone);
+			holder.tv_status = (TextView) convertView.findViewById(R.id.item_couriers_listview_status);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		holder.bt_change.setOnClickListener(new MyButtonListener(position));
-		holder.bt_del.setOnClickListener(new MyButtonListener(position));
-		holder.tv_title.setText(mData.get(position));
-		if (position < 10) {
-
-			holder.tv_number.setText("0" + position);
-		} else {
-			holder.tv_number.setText(position);
-		}
+		holder.tv_name.setText(mData.get(position).getNickName());
+		holder.tv_number.setText(1 + position + "");
+		holder.tv_phone.setText(mData.get(position).getPhone_num());
+		holder.tv_status.setText(mData.get(position).getStatus());
 		return convertView;
 	}
 
@@ -81,33 +69,11 @@ public class CouriersAdapter extends BaseAdapter {
 		/** 编号 */
 		TextView tv_number;
 		/** 标题 */
-		TextView tv_title;
-		/** 修改 */
-		Button bt_change;
-		/** 删除 */
-		Button bt_del;
+		TextView tv_name;
+		/** 标题 */
+		TextView tv_phone;
+		/** 标题 */
+		TextView tv_status;
 	}
 
-	class MyButtonListener implements OnClickListener {
-		private final int mPosition;
-
-		private MyButtonListener(int position) {
-			this.mPosition = position;
-		}
-
-		@Override
-		public void onClick(View v) {
-			switch (v.getId()) {
-			case R.id.item_couriers_listview_change:
-				ToastUtil.showShortToast(mContext, mData.get(mPosition));
-				break;
-			case R.id.item_couriers_listview_del:
-
-				break;
-
-			default:
-				break;
-			}
-		}
-	}
 }

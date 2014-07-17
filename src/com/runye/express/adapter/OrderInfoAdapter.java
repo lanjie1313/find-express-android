@@ -10,7 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.runye.express.android.R;
-import com.runye.express.bean.OrderModeBean;
+import com.runye.express.bean.OrderItems;
+import com.runye.express.bean.ProductsBean;
 import com.runye.express.utils.ToastUtil;
 
 /**
@@ -24,11 +25,14 @@ import com.runye.express.utils.ToastUtil;
  */
 public class OrderInfoAdapter extends BaseAdapter {
 	Context mContext;
-	private final List<OrderModeBean> mData;
+	private final List<ProductsBean> mData;
 
-	public OrderInfoAdapter(Context context, List<OrderModeBean> data) {
+	private final List<OrderItems> itemsData;
+
+	public OrderInfoAdapter(Context context, List<ProductsBean> data, List<OrderItems> itemsData) {
 		this.mContext = context;
 		this.mData = data;
+		this.itemsData = itemsData;
 	}
 
 	@Override
@@ -51,24 +55,18 @@ public class OrderInfoAdapter extends BaseAdapter {
 		ViewHolder holder = null;
 		if (convertView == null) {
 			holder = new ViewHolder();
-			convertView = View.inflate(mContext,
-					R.layout.item_order_info_listview, null);
-			holder.tv_goodsCharge = (TextView) convertView
-					.findViewById(R.id.item_order_info_listview_goodsCharge);
-			holder.tv_goodsName = (TextView) convertView
-					.findViewById(R.id.item_order_info_listview_goodsName);
-			holder.tv_goodsNumber = (TextView) convertView
-					.findViewById(R.id.item_order_info_listview_goodsNumber);
+			convertView = View.inflate(mContext, R.layout.item_order_info_listview, null);
+			holder.tv_goodsCharge = (TextView) convertView.findViewById(R.id.item_order_info_listview_goodsCharge);
+			holder.tv_goodsName = (TextView) convertView.findViewById(R.id.item_order_info_listview_goodsName);
+			holder.tv_goodsNumber = (TextView) convertView.findViewById(R.id.item_order_info_listview_goodsNumber);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
-		// holder.tv_goodsCharge.setText(mData.get(position).getItemsBean()
-		// .getUnit_price());
-		// holder.tv_goodsName.setText(mData.get(position).getItemsBean()
-		// .getProduct());
-		// holder.tv_goodsNumber.setText(mData.get(position).getItemsBean()
-		// .getCount());
+		holder.tv_goodsCharge.setText(itemsData.get(position).getUnit_price());
+		holder.tv_goodsName.setText(mData.get(position).getName());
+		holder.tv_goodsNumber.setText(itemsData.get(position).getCount());
+
 		return convertView;
 	}
 

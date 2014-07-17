@@ -3,7 +3,9 @@ package com.runye.express.bean;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 import com.alibaba.fastjson.JSON;
@@ -21,6 +23,11 @@ import com.alibaba.fastjson.JSONObject;
 
 public class OrderModeBean implements Serializable {
 
+	/**
+	 * @Fields serialVersionUID : TODO（用一句话描述这个变量表示什么）
+	 */
+
+	private static final long serialVersionUID = 1L;
 	private final String TAG = "OrderModeBean";
 	private String id;
 	private String number;
@@ -51,12 +58,13 @@ public class OrderModeBean implements Serializable {
 	private String recipient_name;
 	private String recipient_phone_num;
 	private String recipient_location;
-	/***/
+	/** location */
 	private String location;
 	private String location_lng;
 	private String location_lat;
 
 	/** items */
+	private String items;
 	private String items_product;
 	private String items_count;
 	private String items_unit_price;
@@ -68,6 +76,21 @@ public class OrderModeBean implements Serializable {
 	private String merchant_name;
 	private String merchant_phone;
 	private String merchant_address;
+	private List<OrderItems> itemList;
+
+	public List<OrderItems> getItemList() {
+		return itemList;
+	}
+
+	public String getItems() {
+		return items;
+	}
+
+	public void setItems(String items) {
+		this.itemList = new ArrayList<OrderItems>();
+		this.itemList.addAll(JSON.parseArray(items.toString().replaceAll("\"_id\"", "\"id\""), OrderItems.class));
+		this.items = items;
+	}
 
 	public String getMerchant_name() {
 		return merchant_name;

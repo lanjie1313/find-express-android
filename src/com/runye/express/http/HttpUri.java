@@ -15,9 +15,9 @@ public class HttpUri {
 	/** 测试api */
 	public static final String TEST_IP = "http://api.tyfind.cn:8008/";
 	/** 站长注册 */
-	public static final String REGISTER_MASTER = "expsitemanagers";
+	public static final String MASTER = TEST_IP + "expsitemanagers";
 	/** 快递员 */
-	public static final String REGISTER_COURIERS = "exppostmans";
+	public static final String COURIERS = TEST_IP + "exppostmans";
 	/** 登陆 */
 	public static final String LOGIN = TEST_IP + "token";
 	/** 站点 */
@@ -29,4 +29,7 @@ public class HttpUri {
 	public static final String USERINFO = TEST_IP + "session";
 	/** merchant */
 	public static final String MERCHANT = TEST_IP + "merchants/";
+
+	/** products */
+	public static final String PRODUCTS = TEST_IP + "products/";
 }

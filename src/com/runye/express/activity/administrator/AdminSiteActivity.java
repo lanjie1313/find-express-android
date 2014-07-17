@@ -1,11 +1,11 @@
 package com.runye.express.activity.administrator;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
-import android.annotation.SuppressLint;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,14 +15,16 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.runye.express.adapter.SiteAdapter;
 import com.runye.express.android.R;
+import com.runye.express.async.JsonHttpResponseHandler;
 import com.runye.express.bean.SiteBean;
-import com.runye.express.listview.PullToRefreshView;
-import com.runye.express.listview.PullToRefreshView.OnFooterRefreshListener;
-import com.runye.express.listview.PullToRefreshView.OnHeaderRefreshListener;
+import com.runye.express.http.HttpUri;
+import com.runye.express.http.MyHttpClient;
+import com.runye.express.utils.LoadingDialog;
+import com.runye.express.utils.LogUtil;
 import com.runye.express.utils.SysExitUtil;
 import com.runye.express.utils.ToastUtil;
 
@@ -35,15 +37,17 @@ import com.runye.express.utils.ToastUtil;
  * @version V1.0
  * @Company:山西润叶网络科技有限公司
  */
-public class AdminSiteActivity extends Activity implements
-		OnHeaderRefreshListener, OnFooterRefreshListener {
-	/** 刷新listview */
-	private PullToRefreshView mPullToRefreshView;
+public class AdminSiteActivity extends Activity {
+	protected static final String TAG = "AdminSiteActivity";
 	private ListView listView;
 	/** 数据源 */
 	private List<SiteBean> mList;
 	/** 增加站点 */
 	private Button bt_addSite;
+	/***/
+	private SiteAdapter adapter;
+	/***/
+	private LoadingDialog dialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,63 +59,60 @@ public class AdminSiteActivity extends Activity implements
 	}
 
 	private void initUI() {
-		mPullToRefreshView = (PullToRefreshView) findViewById(R.id.activity_admin_site_pull_refresh_view);
-		mPullToRefreshView.setOnHeaderRefreshListener(this);
-		mPullToRefreshView.setOnFooterRefreshListener(this);
 		listView = (ListView) findViewById(R.id.activity_admin_site_listView);
-		mList = getSite();
-		listView.setAdapter(new SiteAdapter(AdminSiteActivity.this, mList));
+		mList = new ArrayList<SiteBean>();
+		adapter = new SiteAdapter(AdminSiteActivity.this, mList);
+		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(new MyListItemListener());
-
 		bt_addSite = (Button) findViewById(R.id.activity_admin_site_addSite);
 		bt_addSite.setOnClickListener(new MyButtonListener());
+		getSite();
 	}
 
 	/**
 	 * 
-	 * @Description: 联网取站点
-	 * @return List<String>
+	 * @Description: 获取站点
+	 * @return void
 	 */
-	private List<SiteBean> getSite() {
-		String[] dataObjects = new String[] { "全站", "A站", "B站", "C站", "D站",
-				"E站", "F站", "G站", "H站" };
-		List<SiteBean> list = new ArrayList<SiteBean>();
-		for (int i = 0; i < dataObjects.length; i++) {
-			SiteBean bean = new SiteBean();
-			bean.setName(dataObjects[i]);
-			list.add(bean);
-		}
-		return list;
-	}
+	private void getSite() {
 
-	@Override
-	public void onFooterRefresh(PullToRefreshView view) {
-		mPullToRefreshView.postDelayed(new Runnable() {
+		dialog = new LoadingDialog(AdminSiteActivity.this, "正在获取站点");
+		MyHttpClient.getSite(HttpUri.SITE, new JsonHttpResponseHandler() {
+			@Override
+			public void onStart() {
+				LogUtil.d(TAG, "获取站点中");
+				dialog.show();
+				super.onStart();
+			}
 
 			@Override
-			public void run() {
-				mPullToRefreshView.onFooterRefreshComplete();
+			public void onSuccess(int statusCode, JSONObject response) {
+				super.onSuccess(statusCode, response);
+				LogUtil.d(TAG, response.toString());
+				// 根据Bean类的到每一个json数组的项
+				String replaceAfter = "";
+				try {
+					replaceAfter = response.getJSONArray("records").toString().replaceAll("\"__v\"", "\"v\"")
+							.replaceAll("\"_id\"", "\"id\"");
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				mList.addAll(JSON.parseArray(replaceAfter, SiteBean.class));
+				adapter.notifyDataSetChanged();
+				dialog.dismiss();
+				super.onSuccess(statusCode, response);
+
 			}
-		}, 1000);
-	}
 
-	@Override
-	public void onHeaderRefresh(PullToRefreshView view) {
-		mPullToRefreshView.postDelayed(new Runnable() {
-
-			@SuppressLint("SimpleDateFormat")
 			@Override
-			public void run() {
-
-				SimpleDateFormat formatter = new SimpleDateFormat(
-						"yyyy年MM月dd日   HH:mm:ss     ");
-				Date curDate = new Date(System.currentTimeMillis());
-				// 获取当前时间
-				String str = formatter.format(curDate);
-				mPullToRefreshView.onHeaderRefreshComplete("最后更新：" + str);
+			public void onFailure(Throwable e, JSONObject errorResponse) {
+				LogUtil.d(TAG, errorResponse.toString());
+				dialog.dismiss();
+				ToastUtil.showShortToast(AdminSiteActivity.this, "获取站点失败！请稍后重试");
+				super.onFailure(e, errorResponse);
 			}
-		}, 1000);
 
+		});
 	}
 
 	/**
@@ -121,8 +122,7 @@ public class AdminSiteActivity extends Activity implements
 
 		@Override
 		public void onClick(View v) {
-			startActivity(new Intent(AdminSiteActivity.this,
-					AdminAddSiteActivity.class));
+			startActivity(new Intent(AdminSiteActivity.this, AdminAddSiteActivity.class));
 		}
 	}
 
@@ -132,14 +132,12 @@ public class AdminSiteActivity extends Activity implements
 	class MyListItemListener implements OnItemClickListener {
 
 		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position,
-				long id) {
-			TextView textView = (TextView) view
-					.findViewById(R.id.item_admin_site_listview_siteName);
-			String siteName = textView.getText().toString();
-			ToastUtil.showShortToast(AdminSiteActivity.this, siteName);
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			Intent intent = new Intent();
-			intent.putExtra("SITENAME", siteName);
+			SiteBean bean = mList.get(position);
+			Bundle bundle = new Bundle();
+			bundle.putSerializable("SITEBEAN", bean);
+			intent.putExtras(bundle);
 			intent.setClass(AdminSiteActivity.this, AdminSiteInfoActivity.class);
 			startActivity(intent);
 		}

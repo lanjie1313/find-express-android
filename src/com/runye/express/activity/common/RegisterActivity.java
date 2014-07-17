@@ -243,9 +243,9 @@ public class RegisterActivity extends Activity {
 				params.put("password", et_values[3]);
 				params.put("siteId", siteId);
 				if (choiceIdentity.equals("站长")) {
-					mUri = HttpUri.TEST_IP + HttpUri.REGISTER_MASTER;
+					mUri = HttpUri.TEST_IP + HttpUri.MASTER;
 				} else if (choiceIdentity.equals("快递员")) {
-					mUri = HttpUri.TEST_IP + HttpUri.REGISTER_COURIERS;
+					mUri = HttpUri.TEST_IP + HttpUri.COURIERS;
 				}
 				MyHttpClient.postRegister(mUri, params, new JsonHttpResponseHandler() {
 					@Override

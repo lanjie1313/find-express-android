@@ -46,20 +46,20 @@
     <string name="order_delivery_address">收货地址:</string>
     <!-- 订单详细 -->
     <string name="order_info_buyer_name">买家姓名</string>
-    <string name="order_info_order_number">订单号：</string>
-    <string name="order_info_order_time">成交时间：</string>
+    <string name="order_info_order_number">订单号</string>
+    <string name="order_info_order_time">成交时间</string>
     <string name="order_info_delivery_adress">收货地址</string>
-    <string name="order_info_shop_name">店铺:</string>
+    <string name="order_info_shop_name">店铺地址</string>
     <string name="order_info_goodslist">商品清单</string>
     <string name="order_info_goods_charge">单价</string>
     <string name="order_info_goods_number">数量</string>
-    <string name="order_info_description">件商品，总商品金额：</string>
+    <string name="order_info_description">件商品，总商品金额:</string>
     <string name="order_info_freight">运费:</string>
     <string name="order_info_total">应付金额:</string>
     <string name="order_info_message">买家留言:</string>
-    <string name="order_info_done">交易完成时间：</string>
+    <string name="order_info_done">完成时间:</string>
     <string name="order_info_scanmap">查看地图</string>
-    <string name="order_info_confim">确定</string>
+    <string name="order_info_confim">分配</string>
     <string name="order_info_select">选择快递员</string>
 
     <!-- 站长主界面 -->
