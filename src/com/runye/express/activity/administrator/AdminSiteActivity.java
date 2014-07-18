@@ -20,7 +20,7 @@ import com.alibaba.fastjson.JSON;
 import com.runye.express.adapter.SiteAdapter;
 import com.runye.express.android.R;
 import com.runye.express.async.JsonHttpResponseHandler;
-import com.runye.express.bean.SiteBean;
+import com.runye.express.bean.SiteModeBean;
 import com.runye.express.http.HttpUri;
 import com.runye.express.http.MyHttpClient;
 import com.runye.express.utils.LoadingDialog;
@@ -41,7 +41,7 @@ public class AdminSiteActivity extends Activity {
 	protected static final String TAG = "AdminSiteActivity";
 	private ListView listView;
 	/** 数据源 */
-	private List<SiteBean> mList;
+	private List<SiteModeBean> mList;
 	/** 增加站点 */
 	private Button bt_addSite;
 	/***/
@@ -60,7 +60,7 @@ public class AdminSiteActivity extends Activity {
 
 	private void initUI() {
 		listView = (ListView) findViewById(R.id.activity_admin_site_listView);
-		mList = new ArrayList<SiteBean>();
+		mList = new ArrayList<SiteModeBean>();
 		adapter = new SiteAdapter(AdminSiteActivity.this, mList);
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(new MyListItemListener());
@@ -97,7 +97,7 @@ public class AdminSiteActivity extends Activity {
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-				mList.addAll(JSON.parseArray(replaceAfter, SiteBean.class));
+				mList.addAll(JSON.parseArray(replaceAfter, SiteModeBean.class));
 				adapter.notifyDataSetChanged();
 				dialog.dismiss();
 				super.onSuccess(statusCode, response);
@@ -134,7 +134,7 @@ public class AdminSiteActivity extends Activity {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			Intent intent = new Intent();
-			SiteBean bean = mList.get(position);
+			SiteModeBean bean = mList.get(position);
 			Bundle bundle = new Bundle();
 			bundle.putSerializable("SITEBEAN", bean);
 			intent.putExtras(bundle);

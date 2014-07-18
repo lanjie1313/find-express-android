@@ -2,7 +2,16 @@ package com.runye.express.bean;
 
 import java.io.Serializable;
 
-public class OrderItems implements Serializable {
+/**
+ * 
+ * @ClassName: OrderItems
+ * @Description: 订单商品清单信息
+ * @author LanJie.Chen
+ * @date 2014-7-18 下午3:27:46
+ * @version V1.0
+ * @Company:山西润叶网络科技有限公司
+ */
+public class OrderItemsBean implements Serializable {
 	/**
 	 * @Fields serialVersionUID : TODO（用一句话描述这个变量表示什么）
 	 */

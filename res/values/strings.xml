@@ -59,8 +59,7 @@
     <string name="order_info_message">买家留言:</string>
     <string name="order_info_done">完成时间:</string>
     <string name="order_info_scanmap">查看地图</string>
-    <string name="order_info_confim">分配</string>
-    <string name="order_info_select">选择快递员</string>
+    <string name="order_info_select">分配</string>
 
     <!-- 站长主界面 -->
 

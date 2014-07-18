@@ -50,7 +50,7 @@ public class MapApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		mInstance = this;
+		mInstance = new MapApplication();
 		initEngineManager(this);
 	}
 

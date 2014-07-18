@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.runye.express.android.R;
-import com.runye.express.bean.SiteBean;
+import com.runye.express.bean.SiteModeBean;
 
 /**
  * 
@@ -22,9 +22,9 @@ import com.runye.express.bean.SiteBean;
  */
 public class SiteAdapter extends BaseAdapter {
 	Context mContext;
-	private final List<SiteBean> mData;
+	private final List<SiteModeBean> mData;
 
-	public SiteAdapter(Context context, List<SiteBean> data) {
+	public SiteAdapter(Context context, List<SiteModeBean> data) {
 		this.mContext = context;
 		this.mData = data;
 	}

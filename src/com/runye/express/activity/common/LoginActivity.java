@@ -20,7 +20,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.runye.express.activity.administrator.AdminSiteActivity;
 import com.runye.express.activity.couriers.CouriersManActivity;
-import com.runye.express.activity.sitemaster.MasterMainActivity;
+import com.runye.express.activity.master.MasterMainActivity;
 import com.runye.express.android.R;
 import com.runye.express.async.JsonHttpResponseHandler;
 import com.runye.express.async.RequestParams;

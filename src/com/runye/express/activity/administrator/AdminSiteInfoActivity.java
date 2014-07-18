@@ -19,9 +19,9 @@ import com.runye.express.adapter.CouriersAdapter;
 import com.runye.express.android.R;
 import com.runye.express.async.JsonHttpResponseHandler;
 import com.runye.express.async.RequestParams;
-import com.runye.express.bean.CouriersBean;
-import com.runye.express.bean.MasterBean;
-import com.runye.express.bean.SiteBean;
+import com.runye.express.bean.CouriersModeBean;
+import com.runye.express.bean.MasterModeBean;
+import com.runye.express.bean.SiteModeBean;
 import com.runye.express.http.HttpUri;
 import com.runye.express.http.MyHttpClient;
 import com.runye.express.listview.ListViewHeight;
@@ -50,10 +50,10 @@ public class AdminSiteInfoActivity extends Activity {
 	private Button bt_change;
 	private ListView mListView;
 	private CouriersAdapter mAdapter;
-	private List<MasterBean> mMasterList;
-	SiteBean siteBean;
+	private List<MasterModeBean> mMasterList;
+	SiteModeBean siteBean;
 	private LoadingDialog mLoadingDialog;
-	private List<CouriersBean> mCouriersList;
+	private List<CouriersModeBean> mCouriersList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,7 +66,7 @@ public class AdminSiteInfoActivity extends Activity {
 	private void initUI() {
 		mLoadingDialog = new LoadingDialog(this, "加载中");
 		mLoadingDialog.show();
-		siteBean = (SiteBean) getIntent().getSerializableExtra("SITEBEAN");
+		siteBean = (SiteModeBean) getIntent().getSerializableExtra("SITEBEAN");
 		tv_siteName = (TextView) findViewById(R.id.activity_admin_siteinfo_siteName);
 		tv_siteName.setText(siteBean.getName());
 
@@ -76,8 +76,8 @@ public class AdminSiteInfoActivity extends Activity {
 		bt_del.setOnClickListener(new MyButtonListener());
 		bt_change.setOnClickListener(new MyButtonListener());
 		getSiteMaster();
-		mMasterList = new ArrayList<MasterBean>();
-		mCouriersList = new ArrayList<CouriersBean>();
+		mMasterList = new ArrayList<MasterModeBean>();
+		mCouriersList = new ArrayList<CouriersModeBean>();
 		mListView = (ListView) findViewById(R.id.activity_admin_siteinfo_listView);
 		mAdapter = new CouriersAdapter(this, mCouriersList);
 		mListView.setAdapter(mAdapter);
@@ -107,7 +107,7 @@ public class AdminSiteInfoActivity extends Activity {
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-				mMasterList.addAll(JSON.parseArray(replaceAfter, MasterBean.class));
+				mMasterList.addAll(JSON.parseArray(replaceAfter, MasterModeBean.class));
 				tv_webMaster.setText(mMasterList.get(0).getNickName());
 				getCouriers();
 			}
@@ -143,7 +143,7 @@ public class AdminSiteInfoActivity extends Activity {
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-				mCouriersList.addAll(JSON.parseArray(replaceAfter, CouriersBean.class));
+				mCouriersList.addAll(JSON.parseArray(replaceAfter, CouriersModeBean.class));
 				mAdapter.notifyDataSetChanged();
 				ListViewHeight.setListViewHeightBasedOnChildren(mListView);
 				mLoadingDialog.dismiss();

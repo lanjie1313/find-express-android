@@ -3,28 +3,60 @@ package com.runye.express.bean;
 /**
  * 
  * @ClassName: CouriersModeBean
- * @Description: 快递员模式bean
+ * @Description: 快递员信息
  * @author LanJie.Chen
- * @date 2014-7-4 下午12:22:11
+ * @date 2014-7-17 下午5:17:27
  * @version V1.0
  * @Company:山西润叶网络科技有限公司
  */
 public class CouriersModeBean {
-	/** 快递员名称 */
-	private String name;
-	/** 快递员编号 */
-	private String number;
-	/** 快递员头像地址 */
-	private String image;
-	private String phone;
-	private String status;
 
-	public String getPhone() {
-		return phone;
+	private String id;
+	private String nickName;
+	private String phone_num;
+	private String email;
+	private String siteId;
+	private String status;
+	private String idverifyStatus;
+
+	public String getId() {
+		return id;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getNickName() {
+		return nickName;
+	}
+
+	public void setNickName(String nickName) {
+		this.nickName = nickName;
+	}
+
+	public String getPhone_num() {
+		return phone_num;
+	}
+
+	public void setPhone_num(String phone_num) {
+		this.phone_num = phone_num;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getSiteId() {
+		return siteId;
+	}
+
+	public void setSiteId(String siteId) {
+		this.siteId = siteId;
 	}
 
 	public String getStatus() {
@@ -32,30 +64,20 @@ public class CouriersModeBean {
 	}
 
 	public void setStatus(String status) {
-		this.status = status;
+		if (status.equals("offline")) {
+
+			this.status = "离线";
+		}
+		if (status.equals("online")) {
+			this.status = "在线";
+		}
 	}
 
-	public String getName() {
-		return name;
+	public String getIdverifyStatus() {
+		return idverifyStatus;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getNumber() {
-		return number;
-	}
-
-	public void setNumber(String number) {
-		this.number = number;
-	}
-
-	public String getImage() {
-		return image;
-	}
-
-	public void setImage(String image) {
-		this.image = image;
+	public void setIdverifyStatus(String idverifyStatus) {
+		this.idverifyStatus = idverifyStatus;
 	}
 }

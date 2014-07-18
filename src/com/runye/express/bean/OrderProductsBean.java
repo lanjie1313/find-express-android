@@ -17,7 +17,7 @@ import com.runye.express.utils.LogUtil;
  * @version V1.0
  * @Company:山西润叶网络科技有限公司
  */
-public class ProductsBean implements Serializable {
+public class OrderProductsBean implements Serializable {
 	/**
 	 * @Fields serialVersionUID : TODO（用一句话描述这个变量表示什么）
 	 */

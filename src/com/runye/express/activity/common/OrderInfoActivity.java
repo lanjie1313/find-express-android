@@ -3,6 +3,7 @@ package com.runye.express.activity.common;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -14,6 +15,7 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -25,22 +27,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.runye.express.adapter.CouriersAdapter;
 import com.runye.express.adapter.OrderInfoAdapter;
-import com.runye.express.adapter.SelectCouriersAdapter;
 import com.runye.express.android.R;
 import com.runye.express.async.JsonHttpResponseHandler;
+import com.runye.express.async.RequestParams;
 import com.runye.express.bean.CouriersModeBean;
-import com.runye.express.bean.MerchantBean;
-import com.runye.express.bean.OrderItems;
+import com.runye.express.bean.MerchantModeBean;
 import com.runye.express.bean.OrderModeBean;
-import com.runye.express.bean.ProductsBean;
+import com.runye.express.bean.OrderProductsBean;
+import com.runye.express.http.HttpUri;
 import com.runye.express.http.MyHttpClient;
 import com.runye.express.listview.ListViewHeight;
-import com.runye.express.map.MapApplication;
 import com.runye.express.utils.LoadingDialog;
 import com.runye.express.utils.LogUtil;
 import com.runye.express.utils.SysExitUtil;
-import com.runye.express.utils.ToastUtil;
 
 /**
  * 
@@ -54,17 +55,23 @@ import com.runye.express.utils.ToastUtil;
 public class OrderInfoActivity extends Activity {
 	protected static final String TAG = "OrderInfoActivity";
 	private OrderModeBean mOrderModeBean;
-	private List<OrderModeBean> orderList;
-	private List<CouriersModeBean> couriersList;
-	private List<ProductsBean> productsList;
+	/** 快递员集合 */
+	private List<CouriersModeBean> mCouriersList;
+	/** 订单商品集合 */
+	private List<OrderProductsBean> mProductsList;
+	/** 快递员 */
+	private CouriersAdapter mCouriersAdapter;
+	/** 订单信息 */
+	private OrderInfoAdapter mOrderInfoAdapter;
+	/** 订单商品list */
 	private ListView mListView;
 	/** 地图 */
 	private Button bt_map;
-	/** 确定 */
-	private Button bt_confim;
+	/** 分配 */
 	private Button bt_select;
 	/** 选择快递员对话框 */
-	Dialog mDialog;
+	private Dialog mDialog;
+	/** 底部菜单栏 */
 	private LinearLayout bottomLayout;
 	/** 店铺地址 */
 	private TextView tv_shopAdress;
@@ -75,7 +82,7 @@ public class OrderInfoActivity extends Activity {
 	/** 留言地址 */
 	private TextView tv_message;
 	private TextView tv_time;
-	private OrderInfoAdapter adapter;
+	/** 收费信息 */
 	private TextView tv_goodsNumber;
 	private TextView tv_shipping;
 	private TextView tv_subtotal;
@@ -86,6 +93,17 @@ public class OrderInfoActivity extends Activity {
 	private TextView tv_buyName;
 	private TextView tv_buyPhone;
 	private LoadingDialog mLoadingDialog;
+	private boolean task1;
+	private boolean task2;
+	private final Handler handler = new Handler() {
+
+		@Override
+		public void handleMessage(android.os.Message msg) {
+			if (msg.arg1 == 1) {
+
+			}
+		};
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -100,39 +118,46 @@ public class OrderInfoActivity extends Activity {
 		mLoadingDialog.show();
 		// 获取上个页面装载完成的数据
 		mOrderModeBean = (OrderModeBean) getIntent().getSerializableExtra("ORDERINFO");
-		mListView = (ListView) findViewById(R.id.activity_order_infos_listview);
 		bt_map = (Button) findViewById(R.id.activity_order_infos_map);
 		bt_map.setOnClickListener(new MyButtonListener());
 		/***
 		 * 获取商品
 		 */
 		getOrderInfo();
-		List<OrderItems> items = mOrderModeBean.getItemList();
-		adapter = new OrderInfoAdapter(OrderInfoActivity.this, productsList, items);
-		mListView.setAdapter(adapter);
+		/**
+		 * 获取商户
+		 */
+		getMerchantInfo();
+		new Thread(new CloseDialog()).start();
+		//
+		mListView = (ListView) findViewById(R.id.activity_order_infos_listview);
+		mOrderInfoAdapter = new OrderInfoAdapter(OrderInfoActivity.this, mProductsList, mOrderModeBean.getItemList());
+		mListView.setAdapter(mOrderInfoAdapter);
 
+		// 商家信息
 		tv_shopAdress = (TextView) findViewById(R.id.activity_order_infos_shopAdress);
 		tv_shopName = (TextView) findViewById(R.id.activity_order_infos_shopName);
 		tv_message = (TextView) findViewById(R.id.activity_order_infos_message);
 		tv_shopPhone = (TextView) findViewById(R.id.activity_order_infos_shopPhone);
 		tv_time = (TextView) findViewById(R.id.activity_order_infos_time);
 		tv_time.setText(mOrderModeBean.getCreation_date());
+		// 留言信息
 		if (mOrderModeBean.getOs_notes() == null || mOrderModeBean.getOs_notes().equals("")) {
 			tv_message.setText("无");
 		} else {
 
 			tv_message.setText(mOrderModeBean.getOs_notes());
 		}
-
+		// 商品信息
 		tv_goodsNumber = (TextView) findViewById(R.id.activity_order_infos_goodsNumber);
 		tv_shipping = (TextView) findViewById(R.id.activity_order_infos_freight);
 		tv_subtotal = (TextView) findViewById(R.id.activity_order_infos_subtotal);
 		tv_total = (TextView) findViewById(R.id.activity_order_infos_total);
+		tv_orderNumber = (TextView) findViewById(R.id.activity_order_infos_orderNumber);
 		tv_goodsNumber.setText(mOrderModeBean.getItemList().size() + "");
 		tv_shipping.setText(mOrderModeBean.getShipping());
 		tv_subtotal.setText(mOrderModeBean.getSubtotal());
 		tv_total.setText(mOrderModeBean.getTotal());
-		tv_orderNumber = (TextView) findViewById(R.id.activity_order_infos_orderNumber);
 		tv_orderNumber.setText(mOrderModeBean.getNumber());
 		// 买家信息
 		tv_buyAddress = (TextView) findViewById(R.id.activity_order_infos_buyAddress);
@@ -151,11 +176,9 @@ public class OrderInfoActivity extends Activity {
 			// 此处判断是否为管理员或者站长，true表示可以选择快递员
 			bt_select = (Button) findViewById(R.id.activity_order_infos_select);
 			bt_select.setOnClickListener(new MyButtonListener());
-			bt_confim = (Button) findViewById(R.id.activity_order_infos_confim);
-			// 快递员发货
-			bt_confim.setOnClickListener(new MyButtonListener());
 
 		}
+
 	}
 
 	/**
@@ -164,7 +187,7 @@ public class OrderInfoActivity extends Activity {
 	 * @return List<OrderModeBean>
 	 */
 	private void getOrderInfo() {
-		productsList = new ArrayList<ProductsBean>();
+		mProductsList = new ArrayList<OrderProductsBean>();
 		int size = mOrderModeBean.getItemList().size();
 		for (int i = 0; i < size; i++) {
 			String id = mOrderModeBean.getItemList().get(i).getProduct();
@@ -174,13 +197,13 @@ public class OrderInfoActivity extends Activity {
 				public void onSuccess(int statusCode, JSONObject response) {
 					super.onSuccess(statusCode, response);
 					LogUtil.d(TAG, "获取商品信息成功" + response.toString());
-					productsList.add(JSON.parseObject(
+					mProductsList.add(JSON.parseObject(
 							response.toString().replaceAll("\"_id\"", "\"id\"").replaceAll("\"__v\"", "\"v\""),
-							ProductsBean.class));
-					adapter.notifyDataSetChanged();
+							OrderProductsBean.class));
+					mOrderInfoAdapter.notifyDataSetChanged();
 					// 差点忘了计算高度
 					ListViewHeight.setListViewHeightBasedOnChildren(mListView);
-					getMerchantInfo();
+					task1 = true;
 				}
 
 				@Override
@@ -188,6 +211,31 @@ public class OrderInfoActivity extends Activity {
 					super.onFailure(e, errorResponse);
 				}
 			});
+		}
+	}
+
+	/**
+	 * 
+	 * @ClassName: closeDialog
+	 * @Description: 控制dialog的消失时间
+	 */
+	private class CloseDialog implements Runnable {
+		boolean isRun = true;
+
+		@Override
+		public void run() {
+			while (isRun) {
+				if (task1 == true && task2 == true) {
+					mLoadingDialog.dismiss();
+					task1 = false;
+					task2 = false;
+					//
+					// Message message = new Message();
+					// message.arg1 = 1;
+					// handler.sendMessage(message);
+					isRun = false;
+				}
+			}
 		}
 	}
 
@@ -202,41 +250,63 @@ public class OrderInfoActivity extends Activity {
 			public void onSuccess(int statusCode, org.json.JSONObject response) {
 				super.onSuccess(statusCode, response);
 				LogUtil.d(TAG, "获取商户信息成功" + response.toString());
-				MerchantBean bean = new MerchantBean();
-				bean = JSON.parseObject(response.toString(), MerchantBean.class);
+				MerchantModeBean bean = new MerchantModeBean();
+				bean = JSON.parseObject(response.toString(), MerchantModeBean.class);
 				tv_shopAdress.setText(bean.getAddress());
 				tv_shopPhone.setText(bean.getPhone_num());
 				tv_shopPhone.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG); // 下划线
 				tv_shopPhone.setOnClickListener(new MyTextViewListener(bean.getPhone_num()));
 				tv_shopName.setText(bean.getName());
-				mLoadingDialog.dismiss();
+				task2 = true;
 			}
 
 			@Override
 			public void onFailure(Throwable e, org.json.JSONObject errorResponse) {
 				super.onFailure(e, errorResponse);
 				LogUtil.d(TAG, "获取商户信息失败" + errorResponse.toString());
+				mLoadingDialog.dismiss();
 			}
 		});
 	}
 
 	/**
 	 * 
-	 * @Description: 获取快递员信息
-	 * @return
-	 * @return List<CouriersModeBean>
+	 * @Description: 联网取站点下的快递员
+	 * @return List<String>
 	 */
-	private List<CouriersModeBean> getCouriersInfo() {
-		List<CouriersModeBean> list = new ArrayList<CouriersModeBean>();
-		for (int i = 0; i < 20; i++) {
-			CouriersModeBean bean = new CouriersModeBean();
-			bean.setNumber(i + "");
-			bean.setName("快递员" + i);
-			bean.setPhone("1823402720" + i);
-			bean.setStatus("空闲");
-			list.add(bean);
-		}
-		return list;
+	private void getCouriers() {
+		mCouriersList = new ArrayList<CouriersModeBean>();
+		mCouriersAdapter = new CouriersAdapter(OrderInfoActivity.this, mCouriersList);
+		mLoadingDialog.show();
+		RequestParams params = new RequestParams();
+		// params.put("siteId", siteBean.getId());
+		MyHttpClient.getSiteCouriers(HttpUri.COURIERS, params, new JsonHttpResponseHandler() {
+			@Override
+			public void onSuccess(int statusCode, JSONObject response) {
+				super.onSuccess(statusCode, response);
+				LogUtil.d(TAG, "快递员获取成功：" + response.toString());
+				// 根据Bean类的到每一个json数组的项
+				String replaceAfter = "";
+				try {
+					replaceAfter = response.getJSONArray("records").toString().replaceAll("\"__v\"", "\"v\"")
+							.replaceAll("\"_id\"", "\"id\"");
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+				mCouriersList.addAll(JSON.parseArray(replaceAfter, CouriersModeBean.class));
+				mCouriersAdapter.notifyDataSetChanged();
+				mLoadingDialog.dismiss();
+				mDialog = setDialog();
+				mDialog.show();
+			}
+
+			@Override
+			public void onFailure(Throwable e, JSONObject errorResponse) {
+				super.onFailure(e, errorResponse);
+				LogUtil.d(TAG, "快递员获取失败：" + errorResponse.toString());
+				mLoadingDialog.dismiss();
+			}
+		});
 	}
 
 	/**
@@ -246,12 +316,10 @@ public class OrderInfoActivity extends Activity {
 	 * @return Dialog
 	 */
 	private Dialog setDialog() {
-		couriersList = getCouriersInfo();
 		Dialog dialog = new Dialog(OrderInfoActivity.this);
 		View view = LayoutInflater.from(OrderInfoActivity.this).inflate(R.layout.select_couriers_dialog, null);
 		ListView listView = (ListView) view.findViewById(R.id.select_couriers_dialog_listview);
-		SelectCouriersAdapter adapter = new SelectCouriersAdapter(OrderInfoActivity.this, couriersList);
-		listView.setAdapter(adapter);
+		listView.setAdapter(mCouriersAdapter);
 		listView.setOnItemClickListener(new MyListListener());
 		dialog.setContentView(view);
 		dialog.setTitle("选择快递员");
@@ -272,7 +340,8 @@ public class OrderInfoActivity extends Activity {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
 				mDialog.dismiss();
-				bt_select.setText(message);
+				// 分配订单
+				distribution();
 			}
 		});
 		alertDialog.setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {
@@ -287,30 +356,17 @@ public class OrderInfoActivity extends Activity {
 
 	}
 
-	private class MyListListener implements OnItemClickListener {
-
-		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-			TextView textView = (TextView) view.findViewById(R.id.item_select_couriers_dialog_name);
-			String message = textView.getText().toString();
-			setConfimDialog(message);
-		}
-	}
-
 	/**
 	 * 
 	 * @Description: 分配订单
 	 * @return void
 	 */
 	private void distribution() {
-		String message = bt_select.getText().toString();
-		if (message.equals(getResources().getString(R.string.order_info_select))) {
-			ToastUtil.showShortToast(OrderInfoActivity.this, "还未选择快递员哦");
-		} else {
-			// 联网分配
-			mLoadingDialog = new LoadingDialog(OrderInfoActivity.this, "订单分配中");
-			mLoadingDialog.show();
-		}
+		// 联网分配
+		mLoadingDialog = new LoadingDialog(OrderInfoActivity.this, "订单分配中");
+		mLoadingDialog.show();
+		bt_select.setText("分配成功");
+		bt_select.setClickable(false);
 	}
 
 	private class MyButtonListener implements OnClickListener {
@@ -318,23 +374,30 @@ public class OrderInfoActivity extends Activity {
 		@Override
 		public void onClick(View v) {
 			switch (v.getId()) {
-			case R.id.activity_order_infos_confim:
-				// 分配订单
-				distribution();
-				break;
 			case R.id.activity_order_infos_map:
 				// admin or master scan couriers couriers scan user location
-				if (MapApplication.getInstance().isISCOURIERS()) {
-
-					ToastUtil.showShortToast(OrderInfoActivity.this, "user location");
-				} else {
-					ToastUtil.showShortToast(OrderInfoActivity.this, "couriers location");
-				}
+				// if (MapApplication.getInstance().isISCOURIERS()) {
+				//
+				// ToastUtil.showShortToast(OrderInfoActivity.this,
+				// "user location");
+				// } else {
+				// ToastUtil.showShortToast(OrderInfoActivity.this,
+				// "couriers location");
+				// }
+				// 传递用户的经纬度
+				Intent intent = new Intent(OrderInfoActivity.this, LocationActivity.class);
+				int lng = (int) (mOrderModeBean.getLocation_lng() * 1e6);
+				int lat = (int) (mOrderModeBean.getLocation_lat() * 1e6);
+				LogUtil.d(TAG, "lng:" + mOrderModeBean.getLocation_lng());
+				LogUtil.d(TAG, "lat:" + mOrderModeBean.getLocation_lat());
+				LogUtil.d(TAG, "传递到地图的lng:" + lng);
+				LogUtil.d(TAG, "传递到地图的lat:" + lat);
+				intent.putExtra("USER_LNG", lng);
+				intent.putExtra("USER_LAT", lat);
+				startActivity(intent);
 				break;
 			case R.id.activity_order_infos_select:
-				mDialog = setDialog();
-				mDialog.show();
-
+				getCouriers();
 			default:
 				break;
 			}
@@ -377,4 +440,13 @@ public class OrderInfoActivity extends Activity {
 		}
 	}
 
+	private class MyListListener implements OnItemClickListener {
+
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			TextView textView = (TextView) view.findViewById(R.id.item_couriers_listview_name);
+			String message = textView.getText().toString();
+			setConfimDialog(message);
+		}
+	}
 }

@@ -1,4 +1,4 @@
-package com.runye.express.activity.sitemaster;
+package com.runye.express.activity.master;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -46,17 +46,27 @@ import com.runye.express.utils.ToastUtil;
  */
 public class MasterBaseActivity extends Activity implements OnHeaderRefreshListener, OnFooterRefreshListener {
 	private final String TAG = "MasterBaseActivity";
-	private List<OrderModeBean> mList;
-	private List<OrderModeBean> mCacheList;
+	/** 刷新listview */
 	private PullToRefreshView mPullToRefreshView;
 	private ListView mListView;
+	private List<OrderModeBean> mList;
+	private OrderModeAdapter adapter;
+	/** 商户token */
 	private String access_token;
+	/** 分页 */
 	private int skip = 0;
+	/** 请求个数 */
 	private final int limit = 10;
-	OrderModeAdapter adapter = null;
+	/** 请求次数 */
 	private int allCount = 0;
-	HashMap<Integer, List<OrderModeBean>> map = new HashMap<Integer, List<OrderModeBean>>();
-	HashMap<Integer, Integer> map1 = new HashMap<Integer, Integer>();
+	/** 下拉 */
+	private final HashMap<Integer, List<OrderModeBean>> map = new HashMap<Integer, List<OrderModeBean>>();
+	/** 上拉 */
+	private final HashMap<Integer, Integer> map1 = new HashMap<Integer, Integer>();
+	/** 是否下拉操作 */
+	private boolean isHead;
+	/** 是否上拉操作 */
+	private boolean isFoot;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -78,7 +88,6 @@ public class MasterBaseActivity extends Activity implements OnHeaderRefreshListe
 		mPullToRefreshView.setOnFooterRefreshListener(this);
 		mListView = (ListView) findViewById(R.id.activity_master_listview);
 		mList = new ArrayList<OrderModeBean>();
-		mCacheList = new ArrayList<OrderModeBean>();
 		mListView.setOnItemClickListener(new MyListLisytener());
 		mPullToRefreshView.startRefresh();
 		getOrders();
@@ -101,7 +110,7 @@ public class MasterBaseActivity extends Activity implements OnHeaderRefreshListe
 		SharedPreferences preferences = getSharedPreferences("user_info", 1);
 		// String siteId = preferences.getString("siteId", "");
 		access_token = preferences.getString("access_token", "");
-		//
+		// 根据状态加载订单
 		String status = getIntent().getStringExtra("STATUS");
 		RequestParams params = new RequestParams();
 		params.put("status", status);
@@ -121,13 +130,14 @@ public class MasterBaseActivity extends Activity implements OnHeaderRefreshListe
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-
+				// 下拉清空list
 				if (isHead) {
 					mList.clear();
 				}
 				mList.addAll(JSON.parseArray(replaceAfter, OrderModeBean.class));
-				map.put(allCount, mList);
+				// 记录新增加的item
 				int count = 0;
+				map.put(allCount, mList);
 				// 当前的list
 				List<OrderModeBean> listNow = map.get(allCount);
 				// 上一个list
@@ -142,13 +152,11 @@ public class MasterBaseActivity extends Activity implements OnHeaderRefreshListe
 						}
 					}
 					if (count > 0) {
-						ToastUtil.showShortToast(MasterBaseActivity.this, "新增加了" + count + "个内容");
+						ToastUtil.showShortToast(MasterBaseActivity.this, "新增加了" + count + "个订单");
 					} else {
-						Toast toast = Toast.makeText(getApplicationContext(), "没有新内容", Toast.LENGTH_SHORT);
+						Toast toast = Toast.makeText(getApplicationContext(), "没有新订单", Toast.LENGTH_SHORT);
 						toast.setGravity(Gravity.CENTER | Gravity.TOP, 0, 100);
 						toast.show();
-						// ToastUtil.showShortToast(MasterBaseActivity.this,
-						// "没有新内容");
 					}
 
 				}
@@ -157,10 +165,10 @@ public class MasterBaseActivity extends Activity implements OnHeaderRefreshListe
 				map1.put(allCount, mList.size());
 				if (isFoot) {
 					if (map1.get(allCount) == map1.get(allCount - 1)) {
-						ToastUtil.showShortToast(MasterBaseActivity.this, "没有更多了");
+						ToastUtil.showShortToast(MasterBaseActivity.this, "没有更多订单了");
 					} else {
-						ToastUtil.showShortToast(MasterBaseActivity.this, map1.get(allCount) - map1.get(allCount - 1)
-								+ "");
+						ToastUtil.showShortToast(MasterBaseActivity.this,
+								"新加载了" + (map1.get(allCount) - map1.get(allCount - 1)) + "个订单");
 					}
 				}
 				SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日   HH:mm:ss     ");
@@ -184,6 +192,11 @@ public class MasterBaseActivity extends Activity implements OnHeaderRefreshListe
 		});
 	}
 
+	/**
+	 * 
+	 * @ClassName: MyListLisytener
+	 * @Description: 点击item进入到订单详情页面
+	 */
 	class MyListLisytener implements OnItemClickListener {
 
 		@Override
@@ -197,11 +210,9 @@ public class MasterBaseActivity extends Activity implements OnHeaderRefreshListe
 		}
 	}
 
-	private boolean isHead;
-	private boolean isFoot;
-
 	@Override
 	public void onHeaderRefresh(PullToRefreshView view) {
+		// 刷新
 		isHead = true;
 		skip = 0;
 		LogUtil.d(TAG, "skip:onHeaderRefresh==" + skip);
@@ -211,6 +222,7 @@ public class MasterBaseActivity extends Activity implements OnHeaderRefreshListe
 
 	@Override
 	public void onFooterRefresh(PullToRefreshView view) {
+		// 加载
 		isFoot = true;
 		skip += limit;
 		LogUtil.d(TAG, "skip:onFooterRefresh==" + skip);

@@ -100,14 +100,15 @@
         </activity>
         <activity android:name="com.runye.express.activity.common.SelectCouriersActivity" >
         </activity>
-        <activity android:name="com.runye.express.activity.sitemaster.MasterMainActivity" >
+        <activity android:name="com.runye.express.activity.master.MasterMainActivity" >
         </activity>
-        <activity android:name="com.runye.express.activity.sitemaster.MasterBaseActivity" >
+        <activity android:name="com.runye.express.activity.master.MasterBaseActivity" >
         </activity>
         <activity android:name="com.runye.express.activity.couriers.CouriersManActivity" >
         </activity>
         <activity android:name="com.runye.express.activity.couriers.CouriersBaseActivity" >
         </activity>
+        <activity android:name="com.runye.express.activity.common.LocationActivity"></activity>
     </application>
 
 </manifest>

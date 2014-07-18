@@ -28,7 +28,7 @@ import com.alibaba.fastjson.JSON;
 import com.runye.express.android.R;
 import com.runye.express.async.JsonHttpResponseHandler;
 import com.runye.express.async.RequestParams;
-import com.runye.express.bean.SiteBean;
+import com.runye.express.bean.SiteModeBean;
 import com.runye.express.http.HttpUri;
 import com.runye.express.http.MyHttpClient;
 import com.runye.express.utils.LoadingDialog;
@@ -70,7 +70,7 @@ public class RegisterActivity extends Activity {
 	/** 选择的站点 */
 	private String choiceSite;
 	/** 站点集合 */
-	private List<SiteBean> mList;
+	private List<SiteModeBean> mList;
 	/** 站点id */
 	private String siteId;
 	/** 注册uri */
@@ -130,7 +130,7 @@ public class RegisterActivity extends Activity {
 				super.onSuccess(statusCode, response);
 				LogUtil.d(TAG, response.toString());
 				// 根据Bean类的到每一个json数组的项
-				mList = new ArrayList<SiteBean>();
+				mList = new ArrayList<SiteModeBean>();
 				String replaceAfter = "";
 				try {
 					replaceAfter = response.getJSONArray("records").toString().replaceAll("\"__v\"", "\"v\"")
@@ -138,7 +138,7 @@ public class RegisterActivity extends Activity {
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-				mList.addAll(JSON.parseArray(replaceAfter, SiteBean.class));
+				mList.addAll(JSON.parseArray(replaceAfter, SiteModeBean.class));
 				sites = new String[mList.size()];
 				for (int i = 0; i < mList.size(); i++) {
 					sites[i] = mList.get(i).getName();

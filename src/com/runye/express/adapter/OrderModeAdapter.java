@@ -85,6 +85,7 @@ public class OrderModeAdapter extends BaseAdapter {
 		String status = mData.get(position).getStatus();
 		if (status.equals("new")) {
 			holder.bt_change.setBackgroundResource(R.drawable.waiting);
+			holder.bt_change.setText("待分配");
 
 		} else if (status.equals("已分配")) {
 			holder.bt_change.setBackgroundResource(R.drawable.done);

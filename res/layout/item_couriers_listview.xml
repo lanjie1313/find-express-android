@@ -12,9 +12,9 @@
 
             <TextView
                 android:id="@+id/item_couriers_listview_number"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:gravity="center_horizontal"
                 android:text="01" />
 
@@ -37,10 +37,10 @@
 
             <TextView
                 android:id="@+id/item_couriers_listview_status"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:gravity="center_horizontal"
+                android:layout_marginRight="10dp"
                 android:text="在线" />
         </LinearLayout>
   

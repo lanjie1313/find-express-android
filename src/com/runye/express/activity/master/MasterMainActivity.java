@@ -1,4 +1,4 @@
-package com.runye.express.activity.sitemaster;
+package com.runye.express.activity.master;
 
 import android.app.Activity;
 import android.app.AlertDialog;

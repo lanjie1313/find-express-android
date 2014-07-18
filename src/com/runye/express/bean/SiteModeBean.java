@@ -20,7 +20,7 @@ import com.alibaba.fastjson.JSONObject;
  * @Company:山西润叶网络科技有限公司
  */
 @SuppressWarnings("serial")
-public class SiteBean implements Serializable {
+public class SiteModeBean implements Serializable {
 	/** 名称 */
 	private String name;
 

@@ -70,8 +70,7 @@ import com.runye.express.utils.ToastUtil;
 public class AdminMainActivity extends Activity {
 	/** listview数据源 */
 	private MainSiteAdapter mAdminListViewAdapter;
-	private static String[] dataObjects = new String[] { "全站", "A站", "B站",
-			"C站", "D站", "E站", "F站", "G站", "H站" };
+	private static String[] dataObjects = new String[] { "全站", "A站", "B站", "C站", "D站", "E站", "F站", "G站", "H站" };
 
 	/**
 	 * button枚举类 LOCATION 定位 COMPASS 罗盘 FOLLOW 跟随
@@ -175,18 +174,15 @@ public class AdminMainActivity extends Activity {
 		bt_list.setOnClickListener(new MyButtonListener());
 		bt_site.setOnClickListener(new MyButtonListener());
 		HorizontalListView listview = (HorizontalListView) findViewById(R.id.activity_admin_main_listview);
-		mAdminListViewAdapter = new MainSiteAdapter(AdminMainActivity.this,
-				dataObjects);
+		mAdminListViewAdapter = new MainSiteAdapter(AdminMainActivity.this, dataObjects);
 		listview.setAdapter(mAdminListViewAdapter);
 		listview.setOnItemClickListener(new MyListViewListener());
 
-		requestLocButton = (Button) AdminMainActivity.this
-				.findViewById(R.id.activity_admin_main__requestLoc);
+		requestLocButton = (Button) AdminMainActivity.this.findViewById(R.id.activity_admin_main__requestLoc);
 		requestLocButton.setOnClickListener(new MyOnClickListener());
 		mCurBtnType = E_BUTTON_TYPE.LOC;
 		// 百度地图
-		mMapView = (MapView) AdminMainActivity.this
-				.findViewById(R.id.activity_admin_main__bmapsView);
+		mMapView = (MapView) AdminMainActivity.this.findViewById(R.id.activity_admin_main__bmapsView);
 		mMapController = mMapView.getController();
 
 		mMapView.getController().setZoom(14);
@@ -217,10 +213,8 @@ public class AdminMainActivity extends Activity {
 		/**
 		 * 创建一个loc popupoverlay
 		 */
-		mLocViewCache = getLayoutInflater()
-				.inflate(R.layout.pop_loc_view, null);
-		mLocPopText = (TextView) mLocViewCache
-				.findViewById(R.id.pop_loc_view_text);
+		mLocViewCache = getLayoutInflater().inflate(R.layout.pop_loc_view, null);
+		mLocPopText = (TextView) mLocViewCache.findViewById(R.id.pop_loc_view_text);
 		mLocPopOverlay = new PopupOverlay(mMapView, new MyPopupClickListener());
 
 		// 停车场搜索引擎实例化，注册
@@ -241,17 +235,14 @@ public class AdminMainActivity extends Activity {
 		/**
 		 * 准备overlay 数据
 		 */
-		mCarItemizedOverlay = new MyCarItemizedOverlay(getResources()
-				.getDrawable(R.drawable.icon_geo), mMapView);
+		mCarItemizedOverlay = new MyCarItemizedOverlay(getResources().getDrawable(R.drawable.icon_geo), mMapView);
 		GeoPoint[] points = new GeoPoint[carsList.size()];
 		OverlayItem[] items = new OverlayItem[carsList.size()];
 		for (int i = 0; i < carsList.size(); i++) {
 			LogUtil.i("获取到的经度", (carsList.get(i).get("LatitudeE6")) + "");
-			LogUtil.i("获取到的纬度",
-					"LongitudeE6" + carsList.get(i).get("LongitudeE6"));
+			LogUtil.i("获取到的纬度", "LongitudeE6" + carsList.get(i).get("LongitudeE6"));
 
-			points[i] = new GeoPoint((carsList.get(i).get("LatitudeE6")),
-					(carsList.get(i).get("LongitudeE6")));
+			points[i] = new GeoPoint((carsList.get(i).get("LatitudeE6")), (carsList.get(i).get("LongitudeE6")));
 			items[i] = new OverlayItem(points[i], pointNames.get(i), "");
 			/**
 			 * 设置overlay图标，如不设置，则使用创建ItemizedOverlay时的默认图标.
@@ -268,12 +259,10 @@ public class AdminMainActivity extends Activity {
 		/**
 		 * 向地图添加自定义View.
 		 */
-		mCarViewCache = AdminMainActivity.this.getLayoutInflater().inflate(
-				R.layout.pop_car_view, null);
+		mCarViewCache = AdminMainActivity.this.getLayoutInflater().inflate(R.layout.pop_car_view, null);
 		mCarPopInfo = mCarViewCache.findViewById(R.id.pop_car_view_info);
 		mCarPopLeft = mCarViewCache.findViewById(R.id.pop_car_view_left);
-		mCarPopText = (TextView) mCarViewCache
-				.findViewById(R.id.pop_car_view_text);
+		mCarPopText = (TextView) mCarViewCache.findViewById(R.id.pop_car_view_text);
 
 		/**
 		 * 创建一个carpopupoverlay
@@ -295,8 +284,7 @@ public class AdminMainActivity extends Activity {
 			if (index == 0) {
 				if (isLocPop) {
 
-					ToastUtil.showLongToast(AdminMainActivity.this,
-							"wwwwwwwwww！");
+					ToastUtil.showLongToast(AdminMainActivity.this, "wwwwwwwwww！");
 				} else {
 					ToastUtil.showLongToast(AdminMainActivity.this, "预约你大爷！");
 				}
@@ -338,8 +326,7 @@ public class AdminMainActivity extends Activity {
 			mCurItem = getItem(index);
 			tapIndex = index;
 			mCarPopText.setText(mCurItem.getTitle());
-			Bitmap[] bitMaps = { BMapUtil.getBitmapFromView(mCarPopLeft),
-					BMapUtil.getBitmapFromView(mCarPopInfo), };
+			Bitmap[] bitMaps = { BMapUtil.getBitmapFromView(mCarPopLeft), BMapUtil.getBitmapFromView(mCarPopInfo), };
 			mCarPopOverlay.showPopup(bitMaps, mCurItem.getPoint(), 32);
 			return true;
 		}
@@ -371,9 +358,8 @@ public class AdminMainActivity extends Activity {
 			// 处理点击事件,弹出泡泡
 			mLocPopText.setBackgroundResource(R.drawable.popup);
 			mLocPopText.setText(myAdress);
-			mLocPopOverlay.showPopup(BMapUtil.getBitmapFromView(mLocPopText),
-					new GeoPoint((int) (mData.latitude * 1e6),
-							(int) (mData.longitude * 1e6)), 8);
+			mLocPopOverlay.showPopup(BMapUtil.getBitmapFromView(mLocPopText), new GeoPoint(
+					(int) (mData.latitude * 1e6), (int) (mData.longitude * 1e6)), 8);
 			return true;
 		}
 
@@ -418,13 +404,11 @@ public class AdminMainActivity extends Activity {
 			switch (v.getId()) {
 			case R.id.activity_admin_main_site:
 				// 站点管理
-				startActivity(new Intent(AdminMainActivity.this,
-						AdminSiteActivity.class));
+				startActivity(new Intent(AdminMainActivity.this, AdminSiteActivity.class));
 				break;
 			case R.id.activity_admin_main_list:
 				// 列表
-				startActivity(new Intent(AdminMainActivity.this,
-						AdminListActivity.class));
+				startActivity(new Intent(AdminMainActivity.this, AdminListActivity.class));
 				break;
 
 			default:
@@ -449,16 +433,14 @@ public class AdminMainActivity extends Activity {
 		public void onGetAddrResult(MKAddrInfo res, int error) {
 			if (error != 0) {
 				String str = String.format("错误号：%d", error);
-				Toast.makeText(AdminMainActivity.this, str, Toast.LENGTH_LONG)
-						.show();
+				Toast.makeText(AdminMainActivity.this, str, Toast.LENGTH_LONG).show();
 				return;
 			}
 			// 地图移动到该点
 			mMapView.getController().animateTo(res.geoPt);
 			if (res.type == MKAddrInfo.MK_GEOCODE) {
 				// 地理编码：通过地址检索坐标点
-				String strInfo = String.format("纬度：%f 经度：%f",
-						res.geoPt.getLatitudeE6() / 1e6,
+				String strInfo = String.format("纬度：%f 经度：%f", res.geoPt.getLatitudeE6() / 1e6,
 						res.geoPt.getLongitudeE6() / 1e6);
 				ToastUtil.showLongToast(AdminMainActivity.this, strInfo);
 			}
@@ -491,8 +473,7 @@ public class AdminMainActivity extends Activity {
 		}
 
 		@Override
-		public void onGetShareUrlResult(MKShareUrlResult arg0, int arg1,
-				int arg2) {
+		public void onGetShareUrlResult(MKShareUrlResult arg0, int arg1, int arg2) {
 
 		}
 
@@ -530,8 +511,7 @@ public class AdminMainActivity extends Activity {
 		}
 
 		@Override
-		public void onGetDrivingRouteResult(MKDrivingRouteResult result,
-				int iError) {
+		public void onGetDrivingRouteResult(MKDrivingRouteResult result, int iError) {
 			// 返回驾乘路线搜索结果
 		}
 
@@ -562,14 +542,12 @@ public class AdminMainActivity extends Activity {
 		}
 
 		@Override
-		public void onGetTransitRouteResult(MKTransitRouteResult result,
-				int iError) {
+		public void onGetTransitRouteResult(MKTransitRouteResult result, int iError) {
 			// 返回公交搜索结果
 		}
 
 		@Override
-		public void onGetWalkingRouteResult(MKWalkingRouteResult result,
-				int iError) {
+		public void onGetWalkingRouteResult(MKWalkingRouteResult result, int iError) {
 			// 返回步行路线搜索结果
 		}
 
@@ -584,8 +562,7 @@ public class AdminMainActivity extends Activity {
 		}
 
 		@Override
-		public void onGetShareUrlResult(MKShareUrlResult result, int type,
-				int error) {
+		public void onGetShareUrlResult(MKShareUrlResult result, int type, int error) {
 			// 在此处理短串请求返回结果.
 		}
 
@@ -618,16 +595,11 @@ public class AdminMainActivity extends Activity {
 			// 是手动触发请求或首次定位时，移动到定位点
 			if (isRequest || isFirstLoc) {
 				// 移动地图到定位点
-				LogUtil.i("----------", "开始移动是地图" + "isRequest=" + isRequest
-						+ "isFirstLoc" + isFirstLoc);
-				mCarSearch.poiSearchNearBy("停车场", new GeoPoint(
-						(int) (mData.latitude * 1e6),
+				LogUtil.i("----------", "开始移动是地图" + "isRequest=" + isRequest + "isFirstLoc" + isFirstLoc);
+				mCarSearch.poiSearchNearBy("停车场", new GeoPoint((int) (mData.latitude * 1e6),
 						(int) (mData.longitude * 1e6)), 5000);
-				mMapController.animateTo(new GeoPoint(
-						(int) (mData.latitude * 1e6),
-						(int) (mData.longitude * 1e6)));
-				GeoPoint ptCenter = new GeoPoint(
-						(int) (Double.valueOf(mData.latitude) * 1e6),
+				mMapController.animateTo(new GeoPoint((int) (mData.latitude * 1e6), (int) (mData.longitude * 1e6)));
+				GeoPoint ptCenter = new GeoPoint((int) (Double.valueOf(mData.latitude) * 1e6),
 						(int) (Double.valueOf(mData.longitude) * 1e6));
 				// 反Geo搜索
 				mGeoSearch.reverseGeocode(ptCenter);
@@ -655,8 +627,7 @@ public class AdminMainActivity extends Activity {
 		isRequest = true;
 		LogUtil.i("----------", "手动定位");
 		mClient.requestLocation();
-		Toast.makeText(AdminMainActivity.this, "正在定位……", Toast.LENGTH_SHORT)
-				.show();
+		Toast.makeText(AdminMainActivity.this, "正在定位……", Toast.LENGTH_SHORT).show();
 	}
 
 	/**
@@ -695,25 +666,22 @@ public class AdminMainActivity extends Activity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			Builder alertDialog = new AlertDialog.Builder(
-					AdminMainActivity.this);
+			Builder alertDialog = new AlertDialog.Builder(AdminMainActivity.this);
 			alertDialog.setMessage("确定退出？");
-			alertDialog.setPositiveButton("确定",
-					new android.content.DialogInterface.OnClickListener() {
+			alertDialog.setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
 
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							SysExitUtil.exit();
-						}
-					});
-			alertDialog.setNegativeButton("取消",
-					new android.content.DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					SysExitUtil.exit();
+				}
+			});
+			alertDialog.setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {
 
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
 
-						}
-					});
+				}
+			});
 			alertDialog.create();
 			alertDialog.show();
 
@@ -724,10 +692,8 @@ public class AdminMainActivity extends Activity {
 	class MyListViewListener implements OnItemClickListener {
 
 		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position,
-				long id) {
-			TextView textView = (TextView) view
-					.findViewById(R.id.item_admin_main_listview_title);
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			TextView textView = (TextView) view.findViewById(R.id.item_admin_main_listview_title);
 			String s = textView.getText().toString();
 			LogUtil.i("====", s);
 			ToastUtil.showShortToast(AdminMainActivity.this, s);

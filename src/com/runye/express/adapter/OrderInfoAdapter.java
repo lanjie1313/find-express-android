@@ -10,8 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.runye.express.android.R;
-import com.runye.express.bean.OrderItems;
-import com.runye.express.bean.ProductsBean;
+import com.runye.express.bean.OrderItemsBean;
+import com.runye.express.bean.OrderProductsBean;
 import com.runye.express.utils.ToastUtil;
 
 /**
@@ -25,11 +25,11 @@ import com.runye.express.utils.ToastUtil;
  */
 public class OrderInfoAdapter extends BaseAdapter {
 	Context mContext;
-	private final List<ProductsBean> mData;
+	private final List<OrderProductsBean> mData;
 
-	private final List<OrderItems> itemsData;
+	private final List<OrderItemsBean> itemsData;
 
-	public OrderInfoAdapter(Context context, List<ProductsBean> data, List<OrderItems> itemsData) {
+	public OrderInfoAdapter(Context context, List<OrderProductsBean> data, List<OrderItemsBean> itemsData) {
 		this.mContext = context;
 		this.mData = data;
 		this.itemsData = itemsData;

@@ -9,7 +9,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.runye.express.android.R;
-import com.runye.express.bean.CouriersBean;
+import com.runye.express.bean.CouriersModeBean;
 
 /**
  * 
@@ -22,9 +22,9 @@ import com.runye.express.bean.CouriersBean;
  */
 public class CouriersAdapter extends BaseAdapter {
 	Context mContext;
-	private final List<CouriersBean> mData;
+	private final List<CouriersModeBean> mData;
 
-	public CouriersAdapter(Context context, List<CouriersBean> data) {
+	public CouriersAdapter(Context context, List<CouriersModeBean> data) {
 		this.mContext = context;
 		this.mData = data;
 	}

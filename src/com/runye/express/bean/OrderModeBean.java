@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
+import android.annotation.SuppressLint;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 
@@ -21,6 +23,7 @@ import com.alibaba.fastjson.JSONObject;
  * @Company:山西润叶网络科技有限公司
  */
 
+@SuppressLint("SimpleDateFormat")
 public class OrderModeBean implements Serializable {
 
 	/**
@@ -28,23 +31,22 @@ public class OrderModeBean implements Serializable {
 	 */
 
 	private static final long serialVersionUID = 1L;
-	private final String TAG = "OrderModeBean";
+	// private final String TAG = "OrderModeBean";
 	private String id;
 	private String number;
 	private String user;
-
 	private String status;
 	private String notes;
 	private String os_notes;
 	private String last_modified;
 	private String v;
 	private String serial_number;
-	private String evaluated;
-	private String display;
+	private boolean evaluated;
+	private boolean display;
 	private String discount;
 	private String shippingType;
 	private String shipping;
-	private String immediate_delivery;
+	private boolean immediate_delivery;
 	private String creation_date;
 	private String total;
 	private String subtotal;
@@ -57,71 +59,28 @@ public class OrderModeBean implements Serializable {
 	private String recipient_street2;
 	private String recipient_name;
 	private String recipient_phone_num;
-	private String recipient_location;
 	/** location */
-	private String location;
-	private String location_lng;
-	private String location_lat;
+	private Double location_lng;
+	private Double location_lat;
 
 	/** items */
+	@SuppressWarnings("unused")
 	private String items;
-	private String items_product;
-	private String items_count;
-	private String items_unit_price;
-	private String items_id;
 	/**
 	 * merchant
 	 */
 	private String merchant;
-	private String merchant_name;
-	private String merchant_phone;
-	private String merchant_address;
-	private List<OrderItems> itemList;
 
-	public List<OrderItems> getItemList() {
+	private List<OrderItemsBean> itemList;
+
+	public List<OrderItemsBean> getItemList() {
 		return itemList;
 	}
 
-	public String getItems() {
-		return items;
-	}
-
 	public void setItems(String items) {
-		this.itemList = new ArrayList<OrderItems>();
-		this.itemList.addAll(JSON.parseArray(items.toString().replaceAll("\"_id\"", "\"id\""), OrderItems.class));
+		this.itemList = new ArrayList<OrderItemsBean>();
+		this.itemList.addAll(JSON.parseArray(items.toString().replaceAll("\"_id\"", "\"id\""), OrderItemsBean.class));
 		this.items = items;
-	}
-
-	public String getMerchant_name() {
-		return merchant_name;
-	}
-
-	public void setMerchant_name(String merchant_name) {
-		this.merchant_name = merchant_name;
-	}
-
-	public String getMerchant_phone() {
-		return merchant_phone;
-	}
-
-	public void setMerchant_phone(String merchant_phone) {
-		this.merchant_phone = merchant_phone;
-	}
-
-	public String getMerchant_address() {
-		return merchant_address;
-	}
-
-	public void setMerchant_address(String merchant_address) {
-		this.merchant_address = merchant_address;
-	}
-
-	public String getRecipient_location() {
-		return recipient_location;
-	}
-
-	public void setRecipient_location(String recipient_location) {
-		this.recipient_location = recipient_location;
 	}
 
 	public String getRecipient_address() {
@@ -141,13 +100,18 @@ public class OrderModeBean implements Serializable {
 
 	/** 再解析 */
 	public void setRecipient(String recipient) {
-		JSONObject jo = JSON.parseObject(recipient);
-		this.recipient_city = jo.getString("city");
-		this.recipient_district = jo.getString("district");
-		this.recipient_street = jo.getString("street");
-		this.recipient_street2 = jo.getString("street2");
-		this.recipient_name = jo.getString("name");
-		this.recipient_phone_num = jo.getString("phone_num");
+		// 解析recipient
+		JSONObject recipientObject = JSON.parseObject(recipient);
+		this.recipient_city = recipientObject.getString("city");
+		this.recipient_district = recipientObject.getString("district");
+		this.recipient_street = recipientObject.getString("street");
+		this.recipient_street2 = recipientObject.getString("street2");
+		this.recipient_name = recipientObject.getString("name");
+		this.recipient_phone_num = recipientObject.getString("phone_num");
+		// 解析location
+		JSONObject locationObject = recipientObject.getJSONObject("location");
+		this.location_lng = locationObject.getDouble("lng");
+		this.location_lat = locationObject.getDouble("lat");
 		this.recipient = recipient;
 	}
 
@@ -199,60 +163,20 @@ public class OrderModeBean implements Serializable {
 		this.recipient_phone_num = recipient_phone_num;
 	}
 
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
-	public String getLocation_lng() {
+	public Double getLocation_lng() {
 		return location_lng;
 	}
 
-	public void setLocation_lng(String location_lng) {
+	public void setLocation_lng(Double location_lng) {
 		this.location_lng = location_lng;
 	}
 
-	public String getLocation_lat() {
+	public Double getLocation_lat() {
 		return location_lat;
 	}
 
-	public void setLocation_lat(String location_lat) {
+	public void setLocation_lat(Double location_lat) {
 		this.location_lat = location_lat;
-	}
-
-	public String getItems_product() {
-		return items_product;
-	}
-
-	public void setItems_product(String items_product) {
-		this.items_product = items_product;
-	}
-
-	public String getItems_count() {
-		return items_count;
-	}
-
-	public void setItems_count(String items_count) {
-		this.items_count = items_count;
-	}
-
-	public String getItems_unit_price() {
-		return items_unit_price;
-	}
-
-	public void setItems_unit_price(String items_unit_price) {
-		this.items_unit_price = items_unit_price;
-	}
-
-	public String getItems_id() {
-		return items_id;
-	}
-
-	public void setItems_id(String items_id) {
-		this.items_id = items_id;
 	}
 
 	public void setId(String id) {
@@ -283,32 +207,7 @@ public class OrderModeBean implements Serializable {
 		return merchant;
 	}
 
-	/**
-	 * 
-	 * @Description: 获取商户信息
-	 * @param merchant
-	 * @return void
-	 */
-	public void setMerchant(final String merchant) {
-		// MyHttpClient.getMerchant(merchant, new JsonHttpResponseHandler() {
-		// @Override
-		// public void onSuccess(int statusCode, org.json.JSONObject response) {
-		// super.onSuccess(statusCode, response);
-		// LogUtil.d(TAG, "获取商户信息成功" + response.toString());
-		// JSONObject jo = JSON.parseObject(response.toString());
-		// merchant_name = jo.getString("company_name") + "-" +
-		// jo.getString("name");
-		// LogUtil.d(TAG, merchant_name);
-		//
-		// }
-		//
-		// @Override
-		// public void onFailure(Throwable e, org.json.JSONObject errorResponse)
-		// {
-		// super.onFailure(e, errorResponse);
-		// LogUtil.d(TAG, "获取商户信息失败" + errorResponse.toString());
-		// }
-		// });
+	public void setMerchant(String merchant) {
 		this.merchant = merchant;
 	}
 
@@ -360,22 +259,6 @@ public class OrderModeBean implements Serializable {
 		this.serial_number = serial_number;
 	}
 
-	public String getEvaluated() {
-		return evaluated;
-	}
-
-	public void setEvaluated(String evaluated) {
-		this.evaluated = evaluated;
-	}
-
-	public String getDisplay() {
-		return display;
-	}
-
-	public void setDisplay(String display) {
-		this.display = display;
-	}
-
 	public String getDiscount() {
 		return discount;
 	}
@@ -398,14 +281,6 @@ public class OrderModeBean implements Serializable {
 
 	public void setShipping(String shipping) {
 		this.shipping = shipping;
-	}
-
-	public String getImmediate_delivery() {
-		return immediate_delivery;
-	}
-
-	public void setImmediate_delivery(String immediate_delivery) {
-		this.immediate_delivery = immediate_delivery;
 	}
 
 	public String getCreation_date() {
@@ -449,4 +324,27 @@ public class OrderModeBean implements Serializable {
 		return id;
 	}
 
+	public boolean isEvaluated() {
+		return evaluated;
+	}
+
+	public void setEvaluated(boolean evaluated) {
+		this.evaluated = evaluated;
+	}
+
+	public boolean isDisplay() {
+		return display;
+	}
+
+	public void setDisplay(boolean display) {
+		this.display = display;
+	}
+
+	public boolean isImmediate_delivery() {
+		return immediate_delivery;
+	}
+
+	public void setImmediate_delivery(boolean immediate_delivery) {
+		this.immediate_delivery = immediate_delivery;
+	}
 }

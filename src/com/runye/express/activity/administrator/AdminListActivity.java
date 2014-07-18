@@ -15,7 +15,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 
-import com.runye.express.adapter.CouriersModeAdapter;
+import com.runye.express.adapter.CouriersAdapter;
 import com.runye.express.android.R;
 import com.runye.express.bean.CouriersModeBean;
 import com.runye.express.fragment.FragmentFive;
@@ -40,8 +40,8 @@ import com.runye.express.utils.SysExitUtil;
  * @version V1.0
  * @Company:山西润叶网络科技有限公司
  */
-public class AdminListActivity extends IndicatorFragmentActivity implements
-		OnHeaderRefreshListener, OnFooterRefreshListener {
+public class AdminListActivity extends IndicatorFragmentActivity implements OnHeaderRefreshListener,
+		OnFooterRefreshListener {
 	public static final int FRAGMENT_ONE = 0;
 	public static final int FRAGMENT_TWO = 1;
 	public static final int FRAGMENT_THREE = 2;
@@ -77,8 +77,7 @@ public class AdminListActivity extends IndicatorFragmentActivity implements
 		mSpinner = (Spinner) findViewById(R.id.activity_admin_list_spinner);
 		String[] mItems = getResources().getStringArray(R.array.spinnername);
 		// 建立Adapter并且绑定数据源
-		ArrayAdapter<String> _Adapter = new ArrayAdapter<String>(this,
-				android.R.layout.simple_spinner_item, mItems);
+		ArrayAdapter<String> _Adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mItems);
 		// 绑定 Adapter到控件
 		mSpinner.setAdapter(_Adapter);
 		bt_mapMode.setOnClickListener(new MyButtonListener());
@@ -92,8 +91,7 @@ public class AdminListActivity extends IndicatorFragmentActivity implements
 		compat = (ViewPagerCompat) findViewById(R.id.activity_admin_list_pager);
 		mListView = (ListView) findViewById(R.id.activity_admin_list_listview);
 		mCouriersModeList = getCouriers();
-		CouriersModeAdapter adapter = new CouriersModeAdapter(
-				AdminListActivity.this, mCouriersModeList);
+		CouriersAdapter adapter = new CouriersAdapter(AdminListActivity.this, mCouriersModeList);
 		mListView.setAdapter(adapter);
 	}
 
@@ -107,9 +105,7 @@ public class AdminListActivity extends IndicatorFragmentActivity implements
 		List<CouriersModeBean> list = new ArrayList<CouriersModeBean>();
 		for (int i = 0; i < 10; i++) {
 			CouriersModeBean bean = new CouriersModeBean();
-			bean.setImage("image" + i);
-			bean.setNumber(" " + i);
-			bean.setName("快递员" + i);
+			bean.setNickName("asdasdasd" + i);
 			list.add(bean);
 		}
 		return list;
@@ -117,16 +113,11 @@ public class AdminListActivity extends IndicatorFragmentActivity implements
 
 	@Override
 	protected int supplyTabs(List<TabInfo> tabs) {
-		tabs.add(new TabInfo(FRAGMENT_ONE, getString(R.string.order_all),
-				FragmentOne.class));
-		tabs.add(new TabInfo(FRAGMENT_TWO, getString(R.string.order_waiting),
-				FragmentTwo.class));
-		tabs.add(new TabInfo(FRAGMENT_THREE, getString(R.string.order_done),
-				FragmentThree.class));
-		tabs.add(new TabInfo(FRAGMENT_FOUR, getString(R.string.order_sending),
-				FragmentFour.class));
-		tabs.add(new TabInfo(FRAGMENT_FIVE, getString(R.string.order_complete),
-				FragmentFive.class));
+		tabs.add(new TabInfo(FRAGMENT_ONE, getString(R.string.order_all), FragmentOne.class));
+		tabs.add(new TabInfo(FRAGMENT_TWO, getString(R.string.order_waiting), FragmentTwo.class));
+		tabs.add(new TabInfo(FRAGMENT_THREE, getString(R.string.order_done), FragmentThree.class));
+		tabs.add(new TabInfo(FRAGMENT_FOUR, getString(R.string.order_sending), FragmentFour.class));
+		tabs.add(new TabInfo(FRAGMENT_FIVE, getString(R.string.order_complete), FragmentFive.class));
 		return FRAGMENT_ONE;
 	}
 
@@ -149,8 +140,7 @@ public class AdminListActivity extends IndicatorFragmentActivity implements
 			@Override
 			public void run() {
 
-				SimpleDateFormat formatter = new SimpleDateFormat(
-						"yyyy年MM月dd日   HH:mm:ss     ");
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日   HH:mm:ss     ");
 				Date curDate = new Date(System.currentTimeMillis());
 				// 获取当前时间
 				String str = formatter.format(curDate);
@@ -166,8 +156,7 @@ public class AdminListActivity extends IndicatorFragmentActivity implements
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.activity_admin_list_mapMode:
-				startActivity(new Intent(AdminListActivity.this,
-						AdminMainActivity.class));
+				startActivity(new Intent(AdminListActivity.this, AdminMainActivity.class));
 				finish();
 				break;
 			case R.id.activity_admin_list_orderMode:

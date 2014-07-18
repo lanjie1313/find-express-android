@@ -9,7 +9,7 @@ package com.runye.express.bean;
  * @version V1.0
  * @Company:山西润叶网络科技有限公司
  */
-public class MasterBean {
+public class MasterModeBean {
 
 	private String id;
 	private String nickName;
