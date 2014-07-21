@@ -177,9 +177,10 @@ public class OrderProductsBean implements Serializable {
 
 	public void setImages(String images) {
 		JSONArray array = JSON.parseArray(images);
-		imagesID = new ArrayList<String>();
+		this.imagesID = new ArrayList<String>();
 		for (int i = 0; i < array.size(); i++) {
 			LogUtil.d(TAG, array.get(i) + "");
+			this.imagesID.add(array.get(i) + "");
 		}
 
 		this.images = images;

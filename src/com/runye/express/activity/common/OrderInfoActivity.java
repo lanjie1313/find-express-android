@@ -15,7 +15,6 @@ import android.content.Intent;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -95,15 +94,6 @@ public class OrderInfoActivity extends Activity {
 	private LoadingDialog mLoadingDialog;
 	private boolean task1;
 	private boolean task2;
-	private final Handler handler = new Handler() {
-
-		@Override
-		public void handleMessage(android.os.Message msg) {
-			if (msg.arg1 == 1) {
-
-			}
-		};
-	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -142,11 +132,11 @@ public class OrderInfoActivity extends Activity {
 		tv_time = (TextView) findViewById(R.id.activity_order_infos_time);
 		tv_time.setText(mOrderModeBean.getCreation_date());
 		// 留言信息
-		if (mOrderModeBean.getOs_notes() == null || mOrderModeBean.getOs_notes().equals("")) {
+		if (mOrderModeBean.getNotes() == null || mOrderModeBean.getNotes().equals("")) {
 			tv_message.setText("无");
 		} else {
 
-			tv_message.setText(mOrderModeBean.getOs_notes());
+			tv_message.setText(mOrderModeBean.getNotes());
 		}
 		// 商品信息
 		tv_goodsNumber = (TextView) findViewById(R.id.activity_order_infos_goodsNumber);
@@ -214,6 +204,7 @@ public class OrderInfoActivity extends Activity {
 		}
 	}
 
+	// private class MyListViewLisener implements on
 	/**
 	 * 
 	 * @ClassName: closeDialog
@@ -229,10 +220,6 @@ public class OrderInfoActivity extends Activity {
 					mLoadingDialog.dismiss();
 					task1 = false;
 					task2 = false;
-					//
-					// Message message = new Message();
-					// message.arg1 = 1;
-					// handler.sendMessage(message);
 					isRun = false;
 				}
 			}

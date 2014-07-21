@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/tool_box_fragment_bg_normal"
+    android:clickable="true"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/linear1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/tool_box_fragment_bg_normal"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <com.runye.express.utils.RoundedImageView
+            android:id="@+id/fragment_manager_headImageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:adjustViewBounds="true"
+            android:src="@drawable/head_default_yixin" />
+
+        <TextView
+            android:id="@+id/fragment_manager_nickName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="陈蓝杰"
+            android:textColor="#ffccccc6"
+            android:textSize="16.0sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/linear2"
+        android:layout_below="@+id/linear1"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/fragment_menu_listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp" >
+        </ListView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linear2"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:background="@drawable/tool_box_fragment_bg_normal"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/fragment_manager_twodimensionalcode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/tools_box_invite_btn_selector"
+            android:gravity="center"
+            android:text="退出当前账号"
+            android:textColor="#ff0000"
+            android:textSize="15.0sp" />
+    </LinearLayout>
+
+</RelativeLayout>

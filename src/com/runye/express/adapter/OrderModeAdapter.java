@@ -8,7 +8,6 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.runye.express.android.R;
@@ -54,7 +53,6 @@ public class OrderModeAdapter extends BaseAdapter {
 		if (convertView == null) {
 			holder = new ViewHolder();
 			convertView = View.inflate(mContext, R.layout.item_order_listview, null);
-			holder.tv_couriersName = (TextView) convertView.findViewById(R.id.item_order_listview_couriresName);
 			holder.tv_couriersNumber = (TextView) convertView.findViewById(R.id.item_order_listview_couriresNumber);
 			holder.tv_orderCharge = (TextView) convertView.findViewById(R.id.item_order_listview_orderCharge);
 			holder.tv_orderNumber = (TextView) convertView.findViewById(R.id.item_order_listview_orderNumber);
@@ -62,7 +60,6 @@ public class OrderModeAdapter extends BaseAdapter {
 			holder.tv_orderTime = (TextView) convertView.findViewById(R.id.item_order_listview_orderTime);
 			holder.tv_deliveryAddress = (TextView) convertView.findViewById(R.id.item_order_listview_deliveryAddress);
 			holder.bt_change = (Button) convertView.findViewById(R.id.item_order_listview_status);
-			holder.rb_rating = (RatingBar) convertView.findViewById(R.id.item_order_listview_rating);
 
 			convertView.setTag(holder);
 		} else {
@@ -111,12 +108,12 @@ public class OrderModeAdapter extends BaseAdapter {
 		TextView tv_deliveryAddress;
 		/** 快递员编号 */
 		TextView tv_couriersNumber;
-		/** 快递员名称 */
-		TextView tv_couriersName;
+		// /** 快递员名称 */
+		// TextView tv_couriersName;
 		/** 订单金额 */
 		TextView tv_orderCharge;
-		/** 评分 */
-		RatingBar rb_rating;
+		// /** 评分 */
+		// RatingBar rb_rating;
 		/** button */
 		Button bt_change;
 

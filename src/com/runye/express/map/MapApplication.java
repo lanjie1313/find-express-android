@@ -1,5 +1,7 @@
 package com.runye.express.map;
 
+import java.io.File;
+
 import android.app.Application;
 import android.content.Context;
 import android.widget.Toast;
@@ -7,6 +9,12 @@ import android.widget.Toast;
 import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.MKGeneralListener;
 import com.baidu.mapapi.map.MKEvent;
+import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
+import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
+import com.nostra13.universalimageloader.utils.StorageUtils;
 
 public class MapApplication extends Application {
 
@@ -52,6 +60,7 @@ public class MapApplication extends Application {
 		super.onCreate();
 		mInstance = new MapApplication();
 		initEngineManager(this);
+		initImageLoader(getApplicationContext());
 	}
 
 	public void initEngineManager(Context context) {
@@ -88,5 +97,27 @@ public class MapApplication extends Application {
 
 		}
 
+	}
+
+	/**
+	 * 
+	 * @Description: 配置imageloader
+	 * @param context
+	 * @return void
+	 */
+	private void initImageLoader(Context context) {
+		// This configuration tuning is custom. You can tune every option, you
+		// may tune some of them,
+		// or you can create default configuration by
+		// ImageLoaderConfiguration.createDefault(this);
+		// method.
+		File cacheDir = StorageUtils.getOwnCacheDirectory(getApplicationContext(), "imageloader/Cache");
+		ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(context)
+				.threadPriority(Thread.NORM_PRIORITY - 2).diskCache(new UnlimitedDiscCache(cacheDir))
+				.denyCacheImageMultipleSizesInMemory().diskCacheFileNameGenerator(new Md5FileNameGenerator())
+				.diskCacheSize(50 * 1024 * 1024) // 50Mb
+				.tasksProcessingOrder(QueueProcessingType.LIFO).writeDebugLogs().build();
+		// Initialize ImageLoader with configuration.
+		ImageLoader.getInstance().init(config);
 	}
 }

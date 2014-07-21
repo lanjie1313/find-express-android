@@ -109,6 +109,8 @@
         <activity android:name="com.runye.express.activity.couriers.CouriersBaseActivity" >
         </activity>
         <activity android:name="com.runye.express.activity.common.LocationActivity"></activity>
+        <activity android:name="com.runye.express.activity.common.ImagePagerActivity"></activity>
+        <activity android:name="com.runye.express.activity.slidingmenu.MainActivity"></activity>
     </application>
 
 </manifest>

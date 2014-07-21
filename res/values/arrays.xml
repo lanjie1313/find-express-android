@@ -17,4 +17,21 @@
         <item>尖草坪站H</item>
     </string-array>
 
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="slidingmenu_titles">
+        <item>订单处理</item>
+        <item>清理缓存</item>
+        <item>软件设置</item>
+        <item>帮助关于</item>
+    </string-array>
+
+    <!-- Nav Drawer List Item Icons -->
+    <!-- Keep them in order as the titles are in -->
+    <array name="slidingmenu_images">
+        <item>@drawable/tool_box_fragment_yixin_icon</item>
+        <item>@drawable/tool_box_fragment_yixin_icon</item>
+        <item>@drawable/tool_box_fragment_yixin_icon</item>
+        <item>@drawable/tool_box_fragment_yixin_icon</item>
+        <item>@drawable/tool_box_fragment_yixin_icon</item>
+    </array> 
 </resources>

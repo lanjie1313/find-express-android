@@ -28,7 +28,7 @@
     <string name="pull_to_refresh_pull_label">下拉刷新</string>
     <string name="pull_to_refresh_release_label">松开后刷新</string>
     <string name="pull_to_refresh_refreshing_label">刷新\u2026</string>
-     <string name="pull_to_refresh_first_label">拼命获取中\u2026</string>
+    <string name="pull_to_refresh_first_label">拼命获取中\u2026</string>
     <string name="pull_to_refresh_footer_release_label">松开后加载</string>
     <string name="pull_to_refresh_footer_pull_label">上拉加载更多</string>
     <string name="pull_to_refresh_footer_refreshing_label">加载中\u2026</string>
@@ -40,10 +40,11 @@
     <string name="order_sending">已发货</string>
     <string name="order_complete">已完成</string>
     <!-- 订单item -->
-    <string name="order_number">订单号:</string>
+    <string name="order_number">订&#160;单&#160;&#160;号:</string>
     <string name="order_time">下单时间:</string>
-    <string name="order_shop">收货人:</string>
+    <string name="order_shop">收&#160;&#160;货&#160;&#160;人:</string>
     <string name="order_delivery_address">收货地址:</string>
+     <string name="order_charge">订单金额:</string>
     <!-- 订单详细 -->
     <string name="order_info_buyer_name">买家姓名</string>
     <string name="order_info_order_number">订单号</string>
@@ -75,5 +76,7 @@
     <string name="couriers_main_compeleted">当日完成订单</string>
     <string name="couriers_main_previous">以往订单管理</string>
     <string name="couriers_main_evaluate">查看评价</string>
+    <!-- images -->
+    <string name="descr_image">images</string>
 
 </resources>
