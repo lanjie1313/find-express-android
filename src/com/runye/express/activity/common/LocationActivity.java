@@ -17,7 +17,6 @@ import com.baidu.mapapi.map.PopupOverlay;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
 import com.runye.express.android.R;
 import com.runye.express.map.BMapUtil;
-import com.runye.express.map.MapApplication;
 import com.runye.express.utils.SysExitUtil;
 import com.runye.express.utils.ToastUtil;
 
@@ -38,7 +37,7 @@ public class LocationActivity extends Activity {
 	/** 构造的点 */
 	private GeoPoint mPoint;
 	/** map注册 */
-	private MapApplication mApplication = null;
+	private MyApplication mApplication = null;
 	/** mapview */
 	private MapView mMapView = null;
 	/** 地图控制器 */
@@ -77,13 +76,13 @@ public class LocationActivity extends Activity {
 		 * 使用地图sdk前需先初始化BMapManager. BMapManager是全局的，可为多个MapView共用，它需要地图模块创建前创建，
 		 * 并在地图地图模块销毁后销毁，只要还有地图模块在使用，BMapManager就不应该销毁
 		 */
-		mApplication = (MapApplication) getApplication();
+		mApplication = (MyApplication) getApplication();
 		if (mApplication.mBMapManager == null) {
 			mApplication.mBMapManager = new BMapManager(getApplicationContext());
 			/**
 			 * 如果BMapManager没有初始化则初始化BMapManager
 			 */
-			mApplication.mBMapManager.init(new MapApplication.MyGeneralListener());
+			mApplication.mBMapManager.init(new MyApplication.MyGeneralListener());
 		}
 		mLng = getIntent().getIntExtra("USER_LNG", 0);
 		mLat = getIntent().getIntExtra("USER_LAT", 0);

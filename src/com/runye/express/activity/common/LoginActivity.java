@@ -7,7 +7,9 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -26,7 +28,7 @@ import com.runye.express.async.JsonHttpResponseHandler;
 import com.runye.express.async.RequestParams;
 import com.runye.express.http.HttpUri;
 import com.runye.express.http.MyHttpClient;
-import com.runye.express.map.MapApplication;
+import com.runye.express.service.UpdateService;
 import com.runye.express.utils.LoadingDialog;
 import com.runye.express.utils.LogUtil;
 import com.runye.express.utils.NetWork;
@@ -68,6 +70,8 @@ public class LoginActivity extends Activity {
 	private String access_token;
 	/** 获取到的token类型 */
 	private String token_type;
+	/** 加载框 */
+	private LoadingDialog mLoadingDialog;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -75,21 +79,23 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 		SysExitUtil.activityList.add(LoginActivity.this);
 		initUI();
+		checkVersion();
 
 	}
 
 	private void initUI() {
 		boolean isRegister = getIntent().getBooleanExtra("ISREGISTER", false);
-		MapApplication.getInstance().setISADMIN(false);
-		MapApplication.getInstance().setISCOURIERS(false);
-		MapApplication.getInstance().setISMASTER(false);
+		MyApplication.getInstance().setISADMIN(false);
+		MyApplication.getInstance().setISCOURIERS(false);
+		MyApplication.getInstance().setISMASTER(false);
 		bt_login = (Button) findViewById(R.id.activity_login);
 		bt_register = (Button) findViewById(R.id.activity_login_register);
 		et_userName = (EditText) findViewById(R.id.activity_login_userName);
 		et_passWord = (EditText) findViewById(R.id.activity_login_passWord);
-		tv_identity = (TextView) findViewById(R.id.activity_login_identity);
 		cb_remberInfo = (CheckBox) findViewById(R.id.activity_login_remberPwd);
 		cb_remberInfo.setOnCheckedChangeListener(new MyCheckChanged());
+		tv_identity = (TextView) findViewById(R.id.activity_login_identity);
+		tv_identity.setCompoundDrawables(getResources().getDrawable(R.drawable.iv_filter), null, null, null);
 		tv_identity.setOnClickListener(new MyOnClickListener());
 		bt_login.setOnClickListener(new MyOnClickListener());
 		bt_register.setOnClickListener(new MyOnClickListener());
@@ -110,7 +116,51 @@ public class LoginActivity extends Activity {
 		}
 	}
 
-	LoadingDialog dialog;
+	/**
+	 * 
+	 * @Description: 检测新版本
+	 * @return void
+	 */
+	Intent updateIntent;
+
+	private void checkVersion() {
+		if (NetWork.isNetworkConnected(LoginActivity.this)) {
+			LogUtil.d(TAG, "开始检测更新\n");
+			if (MyApplication.getInstance().localVersion < MyApplication.getInstance().serverVersion) {
+				LogUtil.d(TAG, "有新版本，开始更新\n" + "本地version:" + MyApplication.getInstance().localVersion
+						+ "\n服务器version:" + MyApplication.getInstance().serverVersion);
+				// 发现新版本，提示用户更新
+				AlertDialog.Builder alert = new AlertDialog.Builder(LoginActivity.this);
+				alert.setTitle("软件升级").setMessage("发现新版本,建议立即更新使用.")
+						.setPositiveButton("更新", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								// 开启更新服务UpdateService
+								updateIntent = new Intent(LoginActivity.this, UpdateService.class);
+								startService(updateIntent);
+							}
+						}).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								dialog.dismiss();
+							}
+						});
+				alert.create().show();
+
+			} else {
+				LogUtil.d(TAG, "没有新版本，无需更新");
+			}
+		}
+
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			finish();
+		}
+		return super.onKeyDown(keyCode, event);
+	}
 
 	/**
 	 * 
@@ -132,7 +182,7 @@ public class LoginActivity extends Activity {
 
 				LogUtil.d(TAG, "没有记住信息");
 			}
-			if (MapApplication.getInstance().isISADMIN()) {
+			if (MyApplication.getInstance().isISADMIN()) {
 
 				startActivity(new Intent(LoginActivity.this, AdminSiteActivity.class));
 			}
@@ -144,8 +194,8 @@ public class LoginActivity extends Activity {
 			params.put("username", identity + "/" + userName);
 			params.put("password", passWord);
 			LogUtil.d(TAG, "请求地址：" + HttpUri.LOGIN);
-			dialog = new LoadingDialog(LoginActivity.this, "正在登录");
-			dialog.show();
+			mLoadingDialog = new LoadingDialog(LoginActivity.this, "正在登录");
+			mLoadingDialog.show();
 			MyHttpClient.postLogin(HttpUri.LOGIN, params, new JsonHttpResponseHandler() {
 				@Override
 				public void onSuccess(int statusCode, org.json.JSONObject response) {
@@ -172,11 +222,11 @@ public class LoginActivity extends Activity {
 							userInfo.edit().putString("verifyStatus", response.optString("verifyStatus")).commit();
 							userInfo.edit().putString("access_token", access_token).commit();
 							userInfo.edit().putString("token_type", token_type).commit();
-							dialog.dismiss();
-							if (MapApplication.getInstance().isISMASTER()) {
+							mLoadingDialog.dismiss();
+							if (MyApplication.getInstance().isISMASTER()) {
 								startActivity(new Intent(LoginActivity.this, MainActivity.class));
 							}
-							if (MapApplication.getInstance().isISCOURIERS()) {
+							if (MyApplication.getInstance().isISCOURIERS()) {
 								startActivity(new Intent(LoginActivity.this, CouriersManActivity.class));
 							}
 						}
@@ -187,7 +237,7 @@ public class LoginActivity extends Activity {
 				@Override
 				public void onFailure(Throwable e, org.json.JSONObject errorResponse) {
 					super.onFailure(e, errorResponse);
-					dialog.dismiss();
+					mLoadingDialog.dismiss();
 					ToastUtil.showShortToast(LoginActivity.this, "用户名或者密码错误");
 				}
 			});
@@ -214,6 +264,8 @@ public class LoginActivity extends Activity {
 	 * @return void
 	 */
 	private void selectIdentity() {
+		Drawable left = getResources().getDrawable(R.drawable.iv_filter_checked);
+		tv_identity.setCompoundDrawables(left, null, null, null);
 		Dialog dialog = null;
 		Builder builder = new android.app.AlertDialog.Builder(this);
 		// 设置对话框的图标
@@ -244,22 +296,22 @@ public class LoginActivity extends Activity {
 		String str = tv_identity.getText().toString();
 		if (!userName.equals("") && !passWord.equals("")) {
 			if (str.equals(getResources().getStringArray(R.array.login_identity)[0])) {
-				MapApplication.getInstance().setISADMIN(true);
-				MapApplication.getInstance().setISCOURIERS(false);
-				MapApplication.getInstance().setISMASTER(false);
+				MyApplication.getInstance().setISADMIN(true);
+				MyApplication.getInstance().setISCOURIERS(false);
+				MyApplication.getInstance().setISMASTER(false);
 				identity = "admin";
 			}
 			if (str.equals(getResources().getStringArray(R.array.login_identity)[1])) {
 				identity = "sitemanager";
-				MapApplication.getInstance().setISMASTER(true);
-				MapApplication.getInstance().setISADMIN(false);
-				MapApplication.getInstance().setISCOURIERS(false);
+				MyApplication.getInstance().setISMASTER(true);
+				MyApplication.getInstance().setISADMIN(false);
+				MyApplication.getInstance().setISCOURIERS(false);
 			}
 			if (str.equals(getResources().getStringArray(R.array.login_identity)[2])) {
 				identity = "postman";
-				MapApplication.getInstance().setISCOURIERS(true);
-				MapApplication.getInstance().setISMASTER(false);
-				MapApplication.getInstance().setISADMIN(false);
+				MyApplication.getInstance().setISCOURIERS(true);
+				MyApplication.getInstance().setISMASTER(false);
+				MyApplication.getInstance().setISADMIN(false);
 			}
 			return true;
 		}

@@ -49,11 +49,11 @@ import com.baidu.mapapi.search.MKSuggestionResult;
 import com.baidu.mapapi.search.MKTransitRouteResult;
 import com.baidu.mapapi.search.MKWalkingRouteResult;
 import com.baidu.platform.comapi.basestruct.GeoPoint;
+import com.runye.express.activity.common.MyApplication;
 import com.runye.express.adapter.MainSiteAdapter;
 import com.runye.express.android.R;
 import com.runye.express.listview.HorizontalListView;
 import com.runye.express.map.BMapUtil;
-import com.runye.express.map.MapApplication;
 import com.runye.express.utils.LogUtil;
 import com.runye.express.utils.SysExitUtil;
 import com.runye.express.utils.ToastUtil;
@@ -86,7 +86,7 @@ public class AdminMainActivity extends Activity {
 	/** 枚举类变量 */
 	private E_BUTTON_TYPE mCurBtnType;
 	/** map注册 */
-	private MapApplication app = null;
+	private MyApplication app = null;
 	/** mapview */
 	private MapView mMapView = null;
 	/** 地图控制器 */
@@ -161,13 +161,13 @@ public class AdminMainActivity extends Activity {
 		 * 使用地图sdk前需先初始化BMapManager. BMapManager是全局的，可为多个MapView共用，它需要地图模块创建前创建，
 		 * 并在地图地图模块销毁后销毁，只要还有地图模块在使用，BMapManager就不应该销毁
 		 */
-		app = (MapApplication) getApplication();
+		app = (MyApplication) getApplication();
 		if (app.mBMapManager == null) {
 			app.mBMapManager = new BMapManager(getApplicationContext());
 			/**
 			 * 如果BMapManager没有初始化则初始化BMapManager
 			 */
-			app.mBMapManager.init(new MapApplication.MyGeneralListener());
+			app.mBMapManager.init(new MyApplication.MyGeneralListener());
 		}
 		bt_list = (Button) findViewById(R.id.activity_admin_main_list);
 		bt_site = (Button) findViewById(R.id.activity_admin_main_site);
