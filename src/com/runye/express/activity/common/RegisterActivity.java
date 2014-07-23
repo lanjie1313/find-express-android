@@ -254,6 +254,7 @@ public class RegisterActivity extends Activity {
 						ToastUtil.showShortToast(RegisterActivity.this, "注册成功");
 						Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
 						intent.putExtra("ISREGISTER", true);
+						intent.putExtra("username", et_values[1]);
 						startActivity(intent);
 						finish();
 

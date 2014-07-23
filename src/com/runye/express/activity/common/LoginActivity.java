@@ -6,8 +6,6 @@ import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -95,24 +93,41 @@ public class LoginActivity extends Activity {
 		cb_remberInfo = (CheckBox) findViewById(R.id.activity_login_remberPwd);
 		cb_remberInfo.setOnCheckedChangeListener(new MyCheckChanged());
 		tv_identity = (TextView) findViewById(R.id.activity_login_identity);
-		tv_identity.setCompoundDrawables(getResources().getDrawable(R.drawable.iv_filter), null, null, null);
 		tv_identity.setOnClickListener(new MyOnClickListener());
 		bt_login.setOnClickListener(new MyOnClickListener());
 		bt_register.setOnClickListener(new MyOnClickListener());
 
-		SharedPreferences userInfo = getSharedPreferences("user_info", 0);
-		String username = userInfo.getString("username", "").trim();
-		String password = userInfo.getString("password", "").trim();
-		String identity = userInfo.getString("identity", "").trim();
-		if (!username.equals("") && !password.equals("") && !identity.equals("") && isRegister == false) {
+		// 不是注册页面
+		if (isRegister == false) {
+			// 记住了信息
+			if (MyApplication.getInstance().isRember()) {
+				et_userName.setText(MyApplication.getInstance().getUserName());
+				et_passWord.setText(MyApplication.getInstance().getPassword());
+				cb_remberInfo.setChecked(true);
+				if (MyApplication.getInstance().getIdentity() == null) {
+					// 默认是管理员
+					tv_identity.setText(getResources().getStringArray(R.array.login_identity)[0]);
+				} else {
 
-			et_userName.setText(username);
-			et_passWord.setText(password);
-			tv_identity.setText(identity);
+					tv_identity.setText(MyApplication.getInstance().getIdentity());
+				}
+			} else {
+				et_userName.setText("");
+				et_passWord.setText("");
+				// 默认是管理员
+				tv_identity.setText(getResources().getStringArray(R.array.login_identity)[0]);
+				cb_remberInfo.setChecked(false);
+
+			}
+
 		}
+		// 注册页面跳转
 		if (isRegister) {
-			et_userName.setText("");
+			et_userName.setText(getIntent().getStringExtra("username"));
 			et_passWord.setText("");
+			// 默认是管理员
+			tv_identity.setText(getResources().getStringArray(R.array.login_identity)[0]);
+			cb_remberInfo.setChecked(false);
 		}
 	}
 
@@ -169,18 +184,14 @@ public class LoginActivity extends Activity {
 	 */
 	private void doLogin() {
 		if (checkInput()) {
-
+			// 记住了信息
 			if (cb_remberInfo.isChecked()) {
-				// 记住信息
-				SharedPreferences userInfo = getSharedPreferences("user_info", 0);
-				userInfo.edit().putString("identity", tv_identity.getText().toString()).commit();
-				userInfo.edit().putString("username", et_userName.getText().toString()).commit();
-				userInfo.edit().putString("password", et_passWord.getText().toString()).commit();
-				LogUtil.d(TAG, "记住了信息");
-
-			} else {
-
-				LogUtil.d(TAG, "没有记住信息");
+				MyApplication.getInstance().setUserName(et_userName.getText().toString());
+				MyApplication.getInstance().setIdentity(tv_identity.getText().toString());
+				MyApplication.getInstance().setPassword(et_passWord.getText().toString());
+				MyApplication.getInstance().setRember(true);
+			} else if (cb_remberInfo.isChecked() == false) {
+				MyApplication.getInstance().setRember(false);
 			}
 			if (MyApplication.getInstance().isISADMIN()) {
 
@@ -210,18 +221,18 @@ public class LoginActivity extends Activity {
 						@Override
 						public void onSuccess(int statusCode, org.json.JSONObject response) {
 							super.onSuccess(statusCode, response);
-							// 将用户信息写入xml
 							LogUtil.d(TAG, response.toString());
-							SharedPreferences userInfo = getSharedPreferences("user_info", 1);
-							userInfo.edit().putString("id", response.optString("_id")).commit();
-							userInfo.edit().putString("siteId", response.optString("siteId")).commit();
-							userInfo.edit().putString("nickName", response.optString("nickName")).commit();
-							userInfo.edit().putString("phone_num", response.optString("phone_num")).commit();
-							userInfo.edit().putString("email", response.optString("email")).commit();
-							userInfo.edit().putString("status", response.optString("status")).commit();
-							userInfo.edit().putString("verifyStatus", response.optString("verifyStatus")).commit();
-							userInfo.edit().putString("access_token", access_token).commit();
-							userInfo.edit().putString("token_type", token_type).commit();
+							// 将用户信息写入xml
+							MyApplication.getInstance().setAccess_token(access_token);
+							MyApplication.getInstance().setToken_type(token_type);
+							MyApplication.getInstance().setemail(response.optString("email"));
+							MyApplication.getInstance().setId(response.optString("_id"));
+							MyApplication.getInstance().setNickName(response.optString("nickName"));
+							MyApplication.getInstance().setPhone_num(response.optString("phone_num"));
+							MyApplication.getInstance().setSiteId(response.optString("siteId"));
+							MyApplication.getInstance().setStatus(response.optString("status"));
+							MyApplication.getInstance().setVerifyStatus(response.optString("verifyStatus"));
+
 							mLoadingDialog.dismiss();
 							if (MyApplication.getInstance().isISMASTER()) {
 								startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -264,8 +275,6 @@ public class LoginActivity extends Activity {
 	 * @return void
 	 */
 	private void selectIdentity() {
-		Drawable left = getResources().getDrawable(R.drawable.iv_filter_checked);
-		tv_identity.setCompoundDrawables(left, null, null, null);
 		Dialog dialog = null;
 		Builder builder = new android.app.AlertDialog.Builder(this);
 		// 设置对话框的图标

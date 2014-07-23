@@ -24,22 +24,25 @@
     <!-- 使用定位功能所需权限,demo已集成百度定位SDK,不使用定位功能可去掉以下6项 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" >
     </uses-permission>
-
     <permission android:name="android.permission.BAIDU_LOCATION_SERVICE" >
     </permission>
-
-    <uses-permission android:name="android.permission.BAIDU_LOCATION_SERVICE" >
-    </uses-permission>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" >
     </uses-permission>
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" >
     </uses-permission>
     <uses-permission android:name="android.permission.ACCESS_GPS" />
-
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- chat -->
+   <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
         android:name="com.runye.express.activity.common.MyApplication"
@@ -47,13 +50,8 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
-        <meta-data
-            android:name="com.baidu.lbsapi.API_KEY"
-            android:value="M3hp8waRNtH0IxAuzL1fuADr" >
-        </meta-data>
-
         <activity
-            android:name="com.runye.express.activity.common.LoginActivity"
+            android:name="com.runye.express.chat.activity.LoginActivity2"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -63,11 +61,6 @@
         </activity>
         <activity android:name="com.runye.express.activity.common.RegisterActivity" >
         </activity>
-
-        <service
-            android:name="com.baidu.location.f"
-            android:enabled="true"
-            android:process=":remote" />
 
         <activity android:name="com.runye.express.activity.administrator.AdminMainActivity" >
         </activity>
@@ -99,10 +92,146 @@
         </activity>
         <activity android:name="com.runye.express.activity.couriers.CouriersBaseActivity" >
         </activity>
-        <activity android:name="com.runye.express.activity.common.LocationActivity"></activity>
-        <activity android:name="com.runye.express.activity.common.ImagePagerActivity"></activity>
-        <activity android:name="com.runye.express.activity.slidingmenu.MainActivity"></activity>
-        <service android:name="com.runye.express.service.UpdateService"></service>
+        <activity android:name="com.runye.express.activity.common.LocationActivity" >
+        </activity>
+        <activity android:name="com.runye.express.activity.common.ImagePagerActivity" >
+        </activity>
+        <activity android:name="com.runye.express.activity.slidingmenu.MainActivity" >
+        </activity>
+        <activity
+            android:name="com.runye.express.chat.activity.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <!-- 注册 -->
+        <activity
+            android:name="com.runye.express.chat.activity.RegisterActivity"
+            android:theme="@style/horizontal_slide" >
+        </activity>
+        <!-- 聊天页面 -->
+        <activity
+            android:name="com.runye.express.chat.activity.ChatActivity"
+            android:launchMode="singleTop"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustResize" >
+        </activity>
+        <!-- 添加好友 -->
+        <activity
+            android:name="com.runye.express.chat.activity.AddContactActivity"
+            android:theme="@style/horizontal_slide" >
+        </activity>
+        <!-- 群组详情 -->
+        <activity
+            android:name="com.runye.express.chat.activity.GroupDetailsActivity"
+            android:theme="@style/horizontal_slide" >
+        </activity>
+        <!-- 群组列表 -->
+        <activity
+            android:name="com.runye.express.chat.activity.GroupsActivity"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <!-- 新建群组 -->
+        <activity
+            android:name="com.runye.express.chat.activity.NewGroupActivity"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <!-- 退出群组提示框 -->
+        <activity
+            android:name="com.runye.express.chat.activity.ExitGroupDialog"
+            android:theme="@style/chat_MyDialogStyleBottom" >
+        </activity>
+        <!-- 群组选人 -->
+        <activity
+            android:name="com.runye.express.chat.activity.GroupPickContactsActivity"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <!-- 地图 -->
+        <activity
+            android:name="com.runye.express.chat.activity.BaiduMapActivity"
+            android:theme="@style/horizontal_slide" >
+        </activity>
+
+        <!-- 新的朋友邀请消息页面 -->
+        <activity
+            android:name="com.runye.express.chat.activity.NewFriendsMsgActivity"
+            android:theme="@style/horizontal_slide" >
+        </activity>
+        <!-- 转发消息用户列表页面 -->
+        <activity
+            android:name="com.runye.express.chat.activity.ForwardMessageActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <!-- 自定义的contextmenu -->
+        <activity
+            android:name="com.runye.express.chat.activity.ContextMenu"
+            android:theme="@style/chat_MyDialogStyle" >
+        </activity>
+        <!-- 自定义的alertdialog -->
+        <activity
+            android:name="com.runye.express.chat.activity.AlertDialog"
+            android:theme="@style/chat_MyDialogStyle" >
+        </activity>
+        <!-- 显示下载大图页面 -->
+        <activity
+            android:name="com.runye.express.chat.activity.ShowBigImage"
+            android:theme="@style/horizontal_slide" >
+        </activity>
+        <!-- 公开的群聊列表 -->
+        <activity
+            android:name="com.runye.express.chat.activity.PublicGroupsActivity"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="adjustPan" >
+        </activity>
+        <activity
+            android:name="com.runye.express.chat.activity.GroupSimpleDetailActivity"
+            android:theme="@style/horizontal_slide" >
+        </activity>
+        <activity
+            android:name="com.runye.express.chat.activity.ShowVideoActivity"
+            android:theme="@style/horizontal_slide"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+        </activity>
+        <!-- 开机自启动服务 -->
+        <receiver android:name="com.easemob.chat.StartServiceReceiver" >
+            <intent-filter android:priority="1000" >
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.QUICKBOOT_POWERON" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </receiver>
+
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="M3hp8waRNtH0IxAuzL1fuADr" >
+        </meta-data>
+        <!-- 设置环信应用的appkey -->
+        <meta-data
+            android:name="EASEMOB_APPKEY"
+            android:value="easemob-demo#chatdemoui" />
+        <!-- 声明sdk所需的service -->
+        <service android:name="com.easemob.chat.EMChatService" />
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote" />
+
+        <!-- ChatDemoUI  使用友盟统计来收集crash report。这个不是环信sdk 的一部分 -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="53912a3156240b01a7075ed1" >
+        </meta-data>
+        <!-- end of 友盟声明 -->
+
+        <service android:name="com.runye.express.service.UpdateService" >
+        </service>
     </application>
 
 </manifest>

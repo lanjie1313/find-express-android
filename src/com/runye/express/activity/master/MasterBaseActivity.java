@@ -10,7 +10,6 @@ import org.json.JSONException;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -20,6 +19,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.runye.express.activity.common.MyApplication;
 import com.runye.express.activity.common.OrderInfoActivity;
 import com.runye.express.adapter.OrderModeAdapter;
 import com.runye.express.android.R;
@@ -107,9 +107,9 @@ public class MasterBaseActivity extends Activity implements OnHeaderRefreshListe
 		/**
 		 * 根据siteid请求order
 		 */
-		SharedPreferences preferences = getSharedPreferences("user_info", 1);
-		// String siteId = preferences.getString("siteId", "");
-		access_token = preferences.getString("access_token", "");
+		// SharedPreferences preferences = getSharedPreferences("user_info", 1);
+		// // String siteId = preferences.getString("siteId", "");
+		access_token = MyApplication.getInstance().getAccess_token();
 		// 根据状态加载订单
 		String status = getIntent().getStringExtra("STATUS");
 		RequestParams params = new RequestParams();
