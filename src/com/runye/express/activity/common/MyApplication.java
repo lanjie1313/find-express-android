@@ -11,7 +11,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -34,7 +33,7 @@ import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 import com.runye.express.chat.activity.ChatActivity;
-import com.runye.express.chat.activity.MainActivity;
+import com.runye.express.chat.activity.ChatMainActivity;
 import com.runye.express.chat.db.DbOpenHelper;
 import com.runye.express.chat.db.UserDao;
 import com.runye.express.chat.domain.User;
@@ -59,6 +58,7 @@ public class MyApplication extends Application {
 	private static MyApplication mInstance = null;
 	public static Context applicationContext;
 	private Map<String, User> contactList;
+	private boolean isLgoinChat = false;
 	/** 本地安装版本 */
 	public int localVersion = 0;
 	/** 服务器版本 */
@@ -193,18 +193,20 @@ public class MyApplication extends Application {
 	 * @param pID
 	 * @return String
 	 */
+	@SuppressWarnings("rawtypes")
 	private String getAppName(int pID) {
 		String processName = null;
 		ActivityManager am = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
 		List l = am.getRunningAppProcesses();
 		Iterator i = l.iterator();
-		PackageManager pm = this.getPackageManager();
+		// PackageManager pm = this.getPackageManager();
 		while (i.hasNext()) {
 			ActivityManager.RunningAppProcessInfo info = (ActivityManager.RunningAppProcessInfo) (i.next());
 			try {
 				if (info.pid == pID) {
-					CharSequence c = pm.getApplicationLabel(pm.getApplicationInfo(info.processName,
-							PackageManager.GET_META_DATA));
+					// CharSequence c =
+					// pm.getApplicationLabel(pm.getApplicationInfo(info.processName,
+					// PackageManager.GET_META_DATA));
 					// Log.d("Process", "Id: "+ info.pid +" ProcessName: "+
 					// info.processName +"  Label: "+c.toString());
 					// processName = c.toString();
@@ -212,7 +214,6 @@ public class MyApplication extends Application {
 					return processName;
 				}
 			} catch (Exception e) {
-				// Log.d("Process", "Error>> :"+ e.toString());
 			}
 		}
 		return processName;
@@ -299,8 +300,7 @@ public class MyApplication extends Application {
 		// 先调用sdk logout，在清理app中自己的数据
 		EMChatManager.getInstance().logout();
 		DbOpenHelper.getInstance(applicationContext).closeDB();
-		// reset password to null
-		setPassword(null);
+		MyApplication.getInstance().setIsLgoinChat(false);
 		setContactList(null);
 
 	}
@@ -317,7 +317,7 @@ public class MyApplication extends Application {
 		@Override
 		public void onDisConnected(String errorString) {
 			if (errorString != null && errorString.contains("conflict")) {
-				Intent intent = new Intent(applicationContext, MainActivity.class);
+				Intent intent = new Intent(applicationContext, ChatMainActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				intent.putExtra("conflict", true);
 				startActivity(intent);
@@ -462,11 +462,13 @@ public class MyApplication extends Application {
 	 * @return String
 	 */
 	public void setPassword(String password) {
-		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
-		SharedPreferences.Editor editor = preferences.edit();
-		if (editor.putString("password", password).commit()) {
-			LogUtil.d(TAG, password);
-			this.password = password;
+		if (password != null) {
+			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
+			SharedPreferences.Editor editor = preferences.edit();
+			if (editor.putString("password", password).commit()) {
+				LogUtil.d(TAG, password);
+				this.password = password;
+			}
 		}
 	}
 
@@ -744,6 +746,26 @@ public class MyApplication extends Application {
 			LogUtil.d(TAG, isRember + "");
 			this.isRember = isRember;
 		}
+	}
+
+	/**
+	 * 
+	 * @Description: 是否成功登陆chat服务器
+	 * @return
+	 * @return boolean
+	 */
+	public boolean isLgoinChat() {
+		return isLgoinChat;
+	}
+
+	/**
+	 * 
+	 * @Description: 设置是否成功登陆了chat服务器
+	 * @param isLgoinChat
+	 * @return void
+	 */
+	public void setIsLgoinChat(boolean isLgoinChat) {
+		this.isLgoinChat = isLgoinChat;
 	}
 
 }

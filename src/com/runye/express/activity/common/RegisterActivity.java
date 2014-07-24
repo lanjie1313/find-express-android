@@ -25,6 +25,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Spinner;
 
 import com.alibaba.fastjson.JSON;
+import com.easemob.chat.EMChatManager;
 import com.runye.express.android.R;
 import com.runye.express.async.JsonHttpResponseHandler;
 import com.runye.express.async.RequestParams;
@@ -221,6 +222,8 @@ public class RegisterActivity extends Activity {
 		}
 	}
 
+	LoadingDialog loadingDialog;
+
 	/**
 	 * 
 	 * @Description: 注册提示信息
@@ -233,6 +236,8 @@ public class RegisterActivity extends Activity {
 
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
+				loadingDialog = new LoadingDialog(RegisterActivity.this, "正在提交");
+				loadingDialog.show();
 				// 联网代码，提交参数 注册
 				LogUtil.d(TAG, "名称:" + et_values[0] + "密码" + et_values[3] + "电话" + et_values[1] + "邮箱" + et_values[2]
 						+ "站ID" + siteId);
@@ -251,18 +256,16 @@ public class RegisterActivity extends Activity {
 					@Override
 					public void onSuccess(int statusCode, JSONObject response) {
 						super.onSuccess(statusCode, response);
-						ToastUtil.showShortToast(RegisterActivity.this, "注册成功");
-						Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-						intent.putExtra("ISREGISTER", true);
-						intent.putExtra("username", et_values[1]);
-						startActivity(intent);
-						finish();
+						LogUtil.d(TAG, "服务器注册成功");
+						registerChat();
 
 					}
 
 					@Override
 					public void onFailure(Throwable e, JSONObject errorResponse) {
 						super.onFailure(e, errorResponse);
+						loadingDialog.dismiss();
+						LogUtil.d(TAG, errorResponse.toString());
 						ToastUtil.showShortToast(RegisterActivity.this, "当前的手机号或者邮箱已被注册了");
 					}
 				});
@@ -277,6 +280,38 @@ public class RegisterActivity extends Activity {
 		});
 		alertDialog.create();
 		alertDialog.show();
+	}
+
+	private void registerChat() {
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					LogUtil.d(TAG, "开始注册chat");
+					// 调用sdk注册方法
+					EMChatManager.getInstance().createAccountOnServer(et_values[1], et_values[3]);
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							if (!RegisterActivity.this.isFinishing())
+								loadingDialog.dismiss();
+							LogUtil.d(TAG, "chat注册成功");
+							ToastUtil.showShortToast(RegisterActivity.this, "注册成功");
+							Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+							intent.putExtra("ISREGISTER", true);
+							intent.putExtra("username", et_values[1]);
+							startActivity(intent);
+							finish();
+
+						}
+					});
+				} catch (Exception e) {
+					e.printStackTrace();
+					LogUtil.d(TAG, "chat注册失败");
+					ToastUtil.showShortToast(RegisterActivity.this, "chat注册失败");
+				}
+			}
+		}).start();
 	}
 
 	class MyButtonListener implements OnClickListener {

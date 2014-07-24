@@ -29,10 +29,8 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.easemob.chat.ConnectionListener;
@@ -49,6 +47,7 @@ import com.easemob.chat.EMNotifier;
 import com.easemob.chat.GroupChangeListener;
 import com.easemob.chat.TextMessageBody;
 import com.easemob.util.HanziToPinyin;
+import com.runye.express.activity.common.LoginActivity;
 import com.runye.express.activity.common.MyApplication;
 import com.runye.express.android.R;
 import com.runye.express.chat.Constant;
@@ -59,9 +58,9 @@ import com.runye.express.chat.domain.InviteMessage.InviteMesageStatus;
 import com.runye.express.chat.domain.User;
 import com.runye.express.chat.utils.CommonUtils;
 
-public class MainActivity extends FragmentActivity {
+public class ChatMainActivity extends FragmentActivity {
 
-	protected static final String TAG = "MainActivity";
+	protected static final String TAG = "ChatMainActivity";
 	// 未读消息textview
 	private TextView unreadLabel;
 	// 未读通讯录textview
@@ -73,7 +72,7 @@ public class MainActivity extends FragmentActivity {
 	private SettingsFragment settingFragment;
 	private Fragment[] fragments;
 	private int index;
-	private RelativeLayout[] tab_containers;
+	// private RelativeLayout[] tab_containers;
 	// 当前fragment的index
 	private int currentTabIndex;
 	private NewMessageBroadcastReceiver msgReceiver;
@@ -85,6 +84,26 @@ public class MainActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_chat_main);
 		initView();
+
+	}
+
+	/**
+	 * 初始化组件
+	 */
+	private void initView() {
+		unreadLabel = (TextView) findViewById(R.id.unread_msg_number);
+		unreadAddressLable = (TextView) findViewById(R.id.unread_address_number);
+		mTabs = new Button[3];
+		mTabs[0] = (Button) findViewById(R.id.btn_conversation);
+		mTabs[1] = (Button) findViewById(R.id.btn_address_list);
+		mTabs[2] = (Button) findViewById(R.id.btn_setting);
+		// 把第一个tab设为选中状态
+		mTabs[0].setSelected(true);
+		test();
+
+	}
+
+	private void test() {
 		inviteMessgeDao = new InviteMessgeDao(this);
 		userDao = new UserDao(this);
 		chatHistoryFragment = new ChatHistoryFragment();
@@ -95,7 +114,7 @@ public class MainActivity extends FragmentActivity {
 		getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, chatHistoryFragment)
 				.add(R.id.fragment_container, contactListFragment).hide(contactListFragment).show(chatHistoryFragment)
 				.commit();
-
+		//
 		// 注册一个接收消息的BroadcastReceiver
 		msgReceiver = new NewMessageBroadcastReceiver();
 		IntentFilter intentFilter = new IntentFilter(EMChatManager.getInstance().getNewMessageBroadcastAction());
@@ -116,21 +135,6 @@ public class MainActivity extends FragmentActivity {
 		EMGroupManager.getInstance().addGroupChangeListener(new MyGroupChangeListener());
 		// 通知sdk，UI 已经初始化完毕，注册了相应的receiver和listener, 可以接受broadcast了
 		EMChat.getInstance().setAppInited();
-	}
-
-	/**
-	 * 初始化组件
-	 */
-	private void initView() {
-		unreadLabel = (TextView) findViewById(R.id.unread_msg_number);
-		unreadAddressLable = (TextView) findViewById(R.id.unread_address_number);
-		mTabs = new Button[3];
-		mTabs[0] = (Button) findViewById(R.id.btn_conversation);
-		mTabs[1] = (Button) findViewById(R.id.btn_address_list);
-		mTabs[2] = (Button) findViewById(R.id.btn_setting);
-		// 把第一个tab设为选中状态
-		mTabs[0].setSelected(true);
-
 	}
 
 	/**
@@ -249,7 +253,7 @@ public class MainActivity extends FragmentActivity {
 		@Override
 		public void onReceive(Context context, Intent intent) {
 			// 消息id
-			String msgId = intent.getStringExtra("msgid");
+			// String msgId = intent.getStringExtra("msgid");
 			// 收到这个广播的时候，message已经在db和内存里了，可以通过id获取mesage对象
 			// EMMessage message =
 			// EMChatManager.getInstance().getMessage(msgId);
@@ -492,7 +496,7 @@ public class MainActivity extends FragmentActivity {
 					// 刷新ui
 					if (currentTabIndex == 0)
 						chatHistoryFragment.refresh();
-					if (CommonUtils.getTopActivity(MainActivity.this).equals(GroupsActivity.class.getName())) {
+					if (CommonUtils.getTopActivity(ChatMainActivity.this).equals(GroupsActivity.class.getName())) {
 						GroupsActivity.instance.onResume();
 					}
 				}
@@ -521,7 +525,7 @@ public class MainActivity extends FragmentActivity {
 						updateUnreadLabel();
 						if (currentTabIndex == 0)
 							chatHistoryFragment.refresh();
-						if (CommonUtils.getTopActivity(MainActivity.this).equals(GroupsActivity.class.getName())) {
+						if (CommonUtils.getTopActivity(ChatMainActivity.this).equals(GroupsActivity.class.getName())) {
 							GroupsActivity.instance.onResume();
 						}
 					} catch (Exception e) {
@@ -543,7 +547,7 @@ public class MainActivity extends FragmentActivity {
 					updateUnreadLabel();
 					if (currentTabIndex == 0)
 						chatHistoryFragment.refresh();
-					if (CommonUtils.getTopActivity(MainActivity.this).equals(GroupsActivity.class.getName())) {
+					if (CommonUtils.getTopActivity(ChatMainActivity.this).equals(GroupsActivity.class.getName())) {
 						GroupsActivity.instance.onResume();
 					}
 				}
@@ -586,7 +590,7 @@ public class MainActivity extends FragmentActivity {
 					// 刷新ui
 					if (currentTabIndex == 0)
 						chatHistoryFragment.refresh();
-					if (CommonUtils.getTopActivity(MainActivity.this).equals(GroupsActivity.class.getName())) {
+					if (CommonUtils.getTopActivity(ChatMainActivity.this).equals(GroupsActivity.class.getName())) {
 						GroupsActivity.instance.onResume();
 					}
 				}
@@ -611,15 +615,6 @@ public class MainActivity extends FragmentActivity {
 
 	}
 
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			moveTaskToBack(false);
-			return true;
-		}
-		return super.onKeyDown(keyCode, event);
-	}
-
 	private android.app.AlertDialog.Builder conflictBuilder;
 	private boolean isConflictDialogShow;
 
@@ -630,11 +625,11 @@ public class MainActivity extends FragmentActivity {
 		isConflictDialogShow = true;
 		MyApplication.getInstance().logout();
 
-		if (!MainActivity.this.isFinishing()) {
+		if (!ChatMainActivity.this.isFinishing()) {
 			// clear up global variables
 			try {
 				if (conflictBuilder == null)
-					conflictBuilder = new android.app.AlertDialog.Builder(MainActivity.this);
+					conflictBuilder = new android.app.AlertDialog.Builder(ChatMainActivity.this);
 				conflictBuilder.setTitle("下线通知");
 				conflictBuilder.setMessage(R.string.connect_conflict);
 				conflictBuilder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
@@ -644,7 +639,7 @@ public class MainActivity extends FragmentActivity {
 						dialog.dismiss();
 						conflictBuilder = null;
 						finish();
-						startActivity(new Intent(MainActivity.this, LoginActivity2.class));
+						startActivity(new Intent(ChatMainActivity.this, LoginActivity.class));
 					}
 				});
 				conflictBuilder.setCancelable(false);

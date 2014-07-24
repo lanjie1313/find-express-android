@@ -6,20 +6,24 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingActivity;
+import com.runye.express.activity.common.MyApplication;
 import com.runye.express.activity.slidingmenu.ManagerFragment.SlidingMenuListOnItemClickListener;
 import com.runye.express.android.R;
+import com.runye.express.chat.activity.ChatMainActivity;
+import com.runye.express.utils.LogUtil;
+import com.runye.express.utils.LoginChat;
 import com.runye.express.utils.SysExitUtil;
 
 public class MainActivity extends SlidingActivity implements SlidingMenuListOnItemClickListener {
-	// public class MainActivity extends SlidingFragmentActivity {
 
+	private static final String TAG = "MainActivity";
 	private SlidingMenu mSlidingMenu;
 
 	@Override
@@ -96,8 +100,6 @@ public class MainActivity extends SlidingActivity implements SlidingMenuListOnIt
 		switch (item.getItemId()) {
 		case android.R.id.home:
 			toggle(); // 动态判断自动关闭或开启SlidingMenu
-			// getSlidingMenu().showMenu();//显示SlidingMenu
-			// getSlidingMenu().showContent();//显示内容
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -105,12 +107,26 @@ public class MainActivity extends SlidingActivity implements SlidingMenuListOnIt
 
 	@Override
 	public void selectItem(int position, String title) {
+
 		// update the main content by replacing fragments
 		Fragment fragment = null;
 		switch (position) {
 		case 0:
 			fragment = new FindFragment();
 			break;
+		case 1:
+			/**
+			 * 判断聊天服务器是否加载成功
+			 */
+			if (MyApplication.getInstance().isLgoinChat()) {
+				startActivity(new Intent(MainActivity.this, ChatMainActivity.class));
+			} else {
+				LoginChat.loginChat(TAG, MainActivity.this);
+				if (MyApplication.getInstance().isLgoinChat()) {
+					LogUtil.d(TAG, "二次登陆成功");
+					startActivity(new Intent(MainActivity.this, ChatMainActivity.class));
+				}
+			}
 		default:
 			break;
 		}
@@ -123,8 +139,6 @@ public class MainActivity extends SlidingActivity implements SlidingMenuListOnIt
 			FragmentManager fragmentManager = getFragmentManager();
 			fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 			mSlidingMenu.showContent();
-		} else {
-			Log.e("MainActivity", "Error in creating fragment");
 		}
 	}
 

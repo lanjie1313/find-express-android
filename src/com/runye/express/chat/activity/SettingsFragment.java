@@ -13,21 +13,18 @@
  */
 package com.runye.express.chat.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMChatOptions;
-import com.runye.express.activity.common.MyApplication;
 import com.runye.express.android.R;
 import com.runye.express.chat.utils.PreferenceUtils;
 
@@ -94,11 +91,6 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 	 */
 	private TextView textview1, textview2;
 
-	/**
-	 * 退出按钮
-	 */
-	private Button logoutBtn;
-
 	private EMChatOptions chatOptions;
 
 	@Override
@@ -122,7 +114,6 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 		iv_switch_close_vibrate = (ImageView) getView().findViewById(R.id.iv_switch_close_vibrate);
 		iv_switch_open_speaker = (ImageView) getView().findViewById(R.id.iv_switch_open_speaker);
 		iv_switch_close_speaker = (ImageView) getView().findViewById(R.id.iv_switch_close_speaker);
-		logoutBtn = (Button) getView().findViewById(R.id.btn_logout);
 
 		textview1 = (TextView) getView().findViewById(R.id.textview1);
 		textview2 = (TextView) getView().findViewById(R.id.textview2);
@@ -131,7 +122,6 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 		rl_switch_sound.setOnClickListener(this);
 		rl_switch_vibrate.setOnClickListener(this);
 		rl_switch_speaker.setOnClickListener(this);
-		logoutBtn.setOnClickListener(this);
 
 		chatOptions = EMChatManager.getInstance().getChatOptions();
 		if (chatOptions.getNotificationEnable()) {
@@ -237,12 +227,6 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 				EMChatManager.getInstance().setChatOptions(chatOptions);
 				PreferenceUtils.getInstance(getActivity()).setSettingMsgVibrate(true);
 			}
-			break;
-		case R.id.btn_logout:
-			MyApplication.getInstance().logout();
-			// 重新显示登陆页面
-			((MainActivity) getActivity()).finish();
-			startActivity(new Intent(getActivity(), LoginActivity2.class));
 			break;
 		default:
 			break;

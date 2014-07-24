@@ -24,19 +24,23 @@
     <!-- 使用定位功能所需权限,demo已集成百度定位SDK,不使用定位功能可去掉以下6项 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" >
     </uses-permission>
+
     <permission android:name="android.permission.BAIDU_LOCATION_SERVICE" >
     </permission>
+
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" >
     </uses-permission>
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION" >
     </uses-permission>
     <uses-permission android:name="android.permission.ACCESS_GPS" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <!-- chat -->
-   <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
@@ -51,7 +55,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.runye.express.chat.activity.LoginActivity2"
+            android:name="com.runye.express.activity.common.LoginActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -61,7 +65,6 @@
         </activity>
         <activity android:name="com.runye.express.activity.common.RegisterActivity" >
         </activity>
-
         <activity android:name="com.runye.express.activity.administrator.AdminMainActivity" >
         </activity>
         <activity android:name="com.runye.express.activity.administrator.AdminAddCouriersActivity" >
@@ -99,16 +102,11 @@
         <activity android:name="com.runye.express.activity.slidingmenu.MainActivity" >
         </activity>
         <activity
-            android:name="com.runye.express.chat.activity.MainActivity"
+            android:name="com.runye.express.chat.activity.ChatMainActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" >
-        </activity>
-        <!-- 注册 -->
-        <activity
-            android:name="com.runye.express.chat.activity.RegisterActivity"
-            android:theme="@style/horizontal_slide" >
         </activity>
         <!-- 聊天页面 -->
         <activity

@@ -108,6 +108,7 @@ public class ChatHistoryFragment extends Fragment {
 					} else {
 						// it is single chat
 						intent.putExtra("userId", emContact.getUsername());
+						intent.putExtra("nick", emContact.getNick());
 					}
 					startActivity(intent);
 				}
@@ -183,7 +184,7 @@ public class ChatHistoryFragment extends Fragment {
 			adapter.notifyDataSetChanged();
 
 			// 更新消息未读数
-			((MainActivity) getActivity()).updateUnreadLabel();
+			((ChatMainActivity) getActivity()).updateUnreadLabel();
 
 			return true;
 		}

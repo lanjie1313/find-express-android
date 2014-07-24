@@ -51,6 +51,7 @@ import com.easemob.chat.LocationMessageBody;
 import com.easemob.chat.TextMessageBody;
 import com.easemob.chat.VideoMessageBody;
 import com.easemob.chat.VoiceMessageBody;
+import com.easemob.exceptions.EaseMobException;
 import com.easemob.util.DateUtils;
 import com.easemob.util.LatLng;
 import com.easemob.util.TextFormater;
@@ -181,6 +182,11 @@ public class MessageAdapter extends BaseAdapter {
 	@SuppressLint("NewApi")
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		final EMMessage message = getItem(position);
+		// 群聊设置昵称
+		/**
+		 * 获取服务器上的
+		 */
+		message.setAttribute("nick", "haha" + position);
 		ChatType chatType = message.getChatType();
 		final ViewHolder holder;
 		if (convertView == null) {
@@ -249,8 +255,11 @@ public class MessageAdapter extends BaseAdapter {
 
 		// 群聊时，显示接收的消息的发送人的名称
 		if (chatType == ChatType.GroupChat && message.direct == EMMessage.Direct.RECEIVE)
-			// demo用username代替nick
-			holder.tv_userId.setText(message.getFrom());
+			try {
+				holder.tv_userId.setText(message.getStringAttribute("nick"));
+			} catch (EaseMobException e1) {
+				e1.printStackTrace();
+			}
 
 		// 如果是发送的消息并且不是群聊消息，显示已读textview
 		if (message.direct == EMMessage.Direct.SEND && chatType != ChatType.GroupChat) {

@@ -5,11 +5,8 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -21,6 +18,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.runye.express.activity.common.LoginActivity;
+import com.runye.express.activity.common.MyApplication;
 import com.runye.express.adapter.SlidingMenuAdapter;
 import com.runye.express.android.R;
 import com.runye.express.bean.SlidingMenuItemsBean;
@@ -55,11 +53,8 @@ public class ManagerFragment extends Fragment implements OnItemClickListener, On
 	/** 二维码扫描 */
 	private TextView textView_fragmentTwoCode;
 	private ImageView imageView_headView;
-	private String userName;
 	/** 显示用户的昵称 */
 	private TextView textView_nickName;
-	/** 下载的头像 */
-	private Bitmap mBitmap;
 	String imagePath;
 
 	@Override
@@ -73,13 +68,6 @@ public class ManagerFragment extends Fragment implements OnItemClickListener, On
 		}
 		super.onAttach(activity);
 	}
-
-	private final Handler handler = new Handler() {
-		@Override
-		public void handleMessage(android.os.Message msg) {
-			textView_nickName.setText((String) msg.obj);
-		};
-	};
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -109,11 +97,8 @@ public class ManagerFragment extends Fragment implements OnItemClickListener, On
 	 */
 	private void initView(View view) {
 
-		SharedPreferences userinfo = getActivity().getSharedPreferences("USERINFO", 0);
-		// 取出保存的NAME，取出改字段名的值，不存在则创建默认为空
-		userName = userinfo.getString("NAME", ""); // 取出保存的 NAME
-		imagePath = userinfo.getString("IMAGEPATH", "");
 		textView_nickName = (TextView) view.findViewById(R.id.fragment_manager_nickName);
+		textView_nickName.setText(MyApplication.getInstance().getNickName());
 		textView_fragmentTwoCode = (TextView) view.findViewById(R.id.fragment_manager_twodimensionalcode);
 		textView_fragmentTwoCode.setOnClickListener(this);
 
@@ -150,16 +135,16 @@ public class ManagerFragment extends Fragment implements OnItemClickListener, On
 		}
 	}
 
-	/*
-	 * 切换到不同的功能内容
-	 */
-	private void switchFragment(Fragment fragment) {
-		if (getActivity() == null)
-			return;
-		MainActivity ra = (MainActivity) getActivity();
-		ra.switchContent(fragment);
-
-	}
+	// /*
+	// * 切换到不同的功能内容
+	// */
+	// private void switchFragment(Fragment fragment) {
+	// if (getActivity() == null)
+	// return;
+	// MainActivity ra = (MainActivity) getActivity();
+	// ra.switchContent(fragment);
+	//
+	// }
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -199,6 +184,7 @@ public class ManagerFragment extends Fragment implements OnItemClickListener, On
 		switch (v.getId()) {
 		case R.id.fragment_manager_twodimensionalcode:
 			startActivity(new Intent(getActivity(), LoginActivity.class));
+			MyApplication.getInstance().logout();
 			SysExitUtil.exit();
 			break;
 

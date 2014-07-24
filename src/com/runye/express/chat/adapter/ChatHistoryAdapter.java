@@ -80,6 +80,7 @@ public class ChatHistoryAdapter extends ArrayAdapter<EMContact> {
 			holder.avatar.setImageResource(R.drawable.group_icon);
 		} else {
 			holder.avatar.setImageResource(R.drawable.chat_default_avatar);
+			user.setNick("用户");
 		}
 
 		String username = user.getUsername();

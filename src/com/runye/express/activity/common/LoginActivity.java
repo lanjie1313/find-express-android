@@ -7,6 +7,8 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,6 +31,7 @@ import com.runye.express.http.MyHttpClient;
 import com.runye.express.service.UpdateService;
 import com.runye.express.utils.LoadingDialog;
 import com.runye.express.utils.LogUtil;
+import com.runye.express.utils.LoginChat;
 import com.runye.express.utils.NetWork;
 import com.runye.express.utils.SysExitUtil;
 import com.runye.express.utils.ToastUtil;
@@ -129,6 +132,24 @@ public class LoginActivity extends Activity {
 			tv_identity.setText(getResources().getStringArray(R.array.login_identity)[0]);
 			cb_remberInfo.setChecked(false);
 		}
+
+		// 如果用户名改变，清空密码
+		et_userName.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				et_passWord.setText("");
+			}
+
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+
+			}
+		});
 	}
 
 	/**
@@ -232,7 +253,6 @@ public class LoginActivity extends Activity {
 							MyApplication.getInstance().setSiteId(response.optString("siteId"));
 							MyApplication.getInstance().setStatus(response.optString("status"));
 							MyApplication.getInstance().setVerifyStatus(response.optString("verifyStatus"));
-
 							mLoadingDialog.dismiss();
 							if (MyApplication.getInstance().isISMASTER()) {
 								startActivity(new Intent(LoginActivity.this, MainActivity.class));
@@ -240,6 +260,7 @@ public class LoginActivity extends Activity {
 							if (MyApplication.getInstance().isISCOURIERS()) {
 								startActivity(new Intent(LoginActivity.this, CouriersManActivity.class));
 							}
+							LoginChat.loginChat(TAG, LoginActivity.this);
 						}
 					});
 
