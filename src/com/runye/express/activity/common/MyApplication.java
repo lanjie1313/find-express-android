@@ -298,10 +298,15 @@ public class MyApplication extends Application {
 	 */
 	public void logout() {
 		// 先调用sdk logout，在清理app中自己的数据
-		EMChatManager.getInstance().logout();
-		DbOpenHelper.getInstance(applicationContext).closeDB();
-		MyApplication.getInstance().setIsLgoinChat(false);
-		setContactList(null);
+		if (MyApplication.getInstance().isLgoinChat()) {
+
+			EMChatManager.getInstance().logout();
+			DbOpenHelper.getInstance(applicationContext).closeDB();
+			MyApplication.getInstance().setIsLgoinChat(false);
+			setContactList(null);
+		}
+		MyApplication.getInstance().setRember(false);
+		LogUtil.d(TAG, "chat服务器已退出，将不再接受消息");
 
 	}
 

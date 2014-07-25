@@ -1,17 +1,21 @@
 package com.runye.express.activity.common;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Parcelable;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -20,6 +24,7 @@ import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer;
 import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
 import com.runye.express.android.R;
+import com.runye.express.utils.LogUtil;
 import com.runye.express.utils.ToastUtil;
 
 /**
@@ -31,20 +36,25 @@ import com.runye.express.utils.ToastUtil;
  * @version V1.0
  * @Company:山西润叶网络科技有限公司
  */
-public class ImagePagerActivity extends Activity {
+public class ImagePagerActivity extends ComminBaseActivity {
 
 	private static final String STATE_POSITION = "STATE_POSITION";
+	protected static final String TAG = "ImagePagerActivity";
 	private DisplayImageOptions options;
 	private ImageLoader mImageLoader;
 	private ViewPager mPager;
+	private Handler mHandler;
+	int pageIndex = 1;
 
+	@SuppressLint("HandlerLeak")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_image_pager);
+		setContentView(R.layout.activity_image_viewpager);
 
 		Bundle bundle = getIntent().getExtras();
 		String[] imageUrls = bundle.getStringArray("IMAGEURIS");
+		final String[] imageTitle = bundle.getStringArray("IMAGETITLE");
 		int pagerPosition = bundle.getInt("IMAGEURISPOSITION", 0);
 
 		if (savedInstanceState != null) {
@@ -59,6 +69,45 @@ public class ImagePagerActivity extends Activity {
 		mPager = (ViewPager) findViewById(R.id.activity_image_pager);
 		mPager.setAdapter(new ImagePagerAdapter(imageUrls));
 		mPager.setCurrentItem(pagerPosition);
+		mPager.setOnPageChangeListener(new MyOnPageChangeListener());
+		final TextView textView_currentImage = (TextView) findViewById(R.id.item_pager_currentImg);
+		TextView textView_totalImage = (TextView) findViewById(R.id.item_pager_totalImg);
+		textView_totalImage.setText("/" + imageUrls.length);
+		textView_currentImage.setText(pagerPosition + 1 + "");
+		final TextView textView_title = (TextView) findViewById(R.id.activity_image_pager_title);
+		textView_title.setText(imageTitle[pagerPosition]);
+		mHandler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				textView_currentImage.setText(pageIndex + 1 + "");
+				textView_title.setText(imageTitle[pageIndex]);
+				super.handleMessage(msg);
+			}
+		};
+
+	}
+
+	private class MyOnPageChangeListener implements OnPageChangeListener {
+
+		@Override
+		public void onPageSelected(int position) {
+			pageIndex = position;
+		}
+
+		@Override
+		public void onPageScrolled(int position, float arg1, int arg2) {
+
+		}
+
+		/* state: 0空闲，1是滑行中，2加载完毕 */
+		@Override
+		public void onPageScrollStateChanged(int state) {
+			System.out.println("state:" + state);
+			LogUtil.d(TAG, "当前位置:" + pageIndex + "\nstate:" + state);
+			if (state == 2) {
+				mHandler.sendEmptyMessage(0);
+			}
+		}
 	}
 
 	@Override

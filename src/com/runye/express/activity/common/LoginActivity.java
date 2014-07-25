@@ -31,7 +31,6 @@ import com.runye.express.http.MyHttpClient;
 import com.runye.express.service.UpdateService;
 import com.runye.express.utils.LoadingDialog;
 import com.runye.express.utils.LogUtil;
-import com.runye.express.utils.LoginChat;
 import com.runye.express.utils.NetWork;
 import com.runye.express.utils.SysExitUtil;
 import com.runye.express.utils.ToastUtil;
@@ -80,15 +79,16 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 		SysExitUtil.activityList.add(LoginActivity.this);
 		initUI();
-		checkVersion();
+		// checkVersion();
 
 	}
 
 	private void initUI() {
-		boolean isRegister = getIntent().getBooleanExtra("ISREGISTER", false);
-		MyApplication.getInstance().setISADMIN(false);
-		MyApplication.getInstance().setISCOURIERS(false);
-		MyApplication.getInstance().setISMASTER(false);
+		// 如果用户名密码都有，直接进入主页面
+		if (MyApplication.getInstance().isRember()) {
+			startActivity(new Intent(this, MainActivity.class));
+			finish();
+		}
 		bt_login = (Button) findViewById(R.id.activity_login);
 		bt_register = (Button) findViewById(R.id.activity_login_register);
 		et_userName = (EditText) findViewById(R.id.activity_login_userName);
@@ -99,29 +99,10 @@ public class LoginActivity extends Activity {
 		tv_identity.setOnClickListener(new MyOnClickListener());
 		bt_login.setOnClickListener(new MyOnClickListener());
 		bt_register.setOnClickListener(new MyOnClickListener());
-
+		boolean isRegister = getIntent().getBooleanExtra("ISREGISTER", false);
 		// 不是注册页面
 		if (isRegister == false) {
-			// 记住了信息
-			if (MyApplication.getInstance().isRember()) {
-				et_userName.setText(MyApplication.getInstance().getUserName());
-				et_passWord.setText(MyApplication.getInstance().getPassword());
-				cb_remberInfo.setChecked(true);
-				if (MyApplication.getInstance().getIdentity() == null) {
-					// 默认是管理员
-					tv_identity.setText(getResources().getStringArray(R.array.login_identity)[0]);
-				} else {
-
-					tv_identity.setText(MyApplication.getInstance().getIdentity());
-				}
-			} else {
-				et_userName.setText("");
-				et_passWord.setText("");
-				// 默认是管理员
-				tv_identity.setText(getResources().getStringArray(R.array.login_identity)[0]);
-				cb_remberInfo.setChecked(false);
-
-			}
+			tv_identity.setText(getResources().getStringArray(R.array.login_identity)[0]);
 
 		}
 		// 注册页面跳转
@@ -260,7 +241,6 @@ public class LoginActivity extends Activity {
 							if (MyApplication.getInstance().isISCOURIERS()) {
 								startActivity(new Intent(LoginActivity.this, CouriersManActivity.class));
 							}
-							LoginChat.loginChat(TAG, LoginActivity.this);
 						}
 					});
 

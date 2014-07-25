@@ -6,7 +6,6 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.DialogInterface;
@@ -47,7 +46,7 @@ import com.runye.express.utils.ToastUtil;
  * @version V1.0
  * @Company:山西润叶网络科技有限公司
  */
-public class RegisterActivity extends Activity {
+public class RegisterActivity extends ComminBaseActivity {
 	private final String TAG = "RegisterActivity";
 	/**
 	 * 0 昵称 1 手机 2 邮箱 3 密码 4 确认密码 5 推广号

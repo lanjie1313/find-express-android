@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
+import com.runye.express.activity.common.ComminBaseActivity;
 import com.runye.express.activity.common.OrderInfoActivity;
 import com.runye.express.adapter.OrderModeAdapter;
 import com.runye.express.android.R;
@@ -32,8 +32,8 @@ import com.runye.express.utils.SysExitUtil;
  * @version V1.0
  * @Company:山西润叶网络科技有限公司
  */
-public class CouriersBaseActivity extends Activity implements
-		OnHeaderRefreshListener, OnFooterRefreshListener {
+public class CouriersBaseActivity extends ComminBaseActivity implements OnHeaderRefreshListener,
+		OnFooterRefreshListener {
 	private List<OrderModeBean> mList;
 	private PullToRefreshView mPullToRefreshView;
 	private ListView mListView;
@@ -82,10 +82,8 @@ public class CouriersBaseActivity extends Activity implements
 	class MyListLisytener implements OnItemClickListener {
 
 		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position,
-				long id) {
-			Intent intent = new Intent(CouriersBaseActivity.this,
-					OrderInfoActivity.class);
+		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+			Intent intent = new Intent(CouriersBaseActivity.this, OrderInfoActivity.class);
 			OrderModeBean bean = mList.get(position);
 			Bundle bundle = new Bundle();
 			// bundle.putSerializable("ORDERINFO", bean);
@@ -113,8 +111,7 @@ public class CouriersBaseActivity extends Activity implements
 			@Override
 			public void run() {
 
-				SimpleDateFormat formatter = new SimpleDateFormat(
-						"yyyy年MM月dd日   HH:mm:ss     ");
+				SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日   HH:mm:ss     ");
 				Date curDate = new Date(System.currentTimeMillis());
 				// 获取当前时间
 				String str = formatter.format(curDate);

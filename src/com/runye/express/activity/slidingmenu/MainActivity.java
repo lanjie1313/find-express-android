@@ -1,5 +1,10 @@
 package com.runye.express.activity.slidingmenu;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Fragment;
@@ -11,15 +16,23 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 
+import com.easemob.EMCallBack;
+import com.easemob.chat.EMChatManager;
+import com.easemob.chat.EMGroupManager;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.app.SlidingActivity;
 import com.runye.express.activity.common.MyApplication;
 import com.runye.express.activity.slidingmenu.ManagerFragment.SlidingMenuListOnItemClickListener;
 import com.runye.express.android.R;
+import com.runye.express.chat.Constant;
 import com.runye.express.chat.activity.ChatMainActivity;
+import com.runye.express.chat.db.UserDao;
+import com.runye.express.chat.domain.User;
+import com.runye.express.utils.LoadingDialog;
 import com.runye.express.utils.LogUtil;
 import com.runye.express.utils.LoginChat;
 import com.runye.express.utils.SysExitUtil;
+import com.runye.express.utils.ToastUtil;
 
 public class MainActivity extends SlidingActivity implements SlidingMenuListOnItemClickListener {
 
@@ -29,7 +42,6 @@ public class MainActivity extends SlidingActivity implements SlidingMenuListOnIt
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setTitle("主页");
 		setContentView(R.layout.frame_content);
 		SysExitUtil.activityList.add(this);
 		// 1、 set the Behind View
@@ -56,7 +68,7 @@ public class MainActivity extends SlidingActivity implements SlidingMenuListOnIt
 		FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 		ManagerFragment menuFragment = new ManagerFragment();
 		fragmentTransaction.replace(R.id.menu, menuFragment);
-		fragmentTransaction.replace(R.id.content_frame, new FindFragment());
+		fragmentTransaction.replace(R.id.content_frame, new OrderFragment());
 		fragmentTransaction.commit();
 
 		// 使用左上方icon可点，这样在onOptionsItemSelected里面才可以监听到R.id.home
@@ -105,6 +117,8 @@ public class MainActivity extends SlidingActivity implements SlidingMenuListOnIt
 		return super.onOptionsItemSelected(item);
 	}
 
+	LoadingDialog dialog;
+
 	@Override
 	public void selectItem(int position, String title) {
 
@@ -112,26 +126,87 @@ public class MainActivity extends SlidingActivity implements SlidingMenuListOnIt
 		Fragment fragment = null;
 		switch (position) {
 		case 0:
-			fragment = new FindFragment();
+			fragment = new OrderFragment();
 			break;
 		case 1:
 			/**
 			 * 判断聊天服务器是否加载成功
 			 */
 			if (MyApplication.getInstance().isLgoinChat()) {
-				startActivity(new Intent(MainActivity.this, ChatMainActivity.class));
-			} else {
-				LoginChat.loginChat(TAG, MainActivity.this);
-				if (MyApplication.getInstance().isLgoinChat()) {
-					LogUtil.d(TAG, "二次登陆成功");
-					startActivity(new Intent(MainActivity.this, ChatMainActivity.class));
-				}
+				LogUtil.d(TAG, "chat服务器状态为在线");
+				startActivity(new Intent(this, ChatMainActivity.class));
+			} else if (MyApplication.getInstance().isLgoinChat() == false) {
+				LogUtil.d(TAG, "chat服务器状态为离线");
+				loginChatOline();
 			}
+			break;
 		default:
 			break;
 		}
 		switchContent(fragment);
-		setTitle(title);
+	}
+
+	private void loginChatOline() {
+
+		dialog = new LoadingDialog(MainActivity.this, "获取聊天内容中");
+		dialog.show();
+		String username = MyApplication.getInstance().getUserName();
+		String password = MyApplication.getInstance().getPassword();
+		LogUtil.d(TAG, "username:" + username + "\npassword:" + password);
+		// 调用sdk登陆方法登陆聊天服务器
+		EMChatManager.getInstance().login("nx", "q", new EMCallBack() {
+			@Override
+			public void onSuccess() {
+				try {
+					// demo中简单的处理成每次登陆都去获取好友username，开发者自己根据情况而定
+					List<String> usernames = EMChatManager.getInstance().getContactUserNames();
+					Map<String, User> userlist = new HashMap<String, User>();
+					for (String username : usernames) {
+						User user = new User();
+						user.setUsername(username);
+						LoginChat.setUserHearder(username, user);
+						userlist.put(username, user);
+					}
+					// 添加user"申请与通知"
+					User newFriends = new User();
+					newFriends.setUsername(Constant.NEW_FRIENDS_USERNAME);
+					newFriends.setNick("申请与通知");
+					newFriends.setHeader("");
+					userlist.put(Constant.NEW_FRIENDS_USERNAME, newFriends);
+					// 添加"群聊"
+					User groupUser = new User();
+					groupUser.setUsername(Constant.GROUP_USERNAME);
+					groupUser.setNick("群聊");
+					groupUser.setHeader("");
+					userlist.put(Constant.GROUP_USERNAME, groupUser);
+					// 存入内存
+					MyApplication.getInstance().setContactList(userlist);
+					// 存入db
+					UserDao dao = new UserDao(MainActivity.this);
+					List<User> users = new ArrayList<User>(userlist.values());
+					dao.saveContactList(users);
+					// 获取群聊列表,sdk会把群组存入到EMGroupManager和db中
+					EMGroupManager.getInstance().getGroupsFromServer();
+					LogUtil.d(TAG, "chat信息加载成功");
+					MyApplication.getInstance().setIsLgoinChat(true);
+					dialog.dismiss();
+					startActivity(new Intent(MainActivity.this, ChatMainActivity.class));
+				} catch (Exception e) {
+				}
+
+			}
+
+			@Override
+			public void onProgress(int progress, String status) {
+
+			}
+
+			@Override
+			public void onError(int code, final String message) {
+				LogUtil.d(TAG, "chat登陆失败:" + message);
+				ToastUtil.showShortToast(MainActivity.this, "服务器登录失败");
+			}
+		});
 	}
 
 	public void switchContent(Fragment fragment) {

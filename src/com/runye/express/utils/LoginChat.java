@@ -25,7 +25,7 @@ public class LoginChat {
 	 * @param context
 	 * @return void
 	 */
-	public static void loginChat(final String TAG, final Context context) {
+	public static void loginChat(final String TAG, final Context fromContext) {
 		String username = MyApplication.getInstance().getUserName();
 		String password = MyApplication.getInstance().getPassword();
 		LogUtil.d(TAG, "username" + username + "\npassword" + password);
@@ -34,7 +34,6 @@ public class LoginChat {
 
 			@Override
 			public void onSuccess() {
-				LogUtil.d(TAG, "chat登陆成功");
 				try {
 					// demo中简单的处理成每次登陆都去获取好友username，开发者自己根据情况而定
 					List<String> usernames = EMChatManager.getInstance().getContactUserNames();
@@ -60,7 +59,7 @@ public class LoginChat {
 					// 存入内存
 					MyApplication.getInstance().setContactList(userlist);
 					// 存入db
-					UserDao dao = new UserDao(context);
+					UserDao dao = new UserDao(fromContext);
 					List<User> users = new ArrayList<User>(userlist.values());
 					dao.saveContactList(users);
 					// 获取群聊列表,sdk会把群组存入到EMGroupManager和db中
@@ -90,7 +89,7 @@ public class LoginChat {
 	 * @param username
 	 * @param user
 	 */
-	private static void setUserHearder(String username, User user) {
+	public static void setUserHearder(String username, User user) {
 		String headerName = null;
 		if (!TextUtils.isEmpty(user.getNick())) {
 			headerName = user.getNick();

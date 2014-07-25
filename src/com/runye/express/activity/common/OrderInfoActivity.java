@@ -6,7 +6,6 @@ import java.util.List;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
@@ -51,7 +50,7 @@ import com.runye.express.utils.SysExitUtil;
  * @version V1.0
  * @Company:山西润叶网络科技有限公司
  */
-public class OrderInfoActivity extends Activity {
+public class OrderInfoActivity extends ComminBaseActivity {
 	protected static final String TAG = "OrderInfoActivity";
 	private OrderModeBean mOrderModeBean;
 	/** 快递员集合 */

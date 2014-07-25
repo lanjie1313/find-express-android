@@ -1,6 +1,5 @@
 package com.runye.express.activity.common;
 
-import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -29,7 +28,7 @@ import com.runye.express.utils.ToastUtil;
  * @version V1.0
  * @Company:山西润叶网络科技有限公司
  */
-public class LocationActivity extends Activity {
+public class LocationActivity extends ComminBaseActivity {
 	/** 用户lng */
 	private int mLng;
 	/** 用户lat */

@@ -65,47 +65,71 @@
         </activity>
         <activity android:name="com.runye.express.activity.common.RegisterActivity" >
         </activity>
-        <activity android:name="com.runye.express.activity.administrator.AdminMainActivity" >
+        <activity
+            android:name="com.runye.express.activity.administrator.AdminMainActivity"
+            android:theme="@style/horizontal_slide" >
         </activity>
-        <activity android:name="com.runye.express.activity.administrator.AdminAddCouriersActivity" >
+        <activity
+            android:name="com.runye.express.activity.administrator.AdminAddCouriersActivity"
+            android:theme="@style/horizontal_slide" >
         </activity>
-        <activity android:name="com.runye.express.activity.administrator.AdminAddSiteActivity" >
+        <activity
+            android:name="com.runye.express.activity.administrator.AdminAddSiteActivity"
+            android:theme="@style/horizontal_slide" >
         </activity>
-        <activity android:name="com.runye.express.activity.administrator.AdminSiteActivity" >
+        <activity
+            android:name="com.runye.express.activity.administrator.AdminSiteActivity"
+            android:theme="@style/horizontal_slide" >
         </activity>
-        <activity android:name="com.runye.express.activity.administrator.AdminListActivity" >
+        <activity
+            android:name="com.runye.express.activity.administrator.AdminListActivity"
+            android:theme="@style/horizontal_slide" >
         </activity>
-        <activity android:name="com.runye.express.activity.administrator.AdminSiteInfoActivity" >
+        <activity
+            android:name="com.runye.express.activity.administrator.AdminSiteInfoActivity"
+            android:theme="@style/horizontal_slide" >
         </activity>
-        <activity android:name="com.runye.express.activity.administrator.AdminChangeCouriersActivity" >
+        <activity
+            android:name="com.runye.express.activity.administrator.AdminChangeCouriersActivity"
+            android:theme="@style/horizontal_slide" >
         </activity>
-        <activity android:name="com.runye.express.activity.administrator.AdminChangeSiteNameActivity" >
+        <activity
+            android:name="com.runye.express.activity.administrator.AdminChangeSiteNameActivity"
+            android:theme="@style/horizontal_slide" >
         </activity>
-        <activity android:name="com.runye.express.activity.administrator.AdminChangeWebMasterActivity" >
+        <activity
+            android:name="com.runye.express.activity.administrator.AdminChangeWebMasterActivity"
+            android:theme="@style/horizontal_slide" >
         </activity>
-        <activity android:name="com.runye.express.activity.common.OrderInfoActivity" >
+        <activity
+            android:name="com.runye.express.activity.common.OrderInfoActivity"
+            android:theme="@style/horizontal_slide" >
         </activity>
-        <activity android:name="com.runye.express.activity.common.SelectCouriersActivity" >
+        <activity
+            android:name="com.runye.express.activity.master.MasterBaseActivity"
+            android:theme="@style/horizontal_slide" >
         </activity>
-        <activity android:name="com.runye.express.activity.master.MasterMainActivity" >
+        <activity
+            android:name="com.runye.express.activity.couriers.CouriersManActivity"
+            android:theme="@style/horizontal_slide" >
         </activity>
-        <activity android:name="com.runye.express.activity.master.MasterBaseActivity" >
+        <activity
+            android:name="com.runye.express.activity.couriers.CouriersBaseActivity"
+            android:theme="@style/horizontal_slide" >
         </activity>
-        <activity android:name="com.runye.express.activity.couriers.CouriersManActivity" >
+        <activity
+            android:name="com.runye.express.activity.common.LocationActivity"
+            android:theme="@style/horizontal_slide" >
         </activity>
-        <activity android:name="com.runye.express.activity.couriers.CouriersBaseActivity" >
-        </activity>
-        <activity android:name="com.runye.express.activity.common.LocationActivity" >
-        </activity>
-        <activity android:name="com.runye.express.activity.common.ImagePagerActivity" >
+        <activity
+            android:name="com.runye.express.activity.common.ImagePagerActivity"
+            android:theme="@style/horizontal_slide" >
         </activity>
         <activity android:name="com.runye.express.activity.slidingmenu.MainActivity" >
         </activity>
         <activity
             android:name="com.runye.express.chat.activity.ChatMainActivity"
-            android:launchMode="singleTask"
             android:screenOrientation="portrait"
-            android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="adjustPan" >
         </activity>
         <!-- 聊天页面 -->

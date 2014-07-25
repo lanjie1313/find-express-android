@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.json.JSONException;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -19,6 +18,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
+import com.runye.express.activity.common.ComminBaseActivity;
 import com.runye.express.activity.common.MyApplication;
 import com.runye.express.activity.common.OrderInfoActivity;
 import com.runye.express.adapter.OrderModeAdapter;
@@ -44,7 +44,7 @@ import com.runye.express.utils.ToastUtil;
  * @version V1.0
  * @Company:山西润叶网络科技有限公司
  */
-public class MasterBaseActivity extends Activity implements OnHeaderRefreshListener, OnFooterRefreshListener {
+public class MasterBaseActivity extends ComminBaseActivity implements OnHeaderRefreshListener, OnFooterRefreshListener {
 	private final String TAG = "MasterBaseActivity";
 	/** 刷新listview */
 	private PullToRefreshView mPullToRefreshView;

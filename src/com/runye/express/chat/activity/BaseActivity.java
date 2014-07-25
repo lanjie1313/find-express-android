@@ -14,15 +14,24 @@
 
 package com.runye.express.chat.activity;
 
-import com.easemob.chat.EMChatManager;
-
 import android.app.Activity;
+import android.view.KeyEvent;
 
-public class BaseActivity extends Activity{
+import com.easemob.chat.EMChatManager;
+import com.runye.express.android.R;
+
+public class BaseActivity extends Activity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		//onresume时，取消notification显示
+		// onresume时，取消notification显示
 		EMChatManager.getInstance().activityResumed();
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		finish();
+		overridePendingTransition(0, R.anim.chat_slide_out_to_right);
+		return super.onKeyDown(keyCode, event);
 	}
 }

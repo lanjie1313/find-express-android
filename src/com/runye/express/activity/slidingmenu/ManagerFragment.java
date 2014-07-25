@@ -22,7 +22,6 @@ import com.runye.express.activity.common.MyApplication;
 import com.runye.express.adapter.SlidingMenuAdapter;
 import com.runye.express.android.R;
 import com.runye.express.bean.SlidingMenuItemsBean;
-import com.runye.express.utils.SysExitUtil;
 
 /**
  * fragment管理器
@@ -115,11 +114,9 @@ public class ManagerFragment extends Fragment implements OnItemClickListener, On
 		 * 没有定义的资源返回的值
 		 */
 		mSlidingMenuItems.add(new SlidingMenuItemsBean(mSlidingMenuTitles[0], mSlidingMenuImages.getResourceId(0, -1)));
-		mSlidingMenuItems.add(new SlidingMenuItemsBean(mSlidingMenuTitles[1], mSlidingMenuImages.getResourceId(1, -1),
-				true, count));
+		mSlidingMenuItems.add(new SlidingMenuItemsBean(mSlidingMenuTitles[1], mSlidingMenuImages.getResourceId(1, -1)));
 		mSlidingMenuItems.add(new SlidingMenuItemsBean(mSlidingMenuTitles[2], mSlidingMenuImages.getResourceId(2, -1)));
-		mSlidingMenuItems.add(new SlidingMenuItemsBean(mSlidingMenuTitles[3], mSlidingMenuImages.getResourceId(3, -1),
-				true, "22"));
+		mSlidingMenuItems.add(new SlidingMenuItemsBean(mSlidingMenuTitles[3], mSlidingMenuImages.getResourceId(3, -1)));
 
 		// slidingmenu适配器
 		mAdapter = new SlidingMenuAdapter(getActivity(), mSlidingMenuItems);
@@ -183,9 +180,10 @@ public class ManagerFragment extends Fragment implements OnItemClickListener, On
 	public void onClick(View v) {
 		switch (v.getId()) {
 		case R.id.fragment_manager_twodimensionalcode:
-			startActivity(new Intent(getActivity(), LoginActivity.class));
 			MyApplication.getInstance().logout();
-			SysExitUtil.exit();
+			// 重新显示登陆页面
+			((MainActivity) getActivity()).finish();
+			startActivity(new Intent(getActivity(), LoginActivity.class));
 			break;
 
 		case R.id.fragment_manager_headImageView:

@@ -1,44 +1,51 @@
-package com.runye.express.activity.master;
+package com.runye.express.activity.slidingmenu;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.runye.express.activity.master.MasterBaseActivity;
 import com.runye.express.android.R;
 import com.runye.express.utils.LogUtil;
 import com.runye.express.utils.SysExitUtil;
 
 /**
  * 
- * @ClassName: MasterMainActivity
- * @Description: 站长主界面
+ * @ClassName: OrderFragment
+ * @Description: 订单选择fragment
  * @author LanJie.Chen
- * @date 2014-7-7 下午2:29:21
+ * @date 2014-7-25 下午3:49:30
  * @version V1.0
  * @Company:山西润叶网络科技有限公司
  */
-public class MasterMainActivity extends Activity {
+public class OrderFragment extends Fragment {
 	/**
 	 * 0 、待分配订单 1、 已分配订单 2、当日处理订单 3、 以往处理订单 4、查看评价
 	 * */
 	private LinearLayout[] layouts;
 	private int[] ids;
-	private final String TAG = "MasterMainActivity";
+	private final String TAG = "OrderFragment";
+
+	public OrderFragment() {
+	}
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_master_main);
-		initUI();
-		SysExitUtil.activityList.add(MasterMainActivity.this);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		View rootView = inflater.inflate(R.layout.activity_master_main, container, false);
+		return rootView;
 
+	}
+
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState) {
+		super.onActivityCreated(savedInstanceState);
+		initUI();
+		SysExitUtil.activityList.add(getActivity());
 	}
 
 	private void initUI() {
@@ -47,35 +54,9 @@ public class MasterMainActivity extends Activity {
 				R.id.activity_master_main_evaluate };
 		layouts = new LinearLayout[ids.length];
 		for (int i = 0; i < ids.length; i++) {
-			layouts[i] = (LinearLayout) findViewById(ids[i]);
+			layouts[i] = (LinearLayout) getActivity().findViewById(ids[i]);
 			layouts[i].setOnClickListener(new MyLayoutListener());
 		}
-	}
-
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			Builder alertDialog = new AlertDialog.Builder(MasterMainActivity.this);
-			alertDialog.setMessage("确定退出？");
-			alertDialog.setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
-
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					SysExitUtil.exit();
-				}
-			});
-			alertDialog.setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {
-
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-
-				}
-			});
-			alertDialog.create();
-			alertDialog.show();
-
-		}
-		return super.onKeyDown(keyCode, event);
 	}
 
 	private class MyLayoutListener implements OnClickListener {
@@ -85,31 +66,31 @@ public class MasterMainActivity extends Activity {
 			switch (v.getId()) {
 			case R.id.activity_master_main_noAllocation:
 				LogUtil.d(TAG, "待分配订单 ");
-				Intent noAllocation = new Intent(MasterMainActivity.this, MasterBaseActivity.class);
+				Intent noAllocation = new Intent(getActivity(), MasterBaseActivity.class);
 				noAllocation.putExtra("STATUS", "new");
 				startActivity(noAllocation);
 				break;
 			case R.id.activity_master_main_yesAllocation:
 				LogUtil.d(TAG, " 已分配订单");
-				Intent yesAllocation = new Intent(MasterMainActivity.this, MasterBaseActivity.class);
+				Intent yesAllocation = new Intent(getActivity(), MasterBaseActivity.class);
 				yesAllocation.putExtra("STATUS", "confirmed");
 				startActivity(yesAllocation);
 				break;
 			case R.id.activity_master_main_compeleted:
 				LogUtil.d(TAG, "当日处理订单");
-				Intent compeleted = new Intent(MasterMainActivity.this, MasterBaseActivity.class);
+				Intent compeleted = new Intent(getActivity(), MasterBaseActivity.class);
 				compeleted.putExtra("STATUS", "delivering");
 				startActivity(compeleted);
 				break;
 			case R.id.activity_master_main_previous:
 				LogUtil.d(TAG, "以往处理订单");
-				Intent previous = new Intent(MasterMainActivity.this, MasterBaseActivity.class);
+				Intent previous = new Intent(getActivity(), MasterBaseActivity.class);
 				previous.putExtra("STATUS", "complete");
 				startActivity(previous);
 				break;
 			case R.id.activity_master_main_evaluate:
 				LogUtil.d(TAG, "查看评价");
-				Intent evaluate = new Intent(MasterMainActivity.this, MasterBaseActivity.class);
+				Intent evaluate = new Intent(getActivity(), MasterBaseActivity.class);
 				evaluate.putExtra("STATUS", "cancelled");
 				startActivity(evaluate);
 				break;

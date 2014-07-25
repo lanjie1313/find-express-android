@@ -1,15 +1,6 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <!--
-        Base application theme, dependent on API level. This theme is replaced
-        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
-    -->
     <style name="AppBaseTheme" parent="android:Theme.Light">
-        <!--
-            Theme customizations available in newer API levels can go in
-            res/values-vXX/styles.xml, while customizations related to
-            backward-compatibility can go here.
-        -->
     </style>
 
     <!-- Application theme. -->
@@ -110,17 +101,8 @@
         <item name="android:background">@drawable/chat_timestampe_bg</item>
     </style>
 
-    <style name="chat_AnimFade" parent="@android:style/Animation.Activity">
-        <item name="android:activityOpenEnterAnimation">@anim/chat_fade_in</item>
-        <item name="android:activityOpenExitAnimation">@anim/chat_hold</item>
-        <item name="android:activityCloseExitAnimation">@anim/chat_fade_out</item>
-    </style>
-
     <style name="chat_AnimFade2" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/chat_slide_in_from_right</item>
-        <item name="android:activityOpenExitAnimation">@anim/chat_slide_out_to_left</item>
-        <item name="android:activityCloseExitAnimation">@anim/chat_slide_out_to_right</item>
-        <item name="android:activityCloseEnterAnimation">@anim/chat_slide_in_from_left</item>
     </style>
 
     <style name="chat_AnimBottom" parent="@android:style/Animation">
@@ -143,13 +125,13 @@
         <item name="android:windowExitAnimation">@anim/chat_head_out</item>
     </style>
 
-    <style name="chat_Anim_style" parent="android:Theme.NoTitleBar.Fullscreen">
-        <item name="android:windowAnimationStyle">@style/chat_AnimFade</item>
-    </style>
+<!--     <style name="chat_Anim_style" parent="android:Theme.NoTitleBar.Fullscreen"> -->
+<!--         <item name="android:windowAnimationStyle">@style/chat_AnimFade</item> -->
+<!--     </style> -->
 
-    <style name="chat_Anim_style2" parent="android:Theme.NoTitleBar">
-        <item name="android:windowAnimationStyle">@style/chat_AnimFade</item>
-    </style>
+<!--     <style name="chat_Anim_style2" parent="android:Theme.NoTitleBar"> -->
+<!--         <item name="android:windowAnimationStyle">@style/chat_AnimFade</item> -->
+<!--     </style> -->
 
     <style name="chat_horizontal_slide" parent="android:Theme.NoTitleBar">
         <item name="android:windowAnimationStyle">@style/chat_AnimFade2</item>

@@ -29,6 +29,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -658,5 +659,14 @@ public class ChatMainActivity extends FragmentActivity {
 		super.onNewIntent(intent);
 		if (getIntent().getBooleanExtra("conflict", false) && !isConflictDialogShow)
 			showConflictDialog();
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			finish();
+			overridePendingTransition(0, R.anim.chat_slide_out_to_right);
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }

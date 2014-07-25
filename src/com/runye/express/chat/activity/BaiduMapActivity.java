@@ -80,10 +80,6 @@ public class BaiduMapActivity extends BaseActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		instance = this;
-		// Gl app = (Gl)this.getApplication();
-		// if (mBMapManager == null) {
-		// initEngineManager(this.getApplicationContext());
-		// }
 		setContentView(R.layout.activity_chat_baidumap);
 		mMapView = (MapView) findViewById(R.id.bmapView);
 		mMapController = mMapView.getController();

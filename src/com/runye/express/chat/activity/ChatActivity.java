@@ -1212,15 +1212,6 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 	}
 
 	/**
-	 * 返回
-	 * 
-	 * @param view
-	 */
-	public void back(View view) {
-		finish();
-	}
-
-	/**
 	 * 覆盖手机返回键
 	 */
 	@Override

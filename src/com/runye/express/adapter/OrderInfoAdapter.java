@@ -101,12 +101,15 @@ public class OrderInfoAdapter extends BaseAdapter {
 			public void onClick(View v) {
 				imageUris = new String[mData.size()];
 				LogUtil.d(TAG, mData.size() + "个图片");
+				String[] imageTitles = new String[mData.size()];
 				for (int i = 0; i < mData.size(); i++) {
 					imageUris[i] = HttpUri.UPLOADS + mData.get(i).getImagesID().get(0);
+					imageTitles[i] = mData.get(i).getName();
 					LogUtil.d(TAG, "所有图片地址：" + imageUris[i]);
 				}
 				Intent intent = new Intent(mContext, ImagePagerActivity.class);
 				intent.putExtra("IMAGEURIS", imageUris);
+				intent.putExtra("IMAGETITLE", imageTitles);
 				intent.putExtra("IMAGEURISPOSITION", position);
 				mContext.startActivity(intent);
 			}
