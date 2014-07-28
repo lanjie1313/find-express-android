@@ -1,77 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+   <!--ptr 自定义属性  -->
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ptr="http://schemas.android.com/apk/res/com.runye.express.android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
 
     <LinearLayout
-        android:id="@+id/activity_master_main_noAllocation"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@drawable/master_layout_selector"
-        android:gravity="center" >
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/master_main_noAllocation"
-            android:textColor="#333333" />
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:orientation="vertical" >
+
+                <com.runye.express.utils.HomeButton
+                    android:id="@+id/activity_master_main_noAllocation"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    ptr:backcolor="0"
+                    ptr:big="true"
+                    ptr:home="0"
+                    ptr:text="待处理"
+                    ptr:textSize="24sp" />
+
+                <com.runye.express.utils.HomeButton
+                    android:id="@+id/activity_master_main_compeleted"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="8dp"
+                    ptr:backcolor="1"
+                    ptr:big="true"
+                    ptr:home="1"
+                    ptr:text="已完成"
+                    ptr:textSize="24sp" />
+
+                <com.runye.express.utils.HomeButton
+                    android:id="@+id/activity_master_main_evaluate"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="8dp"
+                    ptr:backcolor="2"
+                    ptr:big="true"
+                    ptr:home="2"
+                    ptr:text="已取消"
+                    ptr:textSize="24sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical" >
+
+                <com.runye.express.utils.HomeButton
+                    android:id="@+id/activity_master_main_yesAllocation"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    ptr:backcolor="3"
+                    ptr:big="true"
+                    ptr:home="3"
+                    ptr:text="已分配"
+                    ptr:textSize="24sp" />
+
+                <com.runye.express.utils.HomeButton
+                    android:id="@+id/activity_master_main_previous"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="8dp"
+                    ptr:backcolor="4"
+                    ptr:big="true"
+                    ptr:home="4"
+                    ptr:text="配送中"
+                    ptr:textSize="24sp" />
+
+                <com.runye.express.utils.HomeButton
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="8dp"
+                    ptr:backcolor="5"
+                    ptr:big="true"
+                    ptr:home="5"
+                    ptr:text="hah"
+                    ptr:textSize="24sp" />
+
+                <com.runye.express.utils.HomeButton
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_marginTop="8dp"
+                    ptr:backcolor="6"
+                    ptr:big="true"
+                    ptr:home="6"
+                    ptr:text="哈哈" 
+                    ptr:textSize="24sp" />
+                
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/activity_master_main_yesAllocation"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@drawable/master_layout_selector"
-        android:gravity="center" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/master_main_yesAllocation"
-            android:textColor="#333333" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/activity_master_main_compeleted"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@drawable/master_layout_selector"
-        android:gravity="center" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/master_main_compeleted"
-            android:textColor="#333333" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/activity_master_main_previous"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@drawable/master_layout_selector"
-        android:gravity="center" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/master_main_previous"
-            android:textColor="#333333" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/activity_master_main_evaluate"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@drawable/master_layout_selector"
-        android:gravity="center" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/master_main_evaluate"
-            android:textColor="#333333" />
-    </LinearLayout>
-
-</LinearLayout>
+</ScrollView>

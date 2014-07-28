@@ -5,12 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.runye.express.activity.master.MasterBaseActivity;
 import com.runye.express.android.R;
+import com.runye.express.utils.HomeButton;
+import com.runye.express.utils.HomeButton.HomeClickListener;
 import com.runye.express.utils.LogUtil;
 import com.runye.express.utils.SysExitUtil;
 
@@ -27,7 +27,7 @@ public class OrderFragment extends Fragment {
 	/**
 	 * 0 、待分配订单 1、 已分配订单 2、当日处理订单 3、 以往处理订单 4、查看评价
 	 * */
-	private LinearLayout[] layouts;
+	private HomeButton[] buttons;
 	private int[] ids;
 	private final String TAG = "OrderFragment";
 
@@ -52,17 +52,17 @@ public class OrderFragment extends Fragment {
 		ids = new int[] { R.id.activity_master_main_noAllocation, R.id.activity_master_main_yesAllocation,
 				R.id.activity_master_main_compeleted, R.id.activity_master_main_previous,
 				R.id.activity_master_main_evaluate };
-		layouts = new LinearLayout[ids.length];
+		buttons = new HomeButton[ids.length];
 		for (int i = 0; i < ids.length; i++) {
-			layouts[i] = (LinearLayout) getActivity().findViewById(ids[i]);
-			layouts[i].setOnClickListener(new MyLayoutListener());
+			buttons[i] = (HomeButton) getActivity().findViewById(ids[i]);
+			buttons[i].setOnHomeClick(new MyHomeClickListener());
 		}
 	}
 
-	private class MyLayoutListener implements OnClickListener {
+	private class MyHomeClickListener implements HomeClickListener {
 
 		@Override
-		public void onClick(View v) {
+		public void onclick(View v) {
 			switch (v.getId()) {
 			case R.id.activity_master_main_noAllocation:
 				LogUtil.d(TAG, "待分配订单 ");
@@ -96,6 +96,7 @@ public class OrderFragment extends Fragment {
 				break;
 			default:
 				break;
+
 			}
 
 		}

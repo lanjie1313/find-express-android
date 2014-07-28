@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-   <color name="list_item_title">#fff</color>
-    <color name="list_background">#303030</color>
-    <color name="list_background_pressed">#992416</color>
-    <color name="list_divider">#272727</color>
-    <color name="counter_text_bg">#626262</color>
-    <color name="counter_text_color">#c5c4c4</color>
+
     <color name="white">#FFFFFF</color>
     <color name="tianlan">#87CEEB</color>
     <color name="yinhui">#C0C0C0</color>
@@ -18,8 +13,22 @@
     <color name="result_view">#b0000000</color>
     <color name="viewfinder_mask">#60000000</color>
     <color name="possible_result_points">#c0ffff00</color>
-      <color name="lightwhite">#ddd</color>
-      <drawable name="transparent">#00000000</drawable>
+    <color name="lightwhite">#ddd</color>
+    <color name="orange">#FFA011</color>
+    <color name="red">#DF5431</color>
+    <color name="purple">#B551A5</color>
+    <color name="blue">#299BE8</color>
+    <color name="air">#44DAFF</color>
+    <color name="texi">#6CB5B5</color>
+    <color name="jingdian">#A7B56C</color>
+    <color name="list_item_title">#fff</color>
+    <color name="list_background">#303030</color>
+    <color name="list_background_pressed">#992416</color>
+    <color name="list_divider">#272727</color>
+    <color name="counter_text_bg">#626262</color>
+    <color name="counter_text_color">#c5c4c4</color>
+
+    <drawable name="transparent">#00000000</drawable>
 
     <color name="common_white">#ffffff</color>
     <color name="common_white_shadow">#414141</color>
@@ -42,15 +51,12 @@
     <color name="tab_indicator_text_selected">#ffffff</color>
     <color name="tab_indicator_text_unselected">#aac5d7</color>
     <color name="page_viewer_margin_color">#007800</color>
-     <color name="transparent">#00000000</color>
-      
-     
-     
-     
-     <!--  -->
-     
-      <color name="common_top_bar_blue">#4ebcd3</color>
-      <color name="btn_login_normal">#007086</color>
+    <color name="transparent">#00000000</color>
+
+    <!--  -->
+
+    <color name="common_top_bar_blue">#4ebcd3</color>
+    <color name="btn_login_normal">#007086</color>
     <color name="btn_login_pressed">#303744</color>
     <color name="btn_logout_normal">#d33f3f</color>
     <color name="btn_logout_pressed">#DA5A4D</color>
@@ -66,16 +72,16 @@
     <color name="error_item_color">#F6EBE6</color>
     <color name="bottom_bar_normal_bg">#2D2F31</color>
     <color name="bottom_text_color_normal">#ffffff</color>
-     <color name="btn_white_normal">#f7f8f8</color>
+    <color name="btn_white_normal">#f7f8f8</color>
     <color name="btn_white_pressed">#b5b5b6</color>
     <color name="btn_green_noraml">#68C270</color>
     <color name="btn_green_pressed">#6FCD78</color>
     <color name="btn_gray_normal">#c0c0c0</color>
-     <color name="btn_gray_pressed_status">#b5b5b6</color>
+    <color name="btn_gray_pressed_status">#b5b5b6</color>
     <color name="btn_gray_pressed">#666667</color>
     <color name="btn_blue_normal">#1e90ff</color>
     <color name="btn_blue_pressed">#0066FF</color>
-     <color name="orange">#FFA500</color>
-     <color name="gray_pressed">#b5b5b6</color>
-     <color name="gray_normal">#666667</color>
+    <color name="gray_pressed">#b5b5b6</color>
+    <color name="gray_normal">#666667</color>
+
 </resources>

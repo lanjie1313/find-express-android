@@ -13,6 +13,8 @@ import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 
@@ -203,11 +205,45 @@ public class MainActivity extends SlidingActivity implements SlidingMenuListOnIt
 
 			@Override
 			public void onError(int code, final String message) {
+				dialog.dismiss();
 				LogUtil.d(TAG, "chat登陆失败:" + message);
-				ToastUtil.showShortToast(MainActivity.this, "服务器登录失败");
+				Thread thread = new Thread(new SampleTask(handler, message));
+				thread.start();
 			}
 		});
 	}
+
+	public class SampleTask implements Runnable {
+		Handler handler;
+		String message;
+
+		public SampleTask(Handler handler, String message) {
+			super();
+			this.handler = handler;
+			this.message = message;
+		}
+
+		@Override
+		public void run() {
+			// 任务完成后通知activity更新UI
+			Message msg = new Message();
+			msg.what = 1;
+			msg.obj = message;
+			// message将被添加到主线程的MQ中
+			handler.sendMessage(msg);
+
+		}
+
+	}
+
+	Handler handler = new Handler() {
+		@Override
+		public void handleMessage(android.os.Message msg) {
+			if (msg.what == 1) {
+				ToastUtil.showShortToast(MainActivity.this, "获取失败：" + (String) msg.obj);
+			}
+		};
+	};
 
 	public void switchContent(Fragment fragment) {
 		if (fragment != null) {
