@@ -754,11 +754,11 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int activity_login_remberPwd=0x7f050085;
         public static final int activity_login_userName=0x7f050083;
         public static final int activity_master_listview=0x7f050089;
-        public static final int activity_master_main_compeleted=0x7f05008b;
-        public static final int activity_master_main_evaluate=0x7f05008c;
+        public static final int activity_master_main_compeleted=0x7f05008c;
+        public static final int activity_master_main_evaluate=0x7f05008e;
         public static final int activity_master_main_noAllocation=0x7f05008a;
-        public static final int activity_master_main_previous=0x7f05008e;
-        public static final int activity_master_main_yesAllocation=0x7f05008d;
+        public static final int activity_master_main_previous=0x7f05008d;
+        public static final int activity_master_main_yesAllocation=0x7f05008b;
         public static final int activity_master_pullToRefreshView=0x7f050088;
         public static final int activity_order_infos_bottomLayout=0x7f05002d;
         public static final int activity_order_infos_buyAddress=0x7f050092;

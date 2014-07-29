@@ -1,4 +1,4 @@
-package com.runye.express.activity.slidingmenu;
+package com.runye.express.fragment;
 
 import java.util.ArrayList;
 
@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.runye.express.activity.common.LoginActivity;
 import com.runye.express.activity.common.MyApplication;
+import com.runye.express.activity.slidingmenu.MainActivity;
 import com.runye.express.adapter.SlidingMenuAdapter;
 import com.runye.express.android.R;
 import com.runye.express.bean.SlidingMenuItemsBean;

@@ -1,109 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-   <!--ptr 自定义属性  -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ptr="http://schemas.android.com/apk/res/com.runye.express.android"
     android:layout_width="fill_parent"
-    android:layout_height="wrap_content" >
+    android:layout_height="wrap_content"
+    android:background="#545454" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="horizontal" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:orientation="vertical" >
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="8dp"
-                android:orientation="vertical" >
+            <com.runye.express.utils.HomeButton
+                android:id="@+id/activity_master_main_noAllocation"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                ptr:backcolor="0"
+                ptr:big="true"
+                ptr:home="0"
+                ptr:text="酒店"
+                ptr:textSize="24sp" />
 
-                <com.runye.express.utils.HomeButton
-                    android:id="@+id/activity_master_main_noAllocation"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    ptr:backcolor="0"
-                    ptr:big="true"
-                    ptr:home="0"
-                    ptr:text="待处理"
-                    ptr:textSize="24sp" />
-
-                <com.runye.express.utils.HomeButton
-                    android:id="@+id/activity_master_main_compeleted"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_marginTop="8dp"
-                    ptr:backcolor="1"
-                    ptr:big="true"
-                    ptr:home="1"
-                    ptr:text="已完成"
-                    ptr:textSize="24sp" />
-
-                <com.runye.express.utils.HomeButton
-                    android:id="@+id/activity_master_main_evaluate"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_marginTop="8dp"
-                    ptr:backcolor="2"
-                    ptr:big="true"
-                    ptr:home="2"
-                    ptr:text="已取消"
-                    ptr:textSize="24sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginRight="8dp"
+            <com.runye.express.utils.HomeButton
+                android:id="@+id/activity_master_main_yesAllocation"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
                 android:layout_marginTop="8dp"
-                android:orientation="vertical" >
+                ptr:backcolor="1"
+                ptr:big="true"
+                ptr:home="1"
+                ptr:text="团购"
+                ptr:textSize="24sp" />
 
-                <com.runye.express.utils.HomeButton
-                    android:id="@+id/activity_master_main_yesAllocation"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    ptr:backcolor="3"
-                    ptr:big="true"
-                    ptr:home="3"
-                    ptr:text="已分配"
-                    ptr:textSize="24sp" />
+            <com.runye.express.utils.HomeButton
+                android:id="@+id/activity_master_main_compeleted"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="8dp"
+                ptr:backcolor="2"
+                ptr:big="true"
+                ptr:home="2"
+                ptr:text="火车票"
+                ptr:textSize="24sp" />
+        </LinearLayout>
 
-                <com.runye.express.utils.HomeButton
-                    android:id="@+id/activity_master_main_previous"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_marginTop="8dp"
-                    ptr:backcolor="4"
-                    ptr:big="true"
-                    ptr:home="4"
-                    ptr:text="配送中"
-                    ptr:textSize="24sp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:orientation="vertical" >
 
-                <com.runye.express.utils.HomeButton
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_marginTop="8dp"
-                    ptr:backcolor="5"
-                    ptr:big="true"
-                    ptr:home="5"
-                    ptr:text="hah"
-                    ptr:textSize="24sp" />
+            <com.runye.express.utils.HomeButton
+                android:id="@+id/activity_master_main_previous"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                ptr:backcolor="3"
+                ptr:big="true"
+                ptr:home="3"
+                ptr:text="团购"
+                ptr:textSize="24sp" />
 
-                <com.runye.express.utils.HomeButton
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
-                    android:layout_marginTop="8dp"
-                    ptr:backcolor="6"
-                    ptr:big="true"
-                    ptr:home="6"
-                    ptr:text="哈哈" 
-                    ptr:textSize="24sp" />
-                
-            </LinearLayout>
+            <com.runye.express.utils.HomeButton
+                android:id="@+id/activity_master_main_evaluate"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="8dp"
+                ptr:backcolor="4"
+                ptr:big="true"
+                ptr:home="4"
+                ptr:text="机票"
+                ptr:textSize="24sp" />
+
+            <com.runye.express.utils.HomeButton
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="8dp"
+                ptr:backcolor="5"
+                ptr:big="true"
+                ptr:home="5"
+                ptr:text="机票"
+                ptr:textSize="24sp" />
         </LinearLayout>
     </LinearLayout>
 

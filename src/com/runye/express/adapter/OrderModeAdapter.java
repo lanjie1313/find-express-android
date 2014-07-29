@@ -3,6 +3,7 @@ package com.runye.express.adapter;
 import java.util.List;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.runye.express.android.R;
 import com.runye.express.bean.OrderModeBean;
+import com.runye.express.utils.BadgeView;
 import com.runye.express.utils.ToastUtil;
 
 /**
@@ -60,17 +62,22 @@ public class OrderModeAdapter extends BaseAdapter {
 			holder.tv_orderTime = (TextView) convertView.findViewById(R.id.item_order_listview_orderTime);
 			holder.tv_deliveryAddress = (TextView) convertView.findViewById(R.id.item_order_listview_deliveryAddress);
 			holder.bt_change = (Button) convertView.findViewById(R.id.item_order_listview_status);
-
+			holder.badgeView = new BadgeView(mContext, holder.tv_couriersNumber);
+			holder.badgeView.setBadgeBackgroundColor(Color.parseColor("#5ECB1D"));
+			holder.badgeView.setBadgePosition(BadgeView.POSITION_TOP_LEFT);
+			holder.badgeView.setTextColor(Color.BLACK);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
+		holder.badgeView.setText(position + 1 + "");
+		holder.badgeView.show();
 		holder.tv_orderNumber.setText(mData.get(position).getNumber());
 		holder.tv_orderTime.setText(mData.get(position).getCreation_date());
 		holder.tv_orderCharge.setText("￥" + mData.get(position).getTotal());
 		holder.tv_deliveryAddress.setText(mData.get(position).getRecipient_address());
 		// holder.tv_couriersName.setText(mData.get(position).getCouriersName());
-		holder.tv_couriersNumber.setText(position + 1 + "");
+		// holder.tv_couriersNumber.setText(position + 1 + "");
 		// holder.tv_orderCharge.setText(mData.get(position).getCharge());
 		holder.tv_orderShop.setText(mData.get(position).getRecipient_name());
 		// holder.tv_orderTime.setText(mData.get(position).getTime());
@@ -97,7 +104,7 @@ public class OrderModeAdapter extends BaseAdapter {
 		return convertView;
 	}
 
-	private class ViewHolder {
+	static class ViewHolder {
 		/** 订单编号 */
 		TextView tv_orderNumber;
 		/** 订单时间 */
@@ -116,7 +123,7 @@ public class OrderModeAdapter extends BaseAdapter {
 		// RatingBar rb_rating;
 		/** button */
 		Button bt_change;
-
+		BadgeView badgeView;
 	}
 
 	class MyButtonListener implements OnClickListener {

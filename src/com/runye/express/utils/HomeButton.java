@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -19,48 +20,30 @@ import android.widget.ImageView;
 
 import com.runye.express.android.R;
 
-/**
- * 
- * @ClassName: HomeButton
- * @Description: 动态按钮图片
- * @author LanJie.Chen
- * @date 2014-7-28 下午3:58:12
- * @version V1.0
- * @Company:山西润叶网络科技有限公司
- */
 public class HomeButton extends ImageView {
-	/** 指纹效果 */
-	private Bitmap bitmapFinger;
-	/** 背景图 */
-	private Bitmap home_back;
-	/** 新的标签 */
+
+	private Bitmap bitmap;
+	private Bitmap home_flight;
 	private Bitmap label_new;
-	/** 按下状态 */
 	private int state = 0; // 按下
-	/** 背景色 */
-	private int colorNum;
+
+	private int color;
 	private float textsize;
-	/** 大小判断 */
 	private boolean big;
-	/** 获得位置索引 */
 	private int home;
-	/** 背景文字 */
 	private String text;
-	/** 屏幕宽 */
+
 	private int screenW;
-	/** 屏幕高 */
 	private int screenH;
-	/** 点击事件 */
+
+	// 点击事件
 	private HomeClickListener listener = null;
-	/** 背景色 */
+
 	private final int[] colors = { getResources().getColor(R.color.red), getResources().getColor(R.color.orange),
 			getResources().getColor(R.color.blue), getResources().getColor(R.color.purple),
-			getResources().getColor(R.color.air), getResources().getColor(R.color.texi),
-			getResources().getColor(R.color.jingdian) };
+			getResources().getColor(R.color.air), getResources().getColor(R.color.jingdian) };
 
-	/** 背景图片 */
 	private final Bitmap[] bitmaps = { BitmapFactory.decodeResource(getResources(), R.drawable.home_hotel),
-			BitmapFactory.decodeResource(getResources(), R.drawable.home_hotel),
 			BitmapFactory.decodeResource(getResources(), R.drawable.home_hotel),
 			BitmapFactory.decodeResource(getResources(), R.drawable.home_hotel),
 			BitmapFactory.decodeResource(getResources(), R.drawable.home_hotel),
@@ -73,38 +56,38 @@ public class HomeButton extends ImageView {
 		super(context);
 	}
 
-	@SuppressWarnings("deprecation")
 	public HomeButton(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		bitmapFinger = BitmapUtils.zoomImage(BitmapFactory.decodeResource(getResources(), R.drawable.fingerprint), 200,
-				200);
+		bitmap = BitmapUtils.zoomImage(BitmapFactory.decodeResource(getResources(), R.drawable.fingerprint), 127, 122);
+
 		label_new = BitmapFactory.decodeResource(getResources(), R.drawable.label_new);
-		/** 自定义属性用到，获取xml文件中的属性值 */
 		TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.HomeButton);
-		colorNum = typedArray.getInt(R.styleable.HomeButton_backcolor, 0);
+		color = typedArray.getInt(R.styleable.HomeButton_backcolor, 0);
 		textsize = typedArray.getDimension(R.styleable.HomeButton_textSize, 24);
 		big = typedArray.getBoolean(R.styleable.HomeButton_big, true);
 		home = typedArray.getInt(R.styleable.HomeButton_home, 0);
 		text = typedArray.getString(R.styleable.HomeButton_text);
 		typedArray.recycle();
-		home_back = bitmaps[home];
+		System.out.println("color:" + color + " textsize:" + textsize + " big:" + big + " home:" + home);
+		home_flight = bitmaps[home];
 		// 获取屏幕的大小，坑爹找了老半天
-		screenW = ((Activity) context).getWindow().getWindowManager().getDefaultDisplay().getWidth() / 2 - 16;
-
-		if (big) {// 大图的话宽高一样
+		// screenW = ((Activity)
+		// context).getWindow().getWindowManager().getDefaultDisplay().getWidth()
+		// / 2 - 16;
+		DisplayMetrics dm = new DisplayMetrics();
+		((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(dm);
+		screenW = dm.widthPixels / 2;
+		if (big) {
 			screenH = screenW;
-		} else {// 小图的话宽高2:1
+		} else {
 			screenH = screenW / 2 - 4;
 		}
 
 	}
 
-	/**
-	 * 测量view及其内容来确定view的宽度和高度。这个方法在measure(int, int)中被调用，必须被重写来精确和有效的测量view的内容。
-	 */
 	@Override
 	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-		// 重新设置屏幕大小，存储测量得到的宽度和高度值
+		// 重新设置屏幕大小
 		setMeasuredDimension(screenW, screenH);
 	}
 
@@ -119,67 +102,58 @@ public class HomeButton extends ImageView {
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 
-		canvas.drawColor(colors[colorNum]);
+		canvas.drawColor(colors[color]);
 		Paint paint = new Paint();
 		paint.setColor(Color.WHITE);
-		paint.setTextSize(36);
-		// 大图
+		paint.setTextSize(24);
 		if (big) {
-			Matrix matrix = new Matrix();
-			// 确保图片画在框架中间
-			matrix.postTranslate(this.getWidth() / 2 - home_back.getWidth() / 2,
-					this.getHeight() / 2 - home_back.getHeight() / 2);
-			canvas.drawText(text, this.getWidth() / 2, this.getHeight() / 2, paint);
-			// canvas.drawBitmap(home_back, matrix, paint);
-			if (home == 6) {
+			// Matrix matrix = new Matrix();
+			// matrix.postTranslate(this.getWidth() / 2 - home_flight.getWidth()
+			// / 2, this.getHeight() / 2 - home_flight.getHeight() / 2);
+			canvas.drawText(text, 10, 40, paint);
+			// canvas.drawBitmap(home_flight, matrix, paint);
+			// } else {
+			// Matrix matrix_small = new Matrix();
+			// matrix_small.postTranslate(10,
+			// this.getHeight() / 2 - home_flight.getHeight() / 2);
+			// canvas.drawBitmap(home_flight, matrix_small, new Paint());
+			// if (home == 3) {
+			// paint.setTextSize(16);
+			// canvas.drawText(
+			// "夜宵酒店",
+			// home_flight.getWidth() + 20,
+			// this.getHeight() / 2 - home_flight.getHeight() / 2 + 10,
+			// paint);
+			// canvas.drawText("加载中...", home_flight.getWidth() + 20,
+			// this.getHeight() / 2 + home_flight.getHeight() / 2,
+			// paint);
+			// } else if (home == 5) {
+			// paint.setTextSize(16);
+			// canvas.drawText(
+			// "送机",
+			// home_flight.getWidth() + 20,
+			// this.getHeight() / 2 - home_flight.getHeight() / 2 + 10,
+			// paint);
+			// canvas.drawText("免费叫出租", home_flight.getWidth() + 20,
+			// this.getHeight() / 2 + home_flight.getHeight() / 2,
+			// paint);
+			// } else {
+			// canvas.drawText(text, home_flight.getWidth() + 20,
+			// this.getHeight() / 2 + home_flight.getHeight() / 2,
+			// paint);
+			// }
+			if (home == 5) {
 				Matrix matrix_new = new Matrix();
 				matrix_new.postTranslate(screenW - label_new.getWidth(), 0);
 				canvas.drawBitmap(label_new, matrix_new, new Paint());
 			}
-		} else {// 小图
-			// Matrix matrix_small = new Matrix();
-			// matrix_small.postTranslate(10, this.getHeight() / 2 -
-			// home_back.getHeight() / 2);
-			// canvas.drawBitmap(home_back, matrix_small, new Paint());
-			// if (home == 3) {
-			// paint.setTextSize(16);
-			// canvas.drawText("夜宵酒店", home_back.getWidth() + 20,
-			// this.getHeight() /
-			// 2 - home_back.getHeight() / 2
-			// + 10, paint);
-			// canvas.drawText("加载中...", home_back.getWidth() + 20,
-			// this.getHeight()
-			// / 2 + home_back.getHeight() / 2,
-			// paint);
-			// } else if (home == 5) {
-			// paint.setTextSize(16);
-			// canvas.drawText("送机", home_back.getWidth() + 20, this.getHeight()
-			// / 2
-			// - home_back.getHeight() / 2 + 10,
-			// paint);
-			// canvas.drawText("免费叫出租", home_back.getWidth() + 20,
-			// this.getHeight()
-			// / 2 + home_back.getHeight() / 2,
-			// paint);
-			// } else {
-			// canvas.drawText(text, home_back.getWidth() + 20, this.getHeight()
-			// / 2
-			// + home_back.getHeight() / 2,
-			// paint);
-			// }
-			// if (home == 6) {
-			// Matrix matrix_new = new Matrix();
-			// matrix_new.postTranslate(screenW - label_new.getWidth(), 0);
-			// canvas.drawBitmap(label_new, matrix_new, new Paint());
-			// }
 
 		}
-		// 如果按下
 		if (state == 1) {
 			Matrix matrix2 = new Matrix();
-			matrix2.postTranslate(this.getWidth() / 2 - bitmapFinger.getWidth() / 2, this.getHeight() / 2
-					- bitmapFinger.getHeight() / 2);
-			canvas.drawBitmap(bitmapFinger, matrix2, new Paint());
+			matrix2.postTranslate(this.getWidth() / 2 - bitmap.getWidth() / 2,
+					this.getHeight() / 2 - bitmap.getHeight() / 2);
+			canvas.drawBitmap(bitmap, matrix2, new Paint());
 		}
 	}
 
