@@ -1,21 +1,21 @@
 package com.runye.express.activity.master;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.json.JSONException;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Gravity;
+import android.os.Handler;
+import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.runye.express.activity.common.ComminBaseActivity;
@@ -28,10 +28,11 @@ import com.runye.express.async.RequestParams;
 import com.runye.express.bean.OrderModeBean;
 import com.runye.express.http.HttpUri;
 import com.runye.express.http.MyHttpClient;
-import com.runye.express.listview.PullToRefreshView;
-import com.runye.express.listview.PullToRefreshView.OnFooterRefreshListener;
-import com.runye.express.listview.PullToRefreshView.OnHeaderRefreshListener;
+import com.runye.express.listview.SingleLayoutListView;
+import com.runye.express.listview.SingleLayoutListView.OnLoadMoreListener;
+import com.runye.express.listview.SingleLayoutListView.OnRefreshListener;
 import com.runye.express.utils.LogUtil;
+import com.runye.express.utils.MyToast;
 import com.runye.express.utils.SysExitUtil;
 import com.runye.express.utils.ToastUtil;
 
@@ -44,29 +45,75 @@ import com.runye.express.utils.ToastUtil;
  * @version V1.0
  * @Company:山西润叶网络科技有限公司
  */
-public class MasterBaseActivity extends ComminBaseActivity implements OnHeaderRefreshListener, OnFooterRefreshListener {
+public class MasterBaseActivity extends ComminBaseActivity {
 	private final String TAG = "MasterBaseActivity";
 	/** 刷新listview */
-	private PullToRefreshView mPullToRefreshView;
-	private ListView mListView;
-	private List<OrderModeBean> mList;
-	private OrderModeAdapter adapter;
+	private SingleLayoutListView mListView;
+	private List<OrderModeBean> mOrderData;
+	private OrderModeAdapter mAdapter;
 	/** 商户token */
 	private String access_token;
 	/** 分页 */
 	private int skip = 0;
 	/** 请求个数 */
 	private final int limit = 10;
-	/** 请求次数 */
-	private int allCount = 0;
-	/** 下拉 */
-	private final HashMap<Integer, List<OrderModeBean>> map = new HashMap<Integer, List<OrderModeBean>>();
-	/** 上拉 */
-	private final HashMap<Integer, Integer> map1 = new HashMap<Integer, Integer>();
-	/** 是否下拉操作 */
-	private boolean isHead;
-	/** 是否上拉操作 */
-	private boolean isFoot;
+	private static final int LOAD_DATA_FINISH = 10;
+	private static final int REFRESH_DATA_FINISH = 11;
+	/***/
+	private static final int STOP_REFRSH = 12;
+	/** 当前请求 */
+	@SuppressLint("UseSparseArrays")
+	private final Map<Integer, Integer> mapNow = new HashMap<Integer, Integer>();
+	/** 上一个请求 */
+	@SuppressLint("UseSparseArrays")
+	private final Map<Integer, Integer> mapBefore = new HashMap<Integer, Integer>();
+	/** 请求计数器 */
+	private int count = 0;
+	private int index = 0;
+	private int index2 = 0;
+	@SuppressLint("HandlerLeak")
+	private final Handler mHandler = new Handler() {
+
+		@Override
+		@SuppressWarnings("unchecked")
+		public void handleMessage(android.os.Message msg) {
+			switch (msg.what) {
+			case REFRESH_DATA_FINISH:
+				if (mAdapter != null) {
+					mAdapter.mList = (List<OrderModeBean>) msg.obj;
+					mAdapter.notifyDataSetChanged();
+				}
+				mListView.onRefreshComplete(); // 下拉刷新完成
+				if (count > 1) {
+					if (mapNow.get(count).equals(mapBefore.get(count))) {
+						MyToast.createToast(MasterBaseActivity.this, "没有新的订单");
+					} else {
+						MyToast.createToast(MasterBaseActivity.this,
+								"有新的订单:" + (mapNow.get(count) - mapBefore.get(count)) + "个");
+					}
+				}
+				break;
+			case LOAD_DATA_FINISH:
+				if (mAdapter != null) {
+					mAdapter.mList.addAll((List<OrderModeBean>) msg.obj);
+					LogUtil.d(TAG, "mAdapter.mList加载后的大小：" + mAdapter.mList.size());
+					mAdapter.notifyDataSetChanged();
+				}
+				mListView.onLoadMoreComplete(); // 加载更多完成
+				if (mAdapter.mList.size() == mapNow.get(count)) {
+					// 这里做处理是为了让数据加载完成后再次点击加载更多，才出现提示
+					if (index > 0) {
+						MyToast.createToast(MasterBaseActivity.this, "没有更多了");
+					}
+					index++;
+				}
+				break;
+			case STOP_REFRSH:
+				mListView.setDoRefreshOnUIChanged((Boolean) msg.obj);
+				break;
+			}
+		};
+	};
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -80,19 +127,45 @@ public class MasterBaseActivity extends ComminBaseActivity implements OnHeaderRe
 	@Override
 	protected void onResume() {
 		super.onResume();
+		if (index2 > 0) {
+			mListView.setDoRefreshOnUIChanged(false);
+		}
+		index2++;
 	}
 
 	private void initUI() {
-		mPullToRefreshView = (PullToRefreshView) findViewById(R.id.activity_master_pullToRefreshView);
-		mPullToRefreshView.setOnHeaderRefreshListener(this);
-		mPullToRefreshView.setOnFooterRefreshListener(this);
-		mListView = (ListView) findViewById(R.id.activity_master_listview);
-		mList = new ArrayList<OrderModeBean>();
+
+		mListView = (SingleLayoutListView) findViewById(R.id.singleLayoutListView);
+		mOrderData = new ArrayList<OrderModeBean>();
 		mListView.setOnItemClickListener(new MyListLisytener());
-		mPullToRefreshView.startRefresh();
-		getOrders();
-		adapter = new OrderModeAdapter(MasterBaseActivity.this, mList);
-		mListView.setAdapter(adapter);
+		mAdapter = new OrderModeAdapter(MasterBaseActivity.this, mOrderData);
+		mListView.setAdapter(mAdapter);
+		mListView.setCanLoadMore(true);
+		mListView.setCanRefresh(true);
+		mListView.setAutoLoadMore(true);
+		mListView.setMoveToFirstItemAfterRefresh(true);
+		mListView.setDoRefreshOnUIChanged(true);
+		mListView.setOnRefreshListener(new OnRefreshListener() {
+
+			@Override
+			public void onRefresh() {
+				// TODO 下拉刷新
+				Log.d(TAG, "onRefresh");
+				skip = 0;
+				getOrders(0);
+			}
+		});
+
+		mListView.setOnLoadListener(new OnLoadMoreListener() {
+
+			@Override
+			public void onLoadMore() {
+				// TODO 加载更多
+				Log.d(TAG, "onLoad");
+				skip += limit;
+				getOrders(1);
+			}
+		});
 
 	}
 
@@ -101,14 +174,18 @@ public class MasterBaseActivity extends ComminBaseActivity implements OnHeaderRe
 	 * @Description: 这里应该是首次获取和刷新和加载更多
 	 * @return void
 	 */
-
-	private void getOrders() {
-
+	private void getOrders(final int type) {
+		// 首先尝试读取缓存
+		// String cacheConfigString = ConfigCache.getUrlCache(HttpUri.ORDERS);
+		// 根据结果判定是读取缓存，还是重新读取
+		// if (cacheConfigString != null) {
+		// LogUtil.d(TAG, "listview有缓存,使用缓存");
+		// handleResult(cacheConfigString, type);
+		// } else {
+		// LogUtil.d(TAG, "listview没有缓存,不使用缓存");
 		/**
 		 * 根据siteid请求order
 		 */
-		// SharedPreferences preferences = getSharedPreferences("user_info", 1);
-		// // String siteId = preferences.getString("siteId", "");
 		access_token = MyApplication.getInstance().getAccess_token();
 		// 根据状态加载订单
 		String status = getIntent().getStringExtra("STATUS");
@@ -121,72 +198,45 @@ public class MasterBaseActivity extends ComminBaseActivity implements OnHeaderRe
 			public void onSuccess(int statusCode, org.json.JSONObject response) {
 				super.onSuccess(statusCode, response);
 				LogUtil.d(TAG, "请求成功：" + response);
-
-				// 根据Bean类的到每一个json数组的项
-				String replaceAfter = "";
 				try {
-					replaceAfter = response.getJSONArray("records").toString().replaceAll("\"__v\"", "\"v\"")
+					count++;
+					int orderNumber = response.getJSONObject("_metadata").getInt("count");
+					mapNow.put(count, orderNumber);
+					if (count > 1) {
+
+						mapBefore.put(count, mapNow.get(count - 1));
+					}
+					String result = response.getJSONArray("records").toString().replaceAll("\"__v\"", "\"v\"")
 							.replaceAll("\"_id\"", "\"id\"");
+					List<OrderModeBean> _list = new ArrayList<OrderModeBean>();
+					_list.addAll(JSON.parseArray(result, OrderModeBean.class));
+					if (type == 0) { // 下拉刷新
+						// Collections.reverse(mList); //逆序
+						LogUtil.d(TAG, "第" + count + "次请求订单的总数：" + mapNow.get(count));
+						if (count > 1) {
+
+							if (mapNow.get(count).equals(mapBefore.get(count))) {
+								LogUtil.d(TAG, "没有新的订单");
+							} else {
+								LogUtil.d(TAG, "有新的订单:" + (mapNow.get(count) - mapBefore.get(count)));
+							}
+						}
+						Message _Msg = mHandler.obtainMessage(REFRESH_DATA_FINISH, _list);
+						mHandler.sendMessage(_Msg);
+					} else if (type == 1) {
+						Message _Msg = mHandler.obtainMessage(LOAD_DATA_FINISH, _list);
+						mHandler.sendMessage(_Msg);
+					}
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
-				// 下拉清空list
-				if (isHead) {
-					mList.clear();
-				}
-				mList.addAll(JSON.parseArray(replaceAfter, OrderModeBean.class));
-				// 记录新增加的item
-				int count = 0;
-				map.put(allCount, mList);
-				// 当前的list
-				List<OrderModeBean> listNow = map.get(allCount);
-				// 上一个list
-				List<OrderModeBean> listBefor = map.get(allCount - 1);
-				// 只保证在下拉刷新时比较
-				if (allCount > 0 && isHead) {
-					for (int i = 0; i < listBefor.size(); i++) {
-						String idBefor = listBefor.get(i).getId();
-						String idNow = listNow.get(i).getId();
-						if (!idBefor.equals(idNow)) {
-							count++;
-						}
-					}
-					if (count > 0) {
-						ToastUtil.showShortToast(MasterBaseActivity.this, "新增加了" + count + "个订单");
-					} else {
-						Toast toast = Toast.makeText(getApplicationContext(), "没有新订单", Toast.LENGTH_SHORT);
-						toast.setGravity(Gravity.CENTER | Gravity.TOP, 0, 100);
-						toast.show();
-					}
-
-				}
-				LogUtil.d(TAG, "mList刷新后的大小========" + mList.size());
-				// 只保证在上拉加载时比较是否加载完
-				map1.put(allCount, mList.size());
-				if (isFoot) {
-					if (map1.get(allCount) == map1.get(allCount - 1)) {
-						ToastUtil.showShortToast(MasterBaseActivity.this, "没有更多订单了");
-					} else {
-						ToastUtil.showShortToast(MasterBaseActivity.this,
-								"新加载了" + (map1.get(allCount) - map1.get(allCount - 1)) + "个订单");
-					}
-				}
-				SimpleDateFormat formatter = new SimpleDateFormat("yyyy年MM月dd日   HH:mm:ss     ");
-				Date curDate = new Date(System.currentTimeMillis());
-				// 获取当前时间
-				String str = formatter.format(curDate);
-				mPullToRefreshView.onHeaderRefreshComplete("最后更新：" + str);
-				mPullToRefreshView.onFooterRefreshComplete();
-				adapter.notifyDataSetChanged();
-				allCount++;
-				isHead = false;
-				isFoot = false;
+				// 成功下载，则保存到本地作为后面缓存文件
+				// ConfigCache.setUrlCache(result, HttpUri.ORDERS);
 			}
 
 			@Override
 			public void onFailure(Throwable e, org.json.JSONObject errorResponse) {
 				super.onFailure(e, errorResponse);
-
 				ToastUtil.showShortToast(MasterBaseActivity.this, "请求出错了，请重试");
 			}
 		});
@@ -202,32 +252,15 @@ public class MasterBaseActivity extends ComminBaseActivity implements OnHeaderRe
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			Intent intent = new Intent(MasterBaseActivity.this, OrderInfoActivity.class);
-			OrderModeBean bean = mList.get(position);
+			OrderModeBean bean = mAdapter.mList.get(position);
 			Bundle bundle = new Bundle();
 			bundle.putSerializable("ORDERINFO", bean);
 			intent.putExtras(bundle);
 			startActivity(intent);
+			boolean stop = false;
+			Message message = mHandler.obtainMessage(STOP_REFRSH, stop);
+			mHandler.sendMessage(message);
 		}
-	}
-
-	@Override
-	public void onHeaderRefresh(PullToRefreshView view) {
-		// 刷新
-		isHead = true;
-		skip = 0;
-		LogUtil.d(TAG, "skip:onHeaderRefresh==" + skip);
-		getOrders();
-
-	}
-
-	@Override
-	public void onFooterRefresh(PullToRefreshView view) {
-		// 加载
-		isFoot = true;
-		skip += limit;
-		LogUtil.d(TAG, "skip:onFooterRefresh==" + skip);
-		getOrders();
-
 	}
 
 }

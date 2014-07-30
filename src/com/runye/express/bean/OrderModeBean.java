@@ -100,6 +100,7 @@ public class OrderModeBean implements Serializable {
 
 	/** 再解析 */
 	public void setRecipient(String recipient) {
+
 		// 解析recipient
 		JSONObject recipientObject = JSON.parseObject(recipient);
 		this.recipient_city = recipientObject.getString("city");
@@ -108,11 +109,17 @@ public class OrderModeBean implements Serializable {
 		this.recipient_street2 = recipientObject.getString("street2");
 		this.recipient_name = recipientObject.getString("name");
 		this.recipient_phone_num = recipientObject.getString("phone_num");
-		// 解析location
-		JSONObject locationObject = recipientObject.getJSONObject("location");
-		this.location_lng = locationObject.getDouble("lng");
-		this.location_lat = locationObject.getDouble("lat");
-		this.recipient = recipient;
+		if (recipientObject.containsKey("location")) {
+			// 解析location
+			JSONObject locationObject = recipientObject.getJSONObject("location");
+			this.location_lng = locationObject.getDouble("lng");
+			this.location_lat = locationObject.getDouble("lat");
+		} else {
+			// 默认华顿的地址
+			this.location_lng = 112.563597;
+			this.location_lat = 37.793202;
+		}
+		// this.recipient = recipient;
 	}
 
 	public String getRecipient_city() {

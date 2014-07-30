@@ -59,9 +59,9 @@ public class OrderFragment extends Fragment {
 	}
 
 	private void initUI() {
-		ids = new int[] { R.id.activity_master_main_noAllocation, R.id.activity_master_main_yesAllocation,
-				R.id.activity_master_main_compeleted, R.id.activity_master_main_previous,
-				R.id.activity_master_main_evaluate };
+		ids = new int[] { R.id.activity_master_main_new, R.id.activity_master_main_confirmed,
+				R.id.activity_master_main_delivery, R.id.activity_master_main_compeleted,
+				R.id.activity_master_main_cancle };
 		buttons = new HomeButton[ids.length];
 		mBadgeView = new BadgeView[ids.length];
 		for (int i = 0; i < ids.length; i++) {
@@ -69,6 +69,8 @@ public class OrderFragment extends Fragment {
 			buttons[i].setOnHomeClick(new MyHomeClickListener());
 			mBadgeView[i] = new BadgeView(getActivity(), buttons[i]);
 		}
+		HomeButton button = (HomeButton) getActivity().findViewById(R.id.bt);
+		BadgeView badgeView = new BadgeView(getActivity(), button);
 		getNewOrder();
 		getCancelledOrder();
 		getConfirmedOrder();
@@ -206,31 +208,31 @@ public class OrderFragment extends Fragment {
 		@Override
 		public void onclick(View v) {
 			switch (v.getId()) {
-			case R.id.activity_master_main_noAllocation:
+			case R.id.activity_master_main_new:
 				LogUtil.d(TAG, "待分配订单 ");
 				Intent noAllocation = new Intent(getActivity(), MasterBaseActivity.class);
 				noAllocation.putExtra("STATUS", "new");
 				startActivity(noAllocation);
 				break;
-			case R.id.activity_master_main_yesAllocation:
+			case R.id.activity_master_main_confirmed:
 				LogUtil.d(TAG, " 已分配订单");
 				Intent yesAllocation = new Intent(getActivity(), MasterBaseActivity.class);
 				yesAllocation.putExtra("STATUS", "confirmed");
 				startActivity(yesAllocation);
 				break;
-			case R.id.activity_master_main_compeleted:
+			case R.id.activity_master_main_delivery:
 				LogUtil.d(TAG, "当日处理订单");
 				Intent compeleted = new Intent(getActivity(), MasterBaseActivity.class);
 				compeleted.putExtra("STATUS", "delivering");
 				startActivity(compeleted);
 				break;
-			case R.id.activity_master_main_previous:
+			case R.id.activity_master_main_compeleted:
 				LogUtil.d(TAG, "以往处理订单");
 				Intent previous = new Intent(getActivity(), MasterBaseActivity.class);
 				previous.putExtra("STATUS", "complete");
 				startActivity(previous);
 				break;
-			case R.id.activity_master_main_evaluate:
+			case R.id.activity_master_main_cancle:
 				LogUtil.d(TAG, "查看评价");
 				Intent evaluate = new Intent(getActivity(), MasterBaseActivity.class);
 				evaluate.putExtra("STATUS", "cancelled");

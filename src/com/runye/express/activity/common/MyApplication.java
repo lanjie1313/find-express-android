@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
@@ -38,6 +39,7 @@ import com.runye.express.chat.db.DbOpenHelper;
 import com.runye.express.chat.db.UserDao;
 import com.runye.express.chat.domain.User;
 import com.runye.express.utils.LogUtil;
+import com.runye.express.utils.NetWork;
 import com.runye.express.utils.PreferenceUtils;
 import com.umeng.analytics.MobclickAgent;
 
@@ -59,6 +61,7 @@ public class MyApplication extends Application {
 	public static Context applicationContext;
 	private Map<String, User> contactList;
 	private boolean isLgoinChat = false;
+	public static int mNetWorkState = NetWork.NETWORN_NONE;
 	/** 本地安装版本 */
 	public int localVersion = 0;
 	/** 服务器版本 */
@@ -111,6 +114,8 @@ public class MyApplication extends Application {
 		getVersion(this);
 		// 初始化chatSDK
 		initEMChat();
+		// 加载缓存路径
+		initEnvironment();
 	}
 
 	public static MyApplication getInstance() {
@@ -231,6 +236,29 @@ public class MyApplication extends Application {
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
 		}
+	}
+
+	/** SD卡缓存路径 */
+	public static String mSdcardDataDir;
+
+	/**
+	 * 
+	 * @Description: 获取当前缓存路径
+	 * @return void
+	 */
+	private void initEnvironment() {
+		if (Environment.getExternalStorageState().equals(android.os.Environment.MEDIA_MOUNTED)) {
+			File file = new File(Environment.getExternalStorageDirectory().getPath() + "/find-express/cache/");
+			if (!file.exists()) {
+				if (file.mkdirs()) {
+					mSdcardDataDir = file.getAbsolutePath();
+				}
+			} else {
+				mSdcardDataDir = file.getAbsolutePath();
+			}
+		}
+
+		mNetWorkState = NetWork.getConnectedType(applicationContext);
 	}
 
 	/**

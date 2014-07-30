@@ -58,8 +58,7 @@ public class HomeButton extends ImageView {
 
 	public HomeButton(Context context, AttributeSet attrs) {
 		super(context, attrs);
-		bitmap = BitmapUtils.zoomImage(BitmapFactory.decodeResource(getResources(), R.drawable.fingerprint), 127, 122);
-
+		bitmap = BitmapUtils.zoomImage(BitmapFactory.decodeResource(getResources(), R.drawable.fingerprint), 300, 300);
 		label_new = BitmapFactory.decodeResource(getResources(), R.drawable.label_new);
 		TypedArray typedArray = context.obtainStyledAttributes(attrs, R.styleable.HomeButton);
 		color = typedArray.getInt(R.styleable.HomeButton_backcolor, 0);
@@ -110,7 +109,7 @@ public class HomeButton extends ImageView {
 			// Matrix matrix = new Matrix();
 			// matrix.postTranslate(this.getWidth() / 2 - home_flight.getWidth()
 			// / 2, this.getHeight() / 2 - home_flight.getHeight() / 2);
-			canvas.drawText(text, 10, 40, paint);
+			canvas.drawText(text, this.getWidth() / 2, this.getHeight() / 2, paint);
 			// canvas.drawBitmap(home_flight, matrix, paint);
 			// } else {
 			// Matrix matrix_small = new Matrix();

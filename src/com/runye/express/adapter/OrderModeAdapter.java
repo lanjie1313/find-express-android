@@ -27,16 +27,16 @@ import com.runye.express.utils.ToastUtil;
  */
 public class OrderModeAdapter extends BaseAdapter {
 	Context mContext;
-	private final List<OrderModeBean> mData;
+	public List<OrderModeBean> mList;
 
 	public OrderModeAdapter(Context context, List<OrderModeBean> data) {
 		this.mContext = context;
-		this.mData = data;
+		this.mList = data;
 	}
 
 	@Override
 	public int getCount() {
-		return mData.size();
+		return mList.size();
 	}
 
 	@Override
@@ -72,21 +72,21 @@ public class OrderModeAdapter extends BaseAdapter {
 		}
 		holder.badgeView.setText(position + 1 + "");
 		holder.badgeView.show();
-		holder.tv_orderNumber.setText(mData.get(position).getNumber());
-		holder.tv_orderTime.setText(mData.get(position).getCreation_date());
-		holder.tv_orderCharge.setText("￥" + mData.get(position).getTotal());
-		holder.tv_deliveryAddress.setText(mData.get(position).getRecipient_address());
-		// holder.tv_couriersName.setText(mData.get(position).getCouriersName());
+		holder.tv_orderNumber.setText(mList.get(position).getNumber());
+		holder.tv_orderTime.setText(mList.get(position).getCreation_date());
+		holder.tv_orderCharge.setText("￥" + mList.get(position).getTotal());
+		holder.tv_deliveryAddress.setText(mList.get(position).getRecipient_address());
+		// holder.tv_couriersName.setText(mList.get(position).getCouriersName());
 		// holder.tv_couriersNumber.setText(position + 1 + "");
-		// holder.tv_orderCharge.setText(mData.get(position).getCharge());
-		holder.tv_orderShop.setText(mData.get(position).getRecipient_name());
-		// holder.tv_orderTime.setText(mData.get(position).getTime());
+		// holder.tv_orderCharge.setText(mList.get(position).getCharge());
+		holder.tv_orderShop.setText(mList.get(position).getRecipient_name());
+		// holder.tv_orderTime.setText(mList.get(position).getTime());
 		holder.bt_change.setOnClickListener(new MyButtonListener());
-		// holder.rb_rating.setRating(Float.valueOf(mData.get(position)
+		// holder.rb_rating.setRating(Float.valueOf(mList.get(position)
 		// .getRating()));
 
-		holder.bt_change.setText(mData.get(position).getStatus());
-		String status = mData.get(position).getStatus();
+		holder.bt_change.setText(mList.get(position).getStatus());
+		String status = mList.get(position).getStatus();
 		if (status.equals("new")) {
 			holder.bt_change.setBackgroundResource(R.drawable.waiting);
 			holder.bt_change.setText("待分配");

@@ -19,7 +19,7 @@ import android.os.Message;
 import android.widget.RemoteViews;
 
 import com.runye.express.android.R;
-import com.runye.express.utils.FileUtil;
+import com.runye.express.utils.FileUtils;
 import com.runye.express.utils.LogUtil;
 
 /***
@@ -65,7 +65,7 @@ public class UpdateService extends Service {
 		LogUtil.d(TAG, "UpdateService+onStartCommand");
 		app_name = getResources().getString(R.string.app_name);
 		// 创建文件
-		FileUtil.createFile(app_name);
+		FileUtils.createFile(app_name);
 
 		createNotification();
 
@@ -132,7 +132,7 @@ public class UpdateService extends Service {
 			public void run() {
 
 				try {
-					long downloadSize = downloadUpdateFile(down_url, FileUtil.updateFile.toString());
+					long downloadSize = downloadUpdateFile(down_url, FileUtils.updateFile.toString());
 					if (downloadSize > 0) {
 						// 下载成功
 						message.what = DOWN_OK;
@@ -159,7 +159,7 @@ public class UpdateService extends Service {
 		// 停止服务
 		stopSelf();
 		// 下载完成，点击安装
-		Uri uri = Uri.fromFile(FileUtil.updateFile);
+		Uri uri = Uri.fromFile(FileUtils.updateFile);
 		Intent intent = new Intent(Intent.ACTION_VIEW);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.setDataAndType(uri, "application/vnd.android.package-archive");
