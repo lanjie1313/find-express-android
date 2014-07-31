@@ -110,10 +110,6 @@
             android:theme="@style/horizontal_slide" >
         </activity>
         <activity
-            android:name="com.runye.express.activity.couriers.CouriersManActivity"
-            android:theme="@style/horizontal_slide" >
-        </activity>
-        <activity
             android:name="com.runye.express.activity.couriers.CouriersBaseActivity"
             android:theme="@style/horizontal_slide" >
         </activity>

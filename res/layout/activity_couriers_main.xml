@@ -1,63 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:ptr="http://schemas.android.com/apk/res/com.runye.express.android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#545454" >
 
     <LinearLayout
-        android:id="@+id/activity_couriers_main_noAllocation"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@drawable/master_layout_selector"
-        android:gravity="center" >
+        android:layout_height="match_parent"
+        android:layout_marginTop="20dp"
+        android:background="#545454"
+        android:orientation="horizontal" >
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/couriers_main_noAllocation"
-            android:textColor="#333333" />
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <com.runye.express.utils.HomeButton
+                android:id="@+id/activity_couriers_main_new"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                ptr:backcolor="0"
+                ptr:big="true"
+                ptr:home="0"
+                ptr:text="待配送"
+                ptr:textSize="24sp" />
+
+            <com.runye.express.utils.HomeButton
+                android:id="@+id/activity_couriers_main_history"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="8dp"
+                ptr:backcolor="1"
+                ptr:big="true"
+                ptr:home="1"
+                ptr:text="历史订单"
+                ptr:textSize="24sp" />
+
+            <com.runye.express.utils.HomeButton
+                android:id="@+id/activity_couriers_main_more"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="8dp"
+                ptr:backcolor="5"
+                ptr:big="true"
+                ptr:home="5"
+                ptr:text="更多..."
+                ptr:textSize="24sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_weight="1"
+            android:orientation="vertical" >
+
+            <com.runye.express.utils.HomeButton
+                android:id="@+id/activity_couriers_main_completed"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                ptr:backcolor="3"
+                ptr:big="true"
+                ptr:home="3"
+                ptr:text="已完成"
+                ptr:textSize="24sp" />
+
+            <com.runye.express.utils.HomeButton
+                android:id="@+id/activity_couriers_main_evaluation"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="8dp"
+                ptr:backcolor="4"
+                ptr:big="true"
+                ptr:home="4"
+                ptr:text="查看评价"
+                ptr:textSize="24sp" />
+        </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/activity_couriers_main_compeleted"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@drawable/master_layout_selector"
-        android:gravity="center" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/couriers_main_compeleted"
-            android:textColor="#333333" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/activity_couriers_main_previous"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@drawable/master_layout_selector"
-        android:gravity="center" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/couriers_main_previous"
-            android:textColor="#333333" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/activity_couriers_main_evaluate"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="@drawable/master_layout_selector"
-        android:gravity="center" >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/couriers_main_evaluate"
-            android:textColor="#333333" />
-    </LinearLayout>
-
-</LinearLayout>
+</ScrollView>

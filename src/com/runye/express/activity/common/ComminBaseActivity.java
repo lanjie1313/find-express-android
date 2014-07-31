@@ -1,12 +1,18 @@
 package com.runye.express.activity.common;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.KeyEvent;
 
 import com.runye.express.android.R;
 import com.runye.express.utils.LogUtil;
 
 public class ComminBaseActivity extends Activity {
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {

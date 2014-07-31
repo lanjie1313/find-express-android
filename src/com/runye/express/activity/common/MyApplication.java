@@ -69,11 +69,11 @@ public class MyApplication extends Application {
 	/** 安装目录 */
 	public String downloadDir = "FindExpress/";
 	/** 是否管理员 */
-	private boolean ISADMIN = false;
+	private boolean ADMIN = false;
 	/** 是否站长 */
-	private boolean ISMASTER = false;
+	private boolean MASTER = false;
 	/** 是否快递员 */
-	private boolean ISCOURIERS = false;
+	private boolean COURIERS = false;
 	/** 身份 */
 	private String identity;
 	/** 用户名 */
@@ -391,32 +391,32 @@ public class MyApplication extends Application {
 		this.contactList = contactList;
 	}
 
-	/** 是否管理员 */
-	public boolean isISADMIN() {
-		return ISADMIN;
-	}
-
-	public void setISADMIN(boolean iSADMIN) {
-		ISADMIN = iSADMIN;
-	}
-
-	/** 是否站长 */
-	public boolean isISMASTER() {
-		return ISMASTER;
-	}
-
-	public void setISMASTER(boolean iSMASTER) {
-		ISMASTER = iSMASTER;
-	}
-
-	/** 是否快递员 */
-	public boolean isISCOURIERS() {
-		return ISCOURIERS;
-	}
-
-	public void setISCOURIERS(boolean iSCOURIERS) {
-		ISCOURIERS = iSCOURIERS;
-	}
+	// /** 是否管理员 */
+	// public boolean isISADMIN() {
+	// return ISADMIN;
+	// }
+	//
+	// public void setISADMIN(boolean iSADMIN) {
+	// ISADMIN = iSADMIN;
+	// }
+	//
+	// /** 是否站长 */
+	// public boolean isISMASTER() {
+	// return ISMASTER;
+	// }
+	//
+	// public void setISMASTER(boolean iSMASTER) {
+	// ISMASTER = iSMASTER;
+	// }
+	//
+	// /** 是否快递员 */
+	// public boolean isISCOURIERS() {
+	// return ISCOURIERS;
+	// }
+	//
+	// public void setISCOURIERS(boolean iSCOURIERS) {
+	// ISCOURIERS = iSCOURIERS;
+	// }
 
 	/**
 	 * 
@@ -444,6 +444,52 @@ public class MyApplication extends Application {
 				LogUtil.d(TAG, identity);
 				this.identity = identity;
 			}
+		}
+	}
+
+	public boolean isADMIN() {
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
+		ADMIN = preferences.getBoolean("ADMIN", false);
+		return ADMIN;
+	}
+
+	public boolean isMASTER() {
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
+		MASTER = preferences.getBoolean("MASTER", false);
+		return MASTER;
+	}
+
+	public boolean isCOURIERS() {
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
+		COURIERS = preferences.getBoolean("COURIERS", false);
+		return COURIERS;
+	}
+
+	public void setADMIN(boolean ADMIN) {
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
+		SharedPreferences.Editor editor = preferences.edit();
+		if (editor.putBoolean("ADMIN", ADMIN).commit()) {
+			LogUtil.d(TAG, ADMIN + "");
+			this.ADMIN = ADMIN;
+		}
+	}
+
+	public void setMASTER(boolean MASTER) {
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
+		SharedPreferences.Editor editor = preferences.edit();
+		if (editor.putBoolean("MASTER", MASTER).commit()) {
+			LogUtil.d(TAG, MASTER + "");
+			this.MASTER = MASTER;
+		}
+
+	}
+
+	public void setCOURIERS(boolean COURIERS) {
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
+		SharedPreferences.Editor editor = preferences.edit();
+		if (editor.putBoolean("COURIERS", COURIERS).commit()) {
+			LogUtil.d(TAG, COURIERS + "");
+			this.COURIERS = COURIERS;
 		}
 	}
 

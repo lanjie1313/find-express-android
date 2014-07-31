@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.KeyEvent;
+import android.view.Menu;
 import android.view.MenuItem;
 
 import com.easemob.EMCallBack;
@@ -29,9 +30,10 @@ import com.runye.express.chat.Constant;
 import com.runye.express.chat.activity.ChatMainActivity;
 import com.runye.express.chat.db.UserDao;
 import com.runye.express.chat.domain.User;
+import com.runye.express.fragment.CouriersFragment;
 import com.runye.express.fragment.ManagerFragment;
-import com.runye.express.fragment.OrderFragment;
 import com.runye.express.fragment.ManagerFragment.SlidingMenuListOnItemClickListener;
+import com.runye.express.fragment.MasterFragment;
 import com.runye.express.utils.LoadingDialog;
 import com.runye.express.utils.LogUtil;
 import com.runye.express.utils.LoginChat;
@@ -72,53 +74,21 @@ public class MainActivity extends SlidingActivity implements SlidingMenuListOnIt
 		FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
 		ManagerFragment menuFragment = new ManagerFragment();
 		fragmentTransaction.replace(R.id.menu, menuFragment);
-		fragmentTransaction.replace(R.id.content_frame, new OrderFragment());
+		if (MyApplication.getInstance().isMASTER()) {
+			LogUtil.d(TAG, "初始化站长界面");
+			fragmentTransaction.replace(R.id.content_frame, new MasterFragment());
+		} else if (MyApplication.getInstance().isCOURIERS()) {
+			LogUtil.d(TAG, "初始化快递员界面");
+			fragmentTransaction.replace(R.id.content_frame, new CouriersFragment());
+		} else if (MyApplication.getInstance().isCOURIERS()) {
+			LogUtil.d(TAG, "初始化管理员界面");
+			// fragmentTransaction.replace(R.id.content_frame, new
+			// CouriersFragment());
+		}
 		fragmentTransaction.commit();
-
 		// 使用左上方icon可点，这样在onOptionsItemSelected里面才可以监听到R.id.home
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
-	}
-
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			Builder alertDialog = new AlertDialog.Builder(this);
-			alertDialog.setMessage("确定退出？");
-			alertDialog.setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
-
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					SysExitUtil.exit();
-				}
-			});
-			alertDialog.setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {
-
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-
-				}
-			});
-			alertDialog.create();
-			alertDialog.show();
-
-		}
-		if (keyCode == KeyEvent.KEYCODE_MENU) {
-			toggle();
-		}
-
-		return super.onKeyDown(keyCode, event);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			toggle(); // 动态判断自动关闭或开启SlidingMenu
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
 	}
 
 	LoadingDialog dialog;
@@ -127,10 +97,19 @@ public class MainActivity extends SlidingActivity implements SlidingMenuListOnIt
 	public void selectItem(int position, String title) {
 
 		// update the main content by replacing fragments
+		// 判断登陆身份
 		Fragment fragment = null;
 		switch (position) {
 		case 0:
-			fragment = new OrderFragment();
+			if (MyApplication.getInstance().isMASTER()) {// 站长
+				LogUtil.d(TAG, "切换站长界面");
+				fragment = new MasterFragment();
+			} else if (MyApplication.getInstance().isCOURIERS()) {// 快递员
+				LogUtil.d(TAG, "切换快递员界面");
+				fragment = new CouriersFragment();
+			} else if (MyApplication.getInstance().isADMIN()) {
+
+			}
 			break;
 		case 1:
 			/**
@@ -255,4 +234,49 @@ public class MainActivity extends SlidingActivity implements SlidingMenuListOnIt
 		}
 	}
 
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+		if (keyCode == KeyEvent.KEYCODE_BACK) {
+			Builder alertDialog = new AlertDialog.Builder(this);
+			alertDialog.setMessage("确定退出？");
+			alertDialog.setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					SysExitUtil.exit();
+				}
+			});
+			alertDialog.setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+
+				}
+			});
+			alertDialog.create();
+			alertDialog.show();
+
+		}
+		if (keyCode == KeyEvent.KEYCODE_MENU) {
+			toggle();
+		}
+
+		return super.onKeyDown(keyCode, event);
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			toggle(); // 动态判断自动关闭或开启SlidingMenu
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 }

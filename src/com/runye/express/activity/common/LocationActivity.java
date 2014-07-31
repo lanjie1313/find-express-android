@@ -155,9 +155,9 @@ public class LocationActivity extends ComminBaseActivity {
 		public void onClickedPopup(int index) {
 			if (index == 0) {
 
-				ToastUtil.showLongToast(LocationActivity.this, "预约你大爷！");
+				ToastUtil.showLongToast(LocationActivity.this, "点击1");
 			} else if (index == 1) {
-				ToastUtil.showLongToast(LocationActivity.this, "点我是sb！");
+				ToastUtil.showLongToast(LocationActivity.this, "点击2");
 			} else if (index == 2) {
 				// // 去这里
 				// Intent intent = new Intent(AdministratorMain.this,

@@ -86,10 +86,10 @@ public class MasterBaseActivity extends ComminBaseActivity {
 				mListView.onRefreshComplete(); // 下拉刷新完成
 				if (count > 1) {
 					if (mapNow.get(count).equals(mapBefore.get(count))) {
-						MyToast.createToast(MasterBaseActivity.this, "没有新的订单");
+						MyToast.createToast(MasterBaseActivity.this, "没有新的订单", false);
 					} else {
 						MyToast.createToast(MasterBaseActivity.this,
-								"有新的订单:" + (mapNow.get(count) - mapBefore.get(count)) + "个");
+								"有新的订单:" + (mapNow.get(count) - mapBefore.get(count)) + "个", false);
 					}
 				}
 				break;
@@ -103,7 +103,7 @@ public class MasterBaseActivity extends ComminBaseActivity {
 				if (mAdapter.mList.size() == mapNow.get(count)) {
 					// 这里做处理是为了让数据加载完成后再次点击加载更多，才出现提示
 					if (index > 0) {
-						MyToast.createToast(MasterBaseActivity.this, "没有更多了");
+						MyToast.createToast(MasterBaseActivity.this, "没有更多了", false);
 					}
 					index++;
 				}
@@ -252,7 +252,8 @@ public class MasterBaseActivity extends ComminBaseActivity {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 			Intent intent = new Intent(MasterBaseActivity.this, OrderInfoActivity.class);
-			OrderModeBean bean = mAdapter.mList.get(position);
+			// 注意，这个刷新listview返回的position有误，需要减一
+			OrderModeBean bean = mAdapter.mList.get(position - 1);
 			Bundle bundle = new Bundle();
 			bundle.putSerializable("ORDERINFO", bean);
 			intent.putExtras(bundle);

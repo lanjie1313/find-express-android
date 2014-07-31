@@ -21,7 +21,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.runye.express.activity.administrator.AdminSiteActivity;
-import com.runye.express.activity.couriers.CouriersManActivity;
 import com.runye.express.activity.slidingmenu.MainActivity;
 import com.runye.express.android.R;
 import com.runye.express.async.JsonHttpResponseHandler;
@@ -195,7 +194,7 @@ public class LoginActivity extends Activity {
 			} else if (cb_remberInfo.isChecked() == false) {
 				MyApplication.getInstance().setRember(false);
 			}
-			if (MyApplication.getInstance().isISADMIN()) {
+			if (MyApplication.getInstance().isADMIN()) {
 
 				startActivity(new Intent(LoginActivity.this, AdminSiteActivity.class));
 			}
@@ -235,12 +234,7 @@ public class LoginActivity extends Activity {
 							MyApplication.getInstance().setStatus(response.optString("status"));
 							MyApplication.getInstance().setVerifyStatus(response.optString("verifyStatus"));
 							mLoadingDialog.dismiss();
-							if (MyApplication.getInstance().isISMASTER()) {
-								startActivity(new Intent(LoginActivity.this, MainActivity.class));
-							}
-							if (MyApplication.getInstance().isISCOURIERS()) {
-								startActivity(new Intent(LoginActivity.this, CouriersManActivity.class));
-							}
+							startActivity(new Intent(LoginActivity.this, MainActivity.class));
 						}
 					});
 
@@ -306,22 +300,22 @@ public class LoginActivity extends Activity {
 		String str = tv_identity.getText().toString();
 		if (!userName.equals("") && !passWord.equals("")) {
 			if (str.equals(getResources().getStringArray(R.array.login_identity)[0])) {
-				MyApplication.getInstance().setISADMIN(true);
-				MyApplication.getInstance().setISCOURIERS(false);
-				MyApplication.getInstance().setISMASTER(false);
+				MyApplication.getInstance().setADMIN(true);
+				MyApplication.getInstance().setCOURIERS(false);
+				MyApplication.getInstance().setMASTER(false);
 				identity = "admin";
 			}
 			if (str.equals(getResources().getStringArray(R.array.login_identity)[1])) {
 				identity = "sitemanager";
-				MyApplication.getInstance().setISMASTER(true);
-				MyApplication.getInstance().setISADMIN(false);
-				MyApplication.getInstance().setISCOURIERS(false);
+				MyApplication.getInstance().setMASTER(true);
+				MyApplication.getInstance().setADMIN(false);
+				MyApplication.getInstance().setCOURIERS(false);
 			}
 			if (str.equals(getResources().getStringArray(R.array.login_identity)[2])) {
 				identity = "postman";
-				MyApplication.getInstance().setISCOURIERS(true);
-				MyApplication.getInstance().setISMASTER(false);
-				MyApplication.getInstance().setISADMIN(false);
+				MyApplication.getInstance().setCOURIERS(true);
+				MyApplication.getInstance().setMASTER(false);
+				MyApplication.getInstance().setADMIN(false);
 			}
 			return true;
 		}
