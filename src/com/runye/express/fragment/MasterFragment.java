@@ -3,6 +3,8 @@ package com.runye.express.fragment;
 import org.json.JSONException;
 
 import android.app.Fragment;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -24,6 +26,7 @@ import com.runye.express.async.RequestParams;
 import com.runye.express.http.HttpUri;
 import com.runye.express.http.MyHttpClient;
 import com.runye.express.utils.BadgeView;
+import com.runye.express.utils.CheckVersion;
 import com.runye.express.utils.HomeButton;
 import com.runye.express.utils.HomeButton.HomeClickListener;
 import com.runye.express.utils.LogUtil;
@@ -63,6 +66,8 @@ public class MasterFragment extends Fragment {
 		};
 	};
 
+	private MyReceiver myReceiver;
+
 	public MasterFragment() {
 	}
 
@@ -85,7 +90,20 @@ public class MasterFragment extends Fragment {
 		super.onActivityCreated(savedInstanceState);
 		initUI();
 		SysExitUtil.activityList.add(getActivity());
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction("com.example.communication.RECEIVER");
+		myReceiver = new MyReceiver();
+		getActivity().registerReceiver(myReceiver, intentFilter);
 
+	}
+
+	private class MyReceiver extends BroadcastReceiver {
+
+		@Override
+		public void onReceive(Context context, Intent intent) {
+			CheckVersion.checkVersion(getActivity());
+
+		}
 	}
 
 	@Override
@@ -357,5 +375,11 @@ public class MasterFragment extends Fragment {
 			}
 
 		}
+	}
+
+	@Override
+	public void onDestroy() {
+		getActivity().unregisterReceiver(myReceiver);
+		super.onDestroy();
 	}
 }

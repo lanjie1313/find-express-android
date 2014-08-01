@@ -248,8 +248,9 @@
         </meta-data>
         <!-- end of 友盟声明 -->
 
-        <service android:name="com.runye.express.service.UpdateService" >
+        <service android:name="com.runye.express.service.DownLoadService" >
         </service>
+        <service android:name="com.runye.express.service.CheckVersionService"></service>
     </application>
 
 </manifest>

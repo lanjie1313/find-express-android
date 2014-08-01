@@ -26,15 +26,17 @@ public class ConfigCache {
 			// 1. in case the system time is incorrect (the time is turn back
 			// long ago)
 			// 2. when the network is invalid, you can only read the cache
-			if (MyApplication.mNetWorkState != NetWork.NETWORN_NONE && expiredTime < 0) {
-				return null;
-			}
-			if (MyApplication.mNetWorkState == NetWork.NETWORN_WIFI && expiredTime > CONFIG_CACHE_WIFI_TIMEOUT) {
-				return null;
-			} else if (MyApplication.mNetWorkState == NetWork.NETWORN_MOBILE
-					&& expiredTime > CONFIG_CACHE_MOBILE_TIMEOUT) {
-				return null;
-			}
+			// if (MyApplication.mNetWorkState != NetWork.NETWORN_NONE &&
+			// expiredTime < 0) {
+			// return null;
+			// }
+			// if (MyApplication.mNetWorkState == NetWork.NETWORN_WIFI &&
+			// expiredTime > CONFIG_CACHE_WIFI_TIMEOUT) {
+			// return null;
+			// } else if (MyApplication.mNetWorkState == NetWork.NETWORN_MOBILE
+			// && expiredTime > CONFIG_CACHE_MOBILE_TIMEOUT) {
+			// return null;
+			// }
 			try {
 				result = FileUtils.readTextFile(file);
 			} catch (IOException e) {

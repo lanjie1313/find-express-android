@@ -14,7 +14,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Environment;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.baidu.mapapi.BMapManager;
@@ -38,8 +37,8 @@ import com.runye.express.chat.activity.ChatMainActivity;
 import com.runye.express.chat.db.DbOpenHelper;
 import com.runye.express.chat.db.UserDao;
 import com.runye.express.chat.domain.User;
+import com.runye.express.service.CheckVersionService;
 import com.runye.express.utils.LogUtil;
-import com.runye.express.utils.NetWork;
 import com.runye.express.utils.PreferenceUtils;
 import com.umeng.analytics.MobclickAgent;
 
@@ -56,18 +55,21 @@ public class MyApplication extends Application {
 	private static final String TAG = "MyApplication";
 	/** 地图相关 */
 	public BMapManager mBMapManager = null;
+	/** 地图apikey */
 	public boolean m_bKeyRight = true;
 	private static MyApplication mInstance = null;
 	public static Context applicationContext;
 	private Map<String, User> contactList;
 	private boolean isLgoinChat = false;
-	public static int mNetWorkState = NetWork.NETWORN_NONE;
 	/** 本地安装版本 */
 	public int localVersion = 0;
 	/** 服务器版本 */
-	public int serverVersion = 2;
+	public int serverVersion = 1;
+
 	/** 安装目录 */
 	public String downloadDir = "FindExpress/";
+	/** SD卡缓存路径 */
+	public static String mSdcardDataDir;
 	/** 是否管理员 */
 	private boolean ADMIN = false;
 	/** 是否站长 */
@@ -100,6 +102,7 @@ public class MyApplication extends Application {
 	private String token_type;
 	/** 记住了信息 */
 	private boolean isRember;
+	Intent service;
 
 	@Override
 	public void onCreate() {
@@ -116,6 +119,9 @@ public class MyApplication extends Application {
 		initEMChat();
 		// 加载缓存路径
 		initEnvironment();
+		service = new Intent(this, CheckVersionService.class);
+		startService(service);
+
 	}
 
 	public static MyApplication getInstance() {
@@ -135,7 +141,6 @@ public class MyApplication extends Application {
 			return;
 		}
 		// 初始化环信SDK,一定要先调用init()
-		Log.d("EMChat Demo", "initialize EMChat SDK");
 		EMChat.getInstance().init(applicationContext);
 		// debugmode设为true后，就能看到sdk打印的log了
 		EMChat.getInstance().setDebugMode(true);
@@ -190,11 +195,12 @@ public class MyApplication extends Application {
 		// });
 
 		MobclickAgent.onError(applicationContext);
+		LogUtil.d(TAG, "聊天服务器初始化成功");
 	}
 
 	/**
 	 * 
-	 * @Description: TODO
+	 * @Description: 获取appName
 	 * @param pID
 	 * @return String
 	 */
@@ -233,13 +239,11 @@ public class MyApplication extends Application {
 		try {
 			PackageInfo packageInfo = context.getPackageManager().getPackageInfo(getPackageName(), 0);
 			localVersion = packageInfo.versionCode;
+			LogUtil.d(TAG, "本地版本获取成功" + localVersion);
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
-
-	/** SD卡缓存路径 */
-	public static String mSdcardDataDir;
 
 	/**
 	 * 
@@ -258,7 +262,6 @@ public class MyApplication extends Application {
 			}
 		}
 
-		mNetWorkState = NetWork.getConnectedType(applicationContext);
 	}
 
 	/**
@@ -270,16 +273,19 @@ public class MyApplication extends Application {
 	public void initEngineManager(Context context) {
 		if (mBMapManager == null) {
 			mBMapManager = new BMapManager(context);
+			mBMapManager.init(new MyGeneralListener());
+			LogUtil.d(TAG, "地图引擎加载成功");
 		}
 
 		if (!mBMapManager.init(new MyGeneralListener())) {
 			Toast.makeText(MyApplication.getInstance().getApplicationContext(), "BMapManager  初始化错误!",
 					Toast.LENGTH_LONG).show();
+			LogUtil.d(TAG, "地图引擎加载失败");
 		}
 	}
 
 	// 常用事件监听，用来处理通常的网络错误，授权验证错误等
-	public static class MyGeneralListener implements MKGeneralListener {
+	class MyGeneralListener implements MKGeneralListener {
 
 		@Override
 		public void onGetNetworkState(int iError) {
@@ -319,6 +325,7 @@ public class MyApplication extends Application {
 				.tasksProcessingOrder(QueueProcessingType.LIFO).writeDebugLogs().build();
 		// Initialize ImageLoader with configuration.
 		ImageLoader.getInstance().init(config);
+		LogUtil.d(TAG, "配置imageloader成功");
 	}
 
 	/**
@@ -333,11 +340,22 @@ public class MyApplication extends Application {
 			MyApplication.getInstance().setIsLgoinChat(false);
 			setContactList(null);
 		}
+		stopService(service);
 		MyApplication.getInstance().setRember(false);
-		LogUtil.d(TAG, "chat服务器已退出，将不再接受消息");
+		// 清空xml数据
+		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
+		SharedPreferences.Editor editor = preferences.edit();
+		editor.clear();
+		editor.commit();
+		LogUtil.d(TAG, "，配置文件已删除，chat服务器已退出，将不再接受消息");
 
 	}
 
+	/**
+	 * 
+	 * @ClassName: MyConnectionListener
+	 * @Description: chat服务器连接监听
+	 */
 	class MyConnectionListener implements ConnectionListener {
 		@Override
 		public void onReConnecting() {
@@ -391,33 +409,6 @@ public class MyApplication extends Application {
 		this.contactList = contactList;
 	}
 
-	// /** 是否管理员 */
-	// public boolean isISADMIN() {
-	// return ISADMIN;
-	// }
-	//
-	// public void setISADMIN(boolean iSADMIN) {
-	// ISADMIN = iSADMIN;
-	// }
-	//
-	// /** 是否站长 */
-	// public boolean isISMASTER() {
-	// return ISMASTER;
-	// }
-	//
-	// public void setISMASTER(boolean iSMASTER) {
-	// ISMASTER = iSMASTER;
-	// }
-	//
-	// /** 是否快递员 */
-	// public boolean isISCOURIERS() {
-	// return ISCOURIERS;
-	// }
-	//
-	// public void setISCOURIERS(boolean iSCOURIERS) {
-	// ISCOURIERS = iSCOURIERS;
-	// }
-
 	/**
 	 * 
 	 * @Description: 获取身份
@@ -441,7 +432,7 @@ public class MyApplication extends Application {
 			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
 			SharedPreferences.Editor editor = preferences.edit();
 			if (editor.putString("identity", identity).commit()) {
-				LogUtil.d(TAG, identity);
+				LogUtil.d(TAG, "身份类型：" + identity);
 				this.identity = identity;
 			}
 		}
@@ -469,7 +460,7 @@ public class MyApplication extends Application {
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
 		SharedPreferences.Editor editor = preferences.edit();
 		if (editor.putBoolean("ADMIN", ADMIN).commit()) {
-			LogUtil.d(TAG, ADMIN + "");
+			LogUtil.d(TAG, "ADMIN：" + ADMIN);
 			this.ADMIN = ADMIN;
 		}
 	}
@@ -478,7 +469,7 @@ public class MyApplication extends Application {
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
 		SharedPreferences.Editor editor = preferences.edit();
 		if (editor.putBoolean("MASTER", MASTER).commit()) {
-			LogUtil.d(TAG, MASTER + "");
+			LogUtil.d(TAG, "MASTER：" + MASTER);
 			this.MASTER = MASTER;
 		}
 
@@ -488,7 +479,7 @@ public class MyApplication extends Application {
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
 		SharedPreferences.Editor editor = preferences.edit();
 		if (editor.putBoolean("COURIERS", COURIERS).commit()) {
-			LogUtil.d(TAG, COURIERS + "");
+			LogUtil.d(TAG, "COURIERS：" + COURIERS);
 			this.COURIERS = COURIERS;
 		}
 	}
@@ -516,7 +507,7 @@ public class MyApplication extends Application {
 			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
 			SharedPreferences.Editor editor = preferences.edit();
 			if (editor.putString("username", username).commit()) {
-				LogUtil.d(TAG, username);
+				LogUtil.d(TAG, "用户名：" + username);
 				this.username = username;
 			}
 		}
@@ -545,7 +536,7 @@ public class MyApplication extends Application {
 			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
 			SharedPreferences.Editor editor = preferences.edit();
 			if (editor.putString("password", password).commit()) {
-				LogUtil.d(TAG, password);
+				LogUtil.d(TAG, "密码：" + password);
 				this.password = password;
 			}
 		}
@@ -573,7 +564,7 @@ public class MyApplication extends Application {
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
 		SharedPreferences.Editor editor = preferences.edit();
 		if (editor.putString("id", id).commit()) {
-			LogUtil.d(TAG, id);
+			LogUtil.d(TAG, "ID:" + id);
 			this.id = id;
 		}
 	}
@@ -601,7 +592,7 @@ public class MyApplication extends Application {
 			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
 			SharedPreferences.Editor editor = preferences.edit();
 			if (editor.putString("siteId", siteId).commit()) {
-				LogUtil.d(TAG, siteId);
+				LogUtil.d(TAG, "站点id：" + siteId);
 				this.siteId = siteId;
 			}
 		}
@@ -631,7 +622,7 @@ public class MyApplication extends Application {
 			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
 			SharedPreferences.Editor editor = preferences.edit();
 			if (editor.putString("nickName", nickName).commit()) {
-				LogUtil.d(TAG, nickName);
+				LogUtil.d(TAG, "昵称：" + nickName);
 				this.nickName = nickName;
 			}
 		}
@@ -660,7 +651,7 @@ public class MyApplication extends Application {
 			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
 			SharedPreferences.Editor editor = preferences.edit();
 			if (editor.putString("phone_num", phone_num).commit()) {
-				LogUtil.d(TAG, phone_num);
+				LogUtil.d(TAG, "电话：" + phone_num);
 				this.phone_num = phone_num;
 			}
 		}
@@ -689,7 +680,7 @@ public class MyApplication extends Application {
 			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
 			SharedPreferences.Editor editor = preferences.edit();
 			if (editor.putString("email", email).commit()) {
-				LogUtil.d(TAG, email);
+				LogUtil.d(TAG, "邮箱：" + email);
 				this.email = email;
 			}
 		}
@@ -718,7 +709,7 @@ public class MyApplication extends Application {
 			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
 			SharedPreferences.Editor editor = preferences.edit();
 			if (editor.putString("status", status).commit()) {
-				LogUtil.d(TAG, status);
+				LogUtil.d(TAG, "状态：" + status);
 				this.status = status;
 			}
 		}
@@ -747,7 +738,7 @@ public class MyApplication extends Application {
 			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
 			SharedPreferences.Editor editor = preferences.edit();
 			if (editor.putString("verifyStatus", verifyStatus).commit()) {
-				LogUtil.d(TAG, verifyStatus);
+				LogUtil.d(TAG, "审核状态：" + verifyStatus);
 				this.verifyStatus = verifyStatus;
 			}
 		}
@@ -777,7 +768,7 @@ public class MyApplication extends Application {
 			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
 			SharedPreferences.Editor editor = preferences.edit();
 			if (editor.putString("access_token", access_token).commit()) {
-				LogUtil.d(TAG, access_token);
+				LogUtil.d(TAG, "token：" + access_token);
 				this.access_token = access_token;
 			}
 		}
@@ -806,7 +797,7 @@ public class MyApplication extends Application {
 			SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
 			SharedPreferences.Editor editor = preferences.edit();
 			if (editor.putString("token_type", token_type).commit()) {
-				LogUtil.d(TAG, token_type);
+				LogUtil.d(TAG, "token类型：" + token_type);
 				this.token_type = token_type;
 			}
 		}
@@ -822,7 +813,7 @@ public class MyApplication extends Application {
 		SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(applicationContext);
 		SharedPreferences.Editor editor = preferences.edit();
 		if (editor.putBoolean("isRember", isRember).commit()) {
-			LogUtil.d(TAG, isRember + "");
+			LogUtil.d(TAG, "是否记住信息：" + isRember);
 			this.isRember = isRember;
 		}
 	}

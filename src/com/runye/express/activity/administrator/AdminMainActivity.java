@@ -26,7 +26,6 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
-import com.baidu.mapapi.BMapManager;
 import com.baidu.mapapi.map.ItemizedOverlay;
 import com.baidu.mapapi.map.LocationData;
 import com.baidu.mapapi.map.MKEvent;
@@ -86,7 +85,7 @@ public class AdminMainActivity extends Activity {
 	/** 枚举类变量 */
 	private E_BUTTON_TYPE mCurBtnType;
 	/** map注册 */
-	private MyApplication app = null;
+	private final MyApplication app = null;
 	/** mapview */
 	private MapView mMapView = null;
 	/** 地图控制器 */
@@ -157,18 +156,19 @@ public class AdminMainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_admin_main);
 		SysExitUtil.activityList.add(AdminMainActivity.this);
-		/**
-		 * 使用地图sdk前需先初始化BMapManager. BMapManager是全局的，可为多个MapView共用，它需要地图模块创建前创建，
-		 * 并在地图地图模块销毁后销毁，只要还有地图模块在使用，BMapManager就不应该销毁
-		 */
-		app = (MyApplication) getApplication();
-		if (app.mBMapManager == null) {
-			app.mBMapManager = new BMapManager(getApplicationContext());
-			/**
-			 * 如果BMapManager没有初始化则初始化BMapManager
-			 */
-			app.mBMapManager.init(new MyApplication.MyGeneralListener());
-		}
+		// /**
+		// * 使用地图sdk前需先初始化BMapManager.
+		// BMapManager是全局的，可为多个MapView共用，它需要地图模块创建前创建，
+		// * 并在地图地图模块销毁后销毁，只要还有地图模块在使用，BMapManager就不应该销毁
+		// */
+		// app = (MyApplication) getApplication();
+		// if (app.mBMapManager == null) {
+		// app.mBMapManager = new BMapManager(getApplicationContext());
+		// /**
+		// * 如果BMapManager没有初始化则初始化BMapManager
+		// */
+		// app.mBMapManager.init(new MyApplication.MyGeneralListener());
+		// }
 		bt_list = (Button) findViewById(R.id.activity_admin_main_list);
 		bt_site = (Button) findViewById(R.id.activity_admin_main_site);
 		bt_list.setOnClickListener(new MyButtonListener());

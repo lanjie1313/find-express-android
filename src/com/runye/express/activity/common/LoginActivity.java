@@ -27,7 +27,6 @@ import com.runye.express.async.JsonHttpResponseHandler;
 import com.runye.express.async.RequestParams;
 import com.runye.express.http.HttpUri;
 import com.runye.express.http.MyHttpClient;
-import com.runye.express.service.UpdateService;
 import com.runye.express.utils.LoadingDialog;
 import com.runye.express.utils.LogUtil;
 import com.runye.express.utils.NetWork;
@@ -78,8 +77,6 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 		SysExitUtil.activityList.add(LoginActivity.this);
 		initUI();
-		// checkVersion();
-
 	}
 
 	private void initUI() {
@@ -130,44 +127,6 @@ public class LoginActivity extends Activity {
 
 			}
 		});
-	}
-
-	/**
-	 * 
-	 * @Description: 检测新版本
-	 * @return void
-	 */
-	Intent updateIntent;
-
-	private void checkVersion() {
-		if (NetWork.isNetworkConnected(LoginActivity.this)) {
-			LogUtil.d(TAG, "开始检测更新\n");
-			if (MyApplication.getInstance().localVersion < MyApplication.getInstance().serverVersion) {
-				LogUtil.d(TAG, "有新版本，开始更新\n" + "本地version:" + MyApplication.getInstance().localVersion
-						+ "\n服务器version:" + MyApplication.getInstance().serverVersion);
-				// 发现新版本，提示用户更新
-				AlertDialog.Builder alert = new AlertDialog.Builder(LoginActivity.this);
-				alert.setTitle("软件升级").setMessage("发现新版本,建议立即更新使用.")
-						.setPositiveButton("更新", new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								// 开启更新服务UpdateService
-								updateIntent = new Intent(LoginActivity.this, UpdateService.class);
-								startService(updateIntent);
-							}
-						}).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								dialog.dismiss();
-							}
-						});
-				alert.create().show();
-
-			} else {
-				LogUtil.d(TAG, "没有新版本，无需更新");
-			}
-		}
-
 	}
 
 	@Override

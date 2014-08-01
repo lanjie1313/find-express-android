@@ -140,4 +140,9 @@ public class MyHttpClient {
 		client = new AsyncHttpClient();
 		client.get(url, params, responseHandler);
 	}
+
+	public static void getVersion(String url, RequestParams params, JsonHttpResponseHandler responseHandler) {
+		client = new AsyncHttpClient();
+		client.get(url, params, responseHandler);
+	}
 }

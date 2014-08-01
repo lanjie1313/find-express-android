@@ -28,7 +28,7 @@ import com.runye.express.utils.LogUtil;
  * @author zhangjia
  * 
  */
-public class UpdateService extends Service {
+public class DownLoadService extends Service {
 	private final String TAG = "UpdateService";
 	/** 超时 */
 	private static final int TIMEOUT = 10 * 1000;
