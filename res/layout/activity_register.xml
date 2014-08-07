@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:gravity="center" >
 
-            <com.runye.express.utils.RoundedImageView
+            <com.runye.express.widget.RoundedImageView
             android:id="@+id/activity_register_headImage"
             android:layout_width="100dp"
             android:layout_height="100dp"

@@ -8,6 +8,6 @@
     <!-- 失去焦点时 -->
     <item android:drawable="@drawable/master_layout_pressed" android:state_focused="false" android:state_pressed="true"/>
     <!-- 默认时 -->
-    <item android:drawable="@drawable/master_layout_normal"/>
+    <item android:drawable="@drawable/layout_line"/>
 
 </selector>

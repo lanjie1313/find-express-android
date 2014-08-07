@@ -36,7 +36,7 @@ import com.runye.express.utils.ToastUtil;
  * @version V1.0
  * @Company:山西润叶网络科技有限公司
  */
-public class ImagePagerActivity extends ComminBaseActivity {
+public class ImagePagerActivity extends MyBaseActivity {
 
 	private static final String STATE_POSITION = "STATE_POSITION";
 	protected static final String TAG = "ImagePagerActivity";

@@ -17,10 +17,10 @@ import com.runye.express.async.JsonHttpResponseHandler;
 import com.runye.express.async.RequestParams;
 import com.runye.express.http.HttpUri;
 import com.runye.express.http.MyHttpClient;
-import com.runye.express.utils.LoadingDialog;
 import com.runye.express.utils.LogUtil;
 import com.runye.express.utils.SysExitUtil;
 import com.runye.express.utils.ToastUtil;
+import com.runye.express.widget.LoadingDialog;
 
 /**
  * 

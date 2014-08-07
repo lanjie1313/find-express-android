@@ -36,9 +36,9 @@ import com.easemob.cloud.HttpFileManager;
 import com.easemob.util.ImageUtils;
 import com.easemob.util.PathUtil;
 import com.runye.express.android.R;
+import com.runye.express.chat.photoview.PhotoView;
 import com.runye.express.chat.task.LoadLocalBigImgTask;
-import com.runye.express.chat.utils.ImageCache;
-import com.runye.express.chat.widget.photoview.PhotoView;
+import com.runye.express.utils.ImageCache;
 
 /**
  * 下载显示大图

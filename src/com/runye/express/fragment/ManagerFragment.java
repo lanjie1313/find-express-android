@@ -17,9 +17,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.runye.express.activity.app.MyApplication;
 import com.runye.express.activity.common.LoginActivity;
-import com.runye.express.activity.common.MyApplication;
-import com.runye.express.activity.slidingmenu.MainActivity;
+import com.runye.express.activity.common.MainActivity;
 import com.runye.express.adapter.SlidingMenuAdapter;
 import com.runye.express.android.R;
 import com.runye.express.bean.SlidingMenuItemsBean;

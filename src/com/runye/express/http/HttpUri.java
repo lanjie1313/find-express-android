@@ -32,7 +32,9 @@ public class HttpUri {
 
 	/** products */
 	public static final String PRODUCTS = TEST_IP + "products/";
-
+	/** 运单获取 */
+	public static final String WAYBILLS = TEST_IP + "waybills";
 	/** 下载地址 */
 	public static final String UPLOADS = TEST_IP + "uploads/";
+	/** 下载地址 */
 }

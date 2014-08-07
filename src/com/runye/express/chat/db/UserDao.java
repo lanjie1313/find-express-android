@@ -25,8 +25,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.text.TextUtils;
 
 import com.easemob.util.HanziToPinyin;
-import com.runye.express.chat.Constant;
 import com.runye.express.chat.domain.User;
+import com.runye.express.utils.Constant;
 
 public class UserDao {
 	public static final String TABLE_NAME = "uers";

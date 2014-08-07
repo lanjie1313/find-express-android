@@ -22,8 +22,8 @@ import android.widget.ProgressBar;
 
 import com.easemob.util.ImageUtils;
 import com.runye.express.android.R;
-import com.runye.express.chat.utils.ImageCache;
-import com.runye.express.chat.widget.photoview.PhotoView;
+import com.runye.express.chat.photoview.PhotoView;
+import com.runye.express.utils.ImageCache;
 
 public class LoadLocalBigImgTask extends AsyncTask<Void, Void, Bitmap> {
 

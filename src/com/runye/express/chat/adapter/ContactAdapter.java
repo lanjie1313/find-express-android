@@ -35,9 +35,9 @@ import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import com.runye.express.android.R;
-import com.runye.express.chat.Constant;
 import com.runye.express.chat.domain.User;
-import com.runye.express.chat.widget.Sidebar;
+import com.runye.express.utils.Constant;
+import com.runye.express.widget.Sidebar;
 
 /**
  * 简单的好友Adapter实现

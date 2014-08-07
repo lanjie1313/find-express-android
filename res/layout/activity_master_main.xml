@@ -1,101 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:ptr="http://schemas.android.com/apk/res/com.runye.express.android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#545454" >
+    android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
-        android:background="#545454"
-        android:orientation="horizontal" >
+        android:layout_height="50dp"
+        android:background="@drawable/tool_box_fragment_bg_normal"
+        android:gravity="center" >
+
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_weight="1"
-            android:orientation="vertical" >
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center" >
 
-            <com.runye.express.utils.HomeButton
-                android:id="@+id/activity_master_main_new"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                ptr:backcolor="0"
-                ptr:big="true"
-                ptr:home="0"
-                ptr:text="待处理"
-                ptr:textSize="24sp" />
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/actionbar_menu" />
 
-            <com.runye.express.utils.HomeButton
-                android:id="@+id/activity_master_main_delivery"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginTop="8dp"
-                ptr:backcolor="1"
-                ptr:big="true"
-                ptr:home="1"
-                ptr:text="配送中"
-                ptr:textSize="24sp" />
-
-            <com.runye.express.utils.HomeButton
-                android:id="@+id/activity_master_main_cancle"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginTop="8dp"
-                ptr:backcolor="2"
-                ptr:big="true"
-                ptr:home="2"
-                ptr:text="已取消"
-                ptr:textSize="24sp" />
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="菜单"
+                android:textColor="#ffffff" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:orientation="vertical" >
+            android:gravity="center" >
 
-            <com.runye.express.utils.HomeButton
-                android:id="@+id/activity_master_main_confirmed"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                ptr:backcolor="3"
-                ptr:big="true"
-                ptr:home="3"
-                ptr:text="已确认"
-                ptr:textSize="24sp" />
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="首页"
+                android:textSize="18sp"
+                android:textColor="#ffffff" />
+        </LinearLayout>
 
-            <com.runye.express.utils.HomeButton
-                android:id="@+id/activity_master_main_compeleted"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginTop="8dp"
-                ptr:backcolor="4"
-                ptr:big="true"
-                ptr:home="4"
-                ptr:text="已完成"
-                ptr:textSize="24sp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center" android:padding="10dp">
 
-            <com.runye.express.utils.HomeButton
-                android:id="@+id/bt"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginTop="8dp"
-                ptr:backcolor="5"
-                ptr:big="true"
-                ptr:home="5"
-                ptr:text="更多..."
-                ptr:textSize="24sp" />
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/actionbar_msgs" />
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/actionbar_project" />
         </LinearLayout>
     </LinearLayout>
 
-</ScrollView>
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:fadingEdge="none" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <com.runye.express.widget.HomeButton
+                    android:id="@+id/activity_master_main_new"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    ptr:backcolor="0"
+                    ptr:big="true"
+                    ptr:home="0"
+                    ptr:text="待处理"
+                    ptr:textSize="24sp" />
+
+                <com.runye.express.widget.HomeButton
+                    android:id="@+id/activity_master_main_delivery"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="8dp"
+                    ptr:backcolor="1"
+                    ptr:big="true"
+                    ptr:home="1"
+                    ptr:text="配送中"
+                    ptr:textSize="24sp" />
+
+                <com.runye.express.widget.HomeButton
+                    android:id="@+id/activity_master_main_cancle"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="8dp"
+                    ptr:backcolor="2"
+                    ptr:big="true"
+                    ptr:home="2"
+                    ptr:text="已取消"
+                    ptr:textSize="24sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <com.runye.express.widget.HomeButton
+                    android:id="@+id/activity_master_main_confirmed"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    ptr:backcolor="3"
+                    ptr:big="true"
+                    ptr:home="3"
+                    ptr:text="已确认"
+                    ptr:textSize="24sp" />
+
+                <com.runye.express.widget.HomeButton
+                    android:id="@+id/activity_master_main_compeleted"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="8dp"
+                    ptr:backcolor="4"
+                    ptr:big="true"
+                    ptr:home="4"
+                    ptr:text="已完成"
+                    ptr:textSize="24sp" />
+
+                <com.runye.express.widget.HomeButton
+                    android:id="@+id/bt"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="8dp"
+                    ptr:backcolor="5"
+                    ptr:big="true"
+                    ptr:home="5"
+                    ptr:text="更多..."
+                    ptr:textSize="24sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

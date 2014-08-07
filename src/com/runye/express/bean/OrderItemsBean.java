@@ -17,9 +17,13 @@ public class OrderItemsBean implements Serializable {
 	 */
 
 	private static final long serialVersionUID = 1L;
+	/** 商品id */
 	private String product;
+	/** 商品数量 */
 	private String count;
+	/** 商品单价 */
 	private String unit_price;
+	/**  */
 	private String id;
 
 	public String getProduct() {

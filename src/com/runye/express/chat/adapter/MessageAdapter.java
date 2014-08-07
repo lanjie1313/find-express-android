@@ -64,9 +64,9 @@ import com.runye.express.chat.activity.ShowBigImage;
 import com.runye.express.chat.activity.ShowVideoActivity;
 import com.runye.express.chat.task.LoadImageTask;
 import com.runye.express.chat.task.LoadVideoImageTask;
-import com.runye.express.chat.utils.ImageCache;
-import com.runye.express.chat.utils.ImageUtils;
-import com.runye.express.chat.utils.SmileUtils;
+import com.runye.express.utils.ImageCache;
+import com.runye.express.utils.ImageUtil;
+import com.runye.express.utils.SmileUtil;
 
 public class MessageAdapter extends BaseAdapter {
 
@@ -391,7 +391,7 @@ public class MessageAdapter extends BaseAdapter {
 				if (imgBody.getLocalUrl() != null) {
 					String filePath = imgBody.getLocalUrl();
 
-					String thumbnailPath = ImageUtils.getThumbnailImagePath(filePath);
+					String thumbnailPath = ImageUtil.getThumbnailImagePath(filePath);
 					showImageView(thumbnailPath, holder.iv, filePath, imgBody.getRemoteUrl(), message);
 				}
 			}
@@ -404,9 +404,9 @@ public class MessageAdapter extends BaseAdapter {
 		ImageMessageBody imgBody = (ImageMessageBody) message.getBody();
 		String filePath = imgBody.getLocalUrl();
 		if (new File(filePath).exists())
-			showImageView(ImageUtils.getThumbnailImagePath(filePath), holder.iv, filePath, null, message);
+			showImageView(ImageUtil.getThumbnailImagePath(filePath), holder.iv, filePath, null, message);
 		else {
-			showImageView(ImageUtils.getThumbnailImagePath(filePath), holder.iv, filePath, IMAGE_DIR, message);
+			showImageView(ImageUtil.getThumbnailImagePath(filePath), holder.iv, filePath, IMAGE_DIR, message);
 		}
 
 		switch (message.status) {
@@ -720,7 +720,7 @@ public class MessageAdapter extends BaseAdapter {
 	 */
 	private void handleTextMessage(EMMessage message, ViewHolder holder, final int position) {
 		TextMessageBody txtBody = (TextMessageBody) message.getBody();
-		Spannable span = SmileUtils.getSmiledText(context, txtBody.getMessage());
+		Spannable span = SmileUtil.getSmiledText(context, txtBody.getMessage());
 		holder.tv.setText(span, BufferType.SPANNABLE);
 		holder.tv.setOnLongClickListener(new OnLongClickListener() {
 			@Override

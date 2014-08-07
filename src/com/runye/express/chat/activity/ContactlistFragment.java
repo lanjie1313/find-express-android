@@ -40,14 +40,14 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.easemob.chat.EMContactManager;
-import com.runye.express.activity.common.MyApplication;
+import com.runye.express.activity.app.MyApplication;
 import com.runye.express.android.R;
-import com.runye.express.chat.Constant;
 import com.runye.express.chat.adapter.ContactAdapter;
 import com.runye.express.chat.db.InviteMessgeDao;
 import com.runye.express.chat.db.UserDao;
 import com.runye.express.chat.domain.User;
-import com.runye.express.chat.widget.Sidebar;
+import com.runye.express.utils.Constant;
+import com.runye.express.widget.Sidebar;
 
 /**
  * 联系人列表页

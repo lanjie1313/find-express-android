@@ -15,7 +15,7 @@
         android:gravity="center"
         android:orientation="vertical" >
 
-        <com.runye.express.utils.RoundedImageView
+        <com.runye.express.widget.RoundedImageView
             android:id="@+id/fragment_manager_headImageView"
             android:layout_width="100dp"
             android:layout_height="100dp"

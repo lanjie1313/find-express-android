@@ -5,7 +5,7 @@ import java.io.IOException;
 
 import android.util.Log;
 
-import com.runye.express.activity.common.MyApplication;
+import com.runye.express.activity.app.MyApplication;
 
 public class ConfigCache {
 	private static final String TAG = ConfigCache.class.getName();
@@ -38,7 +38,7 @@ public class ConfigCache {
 			// return null;
 			// }
 			try {
-				result = FileUtils.readTextFile(file);
+				result = FileUtil.readTextFile(file);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -50,7 +50,7 @@ public class ConfigCache {
 		File file = new File(MyApplication.mSdcardDataDir + "/" + getCacheDecodeString(url));
 		try {
 			// 创建缓存数据到磁盘，就是创建文件
-			FileUtils.writeTextFile(file, data);
+			FileUtil.writeTextFile(file, data);
 			LogUtil.d(TAG, "成功创建缓存数据到磁盘");
 		} catch (IOException e) {
 			Log.d(TAG, "write " + file.getAbsolutePath() + " data failed!");

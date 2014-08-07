@@ -28,7 +28,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.easemob.chat.EMContactManager;
-import com.runye.express.activity.common.MyApplication;
+import com.runye.express.activity.app.MyApplication;
 import com.runye.express.android.R;
 
 public class AddContactActivity extends BaseActivity {

@@ -29,7 +29,7 @@ import com.easemob.chat.EMMessage.ChatType;
 import com.easemob.util.ImageUtils;
 import com.runye.express.android.R;
 import com.runye.express.chat.activity.ShowBigImage;
-import com.runye.express.chat.utils.ImageCache;
+import com.runye.express.utils.ImageCache;
 
 public class LoadImageTask extends AsyncTask<Object, Void, Bitmap> {
 	private ImageView iv = null;

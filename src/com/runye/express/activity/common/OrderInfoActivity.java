@@ -37,9 +37,9 @@ import com.runye.express.bean.OrderProductsBean;
 import com.runye.express.http.HttpUri;
 import com.runye.express.http.MyHttpClient;
 import com.runye.express.listview.ListViewHeight;
-import com.runye.express.utils.LoadingDialog;
 import com.runye.express.utils.LogUtil;
 import com.runye.express.utils.SysExitUtil;
+import com.runye.express.widget.LoadingDialog;
 
 /**
  * 
@@ -50,7 +50,7 @@ import com.runye.express.utils.SysExitUtil;
  * @version V1.0
  * @Company:山西润叶网络科技有限公司
  */
-public class OrderInfoActivity extends ComminBaseActivity {
+public class OrderInfoActivity extends MyBaseActivity {
 	protected static final String TAG = "OrderInfoActivity";
 	private OrderModeBean mOrderModeBean;
 	/** 快递员集合 */

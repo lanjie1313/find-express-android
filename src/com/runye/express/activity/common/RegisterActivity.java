@@ -32,11 +32,11 @@ import com.runye.express.async.RequestParams;
 import com.runye.express.bean.SiteModeBean;
 import com.runye.express.http.HttpUri;
 import com.runye.express.http.MyHttpClient;
-import com.runye.express.utils.LoadingDialog;
 import com.runye.express.utils.LogUtil;
 import com.runye.express.utils.MyVerification;
 import com.runye.express.utils.SysExitUtil;
 import com.runye.express.utils.ToastUtil;
+import com.runye.express.widget.LoadingDialog;
 
 /**
  * 
@@ -47,7 +47,7 @@ import com.runye.express.utils.ToastUtil;
  * @version V1.0
  * @Company:山西润叶网络科技有限公司
  */
-public class RegisterActivity extends ComminBaseActivity {
+public class RegisterActivity extends MyBaseActivity {
 	private final String TAG = "RegisterActivity";
 	/**
 	 * 0 昵称 1 手机 2 邮箱 3 密码 4 确认密码 5 推广号

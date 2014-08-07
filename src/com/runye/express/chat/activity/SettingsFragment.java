@@ -26,7 +26,7 @@ import android.widget.TextView;
 import com.easemob.chat.EMChatManager;
 import com.easemob.chat.EMChatOptions;
 import com.runye.express.android.R;
-import com.runye.express.chat.utils.PreferenceUtils;
+import com.runye.express.utils.PreferenceUtil;
 
 /**
  * 设置界面
@@ -170,7 +170,7 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 				chatOptions.setNotificationEnable(false);
 				EMChatManager.getInstance().setChatOptions(chatOptions);
 
-				PreferenceUtils.getInstance(getActivity()).setSettingMsgNotification(false);
+				PreferenceUtil.getInstance(getActivity()).setSettingMsgNotification(false);
 			} else {
 				iv_switch_open_notification.setVisibility(View.VISIBLE);
 				iv_switch_close_notification.setVisibility(View.INVISIBLE);
@@ -180,7 +180,7 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 				textview2.setVisibility(View.VISIBLE);
 				chatOptions.setNotificationEnable(true);
 				EMChatManager.getInstance().setChatOptions(chatOptions);
-				PreferenceUtils.getInstance(getActivity()).setSettingMsgNotification(true);
+				PreferenceUtil.getInstance(getActivity()).setSettingMsgNotification(true);
 			}
 			break;
 		case R.id.rl_switch_sound:
@@ -189,13 +189,13 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 				iv_switch_close_sound.setVisibility(View.VISIBLE);
 				chatOptions.setNoticeBySound(false);
 				EMChatManager.getInstance().setChatOptions(chatOptions);
-				PreferenceUtils.getInstance(getActivity()).setSettingMsgSound(false);
+				PreferenceUtil.getInstance(getActivity()).setSettingMsgSound(false);
 			} else {
 				iv_switch_open_sound.setVisibility(View.VISIBLE);
 				iv_switch_close_sound.setVisibility(View.INVISIBLE);
 				chatOptions.setNoticeBySound(true);
 				EMChatManager.getInstance().setChatOptions(chatOptions);
-				PreferenceUtils.getInstance(getActivity()).setSettingMsgSound(true);
+				PreferenceUtil.getInstance(getActivity()).setSettingMsgSound(true);
 			}
 			break;
 		case R.id.rl_switch_vibrate:
@@ -204,13 +204,13 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 				iv_switch_close_vibrate.setVisibility(View.VISIBLE);
 				chatOptions.setNoticedByVibrate(false);
 				EMChatManager.getInstance().setChatOptions(chatOptions);
-				PreferenceUtils.getInstance(getActivity()).setSettingMsgVibrate(false);
+				PreferenceUtil.getInstance(getActivity()).setSettingMsgVibrate(false);
 			} else {
 				iv_switch_open_vibrate.setVisibility(View.VISIBLE);
 				iv_switch_close_vibrate.setVisibility(View.INVISIBLE);
 				chatOptions.setNoticedByVibrate(true);
 				EMChatManager.getInstance().setChatOptions(chatOptions);
-				PreferenceUtils.getInstance(getActivity()).setSettingMsgVibrate(true);
+				PreferenceUtil.getInstance(getActivity()).setSettingMsgVibrate(true);
 			}
 			break;
 		case R.id.rl_switch_speaker:
@@ -219,13 +219,13 @@ public class SettingsFragment extends Fragment implements OnClickListener {
 				iv_switch_close_speaker.setVisibility(View.VISIBLE);
 				chatOptions.setUseSpeaker(false);
 				EMChatManager.getInstance().setChatOptions(chatOptions);
-				PreferenceUtils.getInstance(getActivity()).setSettingMsgSpeaker(false);
+				PreferenceUtil.getInstance(getActivity()).setSettingMsgSpeaker(false);
 			} else {
 				iv_switch_open_speaker.setVisibility(View.VISIBLE);
 				iv_switch_close_speaker.setVisibility(View.INVISIBLE);
 				chatOptions.setUseSpeaker(true);
 				EMChatManager.getInstance().setChatOptions(chatOptions);
-				PreferenceUtils.getInstance(getActivity()).setSettingMsgVibrate(true);
+				PreferenceUtil.getInstance(getActivity()).setSettingMsgVibrate(true);
 			}
 			break;
 		default:

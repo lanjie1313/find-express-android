@@ -20,18 +20,18 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.runye.express.activity.administrator.AdminSiteActivity;
-import com.runye.express.activity.slidingmenu.MainActivity;
+import com.runye.express.activity.administrator.AdminMainActivity;
+import com.runye.express.activity.app.MyApplication;
 import com.runye.express.android.R;
 import com.runye.express.async.JsonHttpResponseHandler;
 import com.runye.express.async.RequestParams;
 import com.runye.express.http.HttpUri;
 import com.runye.express.http.MyHttpClient;
-import com.runye.express.utils.LoadingDialog;
 import com.runye.express.utils.LogUtil;
-import com.runye.express.utils.NetWork;
+import com.runye.express.utils.NetWorkUtil;
 import com.runye.express.utils.SysExitUtil;
 import com.runye.express.utils.ToastUtil;
+import com.runye.express.widget.LoadingDialog;
 
 /**
  * 
@@ -74,17 +74,13 @@ public class LoginActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.activity_login);
 		SysExitUtil.activityList.add(LoginActivity.this);
 		initUI();
 	}
 
 	private void initUI() {
-		// 如果用户名密码都有，直接进入主页面
-		if (MyApplication.getInstance().isRember()) {
-			startActivity(new Intent(this, MainActivity.class));
-			finish();
-		}
 		bt_login = (Button) findViewById(R.id.activity_login);
 		bt_register = (Button) findViewById(R.id.activity_login_register);
 		et_userName = (EditText) findViewById(R.id.activity_login_userName);
@@ -155,7 +151,7 @@ public class LoginActivity extends Activity {
 			}
 			if (MyApplication.getInstance().isADMIN()) {
 
-				startActivity(new Intent(LoginActivity.this, AdminSiteActivity.class));
+				startActivity(new Intent(LoginActivity.this, AdminMainActivity.class));
 			}
 			LogUtil.d(TAG, "我的身份：" + identity);
 			LogUtil.d(TAG, "用户名：" + userName);
@@ -287,7 +283,7 @@ public class LoginActivity extends Activity {
 		public void onClick(View v) {
 			switch (v.getId()) {
 			case R.id.activity_login:
-				if (NetWork.isNetworkConnected(LoginActivity.this)) {
+				if (NetWorkUtil.isNetworkConnected(LoginActivity.this)) {
 
 					doLogin();
 				} else {
@@ -295,7 +291,7 @@ public class LoginActivity extends Activity {
 				}
 				break;
 			case R.id.activity_login_register:
-				if (NetWork.isNetworkConnected(LoginActivity.this)) {
+				if (NetWorkUtil.isNetworkConnected(LoginActivity.this)) {
 
 					doRegister();
 				} else {

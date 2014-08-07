@@ -3,8 +3,6 @@ package com.runye.express.fragment;
 import org.json.JSONException;
 
 import android.app.Fragment;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.ConnectivityManager;
@@ -12,26 +10,23 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.runye.express.activity.common.MyApplication;
+import com.runye.express.activity.app.MyApplication;
 import com.runye.express.activity.master.MasterBaseActivity;
 import com.runye.express.android.R;
 import com.runye.express.async.JsonHttpResponseHandler;
 import com.runye.express.async.RequestParams;
 import com.runye.express.http.HttpUri;
 import com.runye.express.http.MyHttpClient;
-import com.runye.express.utils.BadgeView;
 import com.runye.express.utils.CheckVersion;
-import com.runye.express.utils.HomeButton;
-import com.runye.express.utils.HomeButton.HomeClickListener;
 import com.runye.express.utils.LogUtil;
-import com.runye.express.utils.NetState;
+import com.runye.express.utils.NetStatusBroadcast;
 import com.runye.express.utils.SysExitUtil;
+import com.runye.express.widget.BadgeView;
+import com.runye.express.widget.HomeButton;
+import com.runye.express.widget.HomeButton.HomeClickListener;
 
 /**
  * 
@@ -49,32 +44,33 @@ public class MasterFragment extends Fragment {
 	 * */
 	private HomeButton[] buttons;
 	private int[] ids;
-	private final String TAG = "OrderFragment";
+	private final String TAG = "MasterFragment";
 	private BadgeView[] mBadgeView;
 	/**
 	 * 请求完成标识
 	 */
 	private int count = 0;
+	private NetStatusBroadcast receiver;
+	private final String[] status = new String[] { "site_new", "site_confirmed", "site_reject", "complete", "cancelled" };
+	private final String access_token = MyApplication.getInstance().getAccess_token();
 	private final Handler mHandler = new Handler() {
 		@Override
 		public void handleMessage(android.os.Message msg) {
 			int nowCompleted = (Integer) msg.obj;
 			if (nowCompleted == 5) {
-				setLoadingState(false);
 				count = 0;
+			}
+			if (nowCompleted == 1001) {
+				CheckVersion.checkVersion(getActivity());
 			}
 		};
 	};
-
-	private MyReceiver myReceiver;
 
 	public MasterFragment() {
 	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
-		setHasOptionsMenu(true);
 		super.onCreate(savedInstanceState);
 	}
 
@@ -90,38 +86,52 @@ public class MasterFragment extends Fragment {
 		super.onActivityCreated(savedInstanceState);
 		initUI();
 		SysExitUtil.activityList.add(getActivity());
-		IntentFilter intentFilter = new IntentFilter();
-		intentFilter.addAction("com.example.communication.RECEIVER");
-		myReceiver = new MyReceiver();
-		getActivity().registerReceiver(myReceiver, intentFilter);
-
-	}
-
-	private class MyReceiver extends BroadcastReceiver {
-
-		@Override
-		public void onReceive(Context context, Intent intent) {
-			CheckVersion.checkVersion(getActivity());
-
-		}
-	}
-
-	@Override
-	public void onResume() {
-		// TODO Auto-generated method stub
-		super.onResume();
 		// 刷新首页数据
-		setLoadingState(true);
 		getNewOrder();
 		getCancelledOrder();
 		getConfirmedOrder();
 		getCompleteOrder();
 		getDeliveringOrder();
-
-		NetState receiver = new NetState();
+		// 监听网络的广播
+		receiver = new NetStatusBroadcast();
 		IntentFilter filter = new IntentFilter();
 		filter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
 		getActivity().registerReceiver(receiver, filter);
+
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		new Thread(new MyThread()).start();
+	}
+
+	public class MyThread implements Runnable {
+
+		@Override
+		public void run() {
+			boolean isRun = true;
+			while (isRun) {
+				LogUtil.d(TAG, "" + MyApplication.getInstance().isFinshed);
+				if (MyApplication.getInstance().isFinshed) {
+					isRun = false;
+					LogUtil.d(TAG, "asdasdasd");
+					Message message = new Message();
+					message.obj = 1001;
+					mHandler.sendMessage(message);
+				}
+
+			}
+		}
+	}
+
+	@Override
+	public void onDestroyView() {
+		super.onDestroyView();
+		if (receiver != null) {
+			LogUtil.d(TAG, "注销了网络状态监听广播");
+			getActivity().unregisterReceiver(receiver);
+		}
 	}
 
 	private void initUI() {
@@ -138,60 +148,6 @@ public class MasterFragment extends Fragment {
 		HomeButton button = (HomeButton) getActivity().findViewById(R.id.bt);
 		BadgeView badgeView = new BadgeView(getActivity(), button);
 	}
-
-	MenuItem mProgressMenu;
-
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-		inflater.inflate(R.menu.activity_main, menu);
-		mProgressMenu = menu.findItem(R.id.actionbar_loading);
-		super.onCreateOptionsMenu(menu, inflater);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(android.view.MenuItem item) {
-		switch (item.getItemId()) {
-		case R.id.actionbar_loading:
-			// 刷新首页数据
-			setLoadingState(true);
-			for (int i = 0; i < mBadgeView.length; i++) {
-				mBadgeView[i].hide();
-				mBadgeView[i].setText("");
-			}
-			getNewOrder();
-			getCancelledOrder();
-			getConfirmedOrder();
-			getCompleteOrder();
-			getDeliveringOrder();
-			break;
-
-		default:
-			break;
-		}
-		return false;
-	};
-
-	/**
-	 * 
-	 * @Description: 设置actionbar-progress的转动状态
-	 * @param refreshing
-	 * @return void
-	 */
-	public void setLoadingState(boolean refreshing) {
-		if (mProgressMenu != null) {
-			if (refreshing) {
-				mProgressMenu.setActionView(R.layout.progressbar);
-				mProgressMenu.setVisible(true);
-			} else {
-				// mProgressMenu.setVisible(false);
-				mProgressMenu.setActionView(null);
-			}
-		}
-	}
-
-	// #2D2F31
-	String[] status = new String[] { "new", "confirmed", "delivering", "complete", "cancelled" };
-	String access_token = MyApplication.getInstance().getAccess_token();
 
 	private void getNewOrder() {
 		// 根据状态加载订单
@@ -379,7 +335,6 @@ public class MasterFragment extends Fragment {
 
 	@Override
 	public void onDestroy() {
-		getActivity().unregisterReceiver(myReceiver);
 		super.onDestroy();
 	}
 }

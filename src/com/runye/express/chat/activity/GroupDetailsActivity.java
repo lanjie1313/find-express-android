@@ -38,9 +38,9 @@ import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
 import com.easemob.util.EMLog;
 import com.easemob.util.NetUtils;
-import com.runye.express.activity.common.MyApplication;
+import com.runye.express.activity.app.MyApplication;
 import com.runye.express.android.R;
-import com.runye.express.chat.widget.ExpandGridView;
+import com.runye.express.widget.ExpandGridView;
 
 public class GroupDetailsActivity extends BaseActivity {
 	private static final String TAG = "GroupDetailsActivity";

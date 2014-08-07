@@ -36,7 +36,7 @@ import com.easemob.chat.TextMessageBody;
 import com.easemob.util.DateUtils;
 import com.easemob.util.EasyUtils;
 import com.runye.express.android.R;
-import com.runye.express.chat.utils.SmileUtils;
+import com.runye.express.utils.SmileUtil;
 
 /**
  * 聊天记录adpater
@@ -99,7 +99,7 @@ public class ChatHistoryAdapter extends ArrayAdapter<EMContact> {
 			// 把最后一条消息的内容作为item的message内容
 			EMMessage lastMessage = conversation.getLastMessage();
 			holder.message.setText(
-					SmileUtils.getSmiledText(getContext(), getMessageDigest(lastMessage, (this.getContext()))),
+					SmileUtil.getSmiledText(getContext(), getMessageDigest(lastMessage, (this.getContext()))),
 					BufferType.SPANNABLE);
 
 			holder.time.setText(DateUtils.getTimestampString(new Date(lastMessage.getMsgTime())));

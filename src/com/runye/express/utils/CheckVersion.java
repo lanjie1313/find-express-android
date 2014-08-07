@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 
-import com.runye.express.activity.common.MyApplication;
+import com.runye.express.activity.app.MyApplication;
 import com.runye.express.service.DownLoadService;
 
 public class CheckVersion {
@@ -19,7 +19,7 @@ public class CheckVersion {
 	 */
 
 	public static void checkVersion(final Context mContext) {
-		if (NetWork.isNetworkConnected(mContext)) {
+		if (NetWorkUtil.isNetworkConnected(mContext)) {
 			LogUtil.d(TAG, "开始检测更新\n");
 			if (MyApplication.getInstance().localVersion < MyApplication.getInstance().serverVersion) {
 				LogUtil.d(TAG, "有新版本，开始更新\n" + "本地version:" + MyApplication.getInstance().localVersion

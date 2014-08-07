@@ -52,7 +52,7 @@ import com.easemob.chat.EMConversation;
 import com.easemob.chat.EMGroup;
 import com.easemob.chat.EMGroupManager;
 import com.easemob.chat.EMMessage;
-import com.runye.express.activity.common.MyApplication;
+import com.runye.express.activity.app.MyApplication;
 import com.runye.express.android.R;
 import com.runye.express.chat.adapter.ChatHistoryAdapter;
 import com.runye.express.chat.db.InviteMessgeDao;

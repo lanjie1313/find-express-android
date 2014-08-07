@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
+import com.runye.express.activity.app.MyApplication;
 import com.runye.express.utils.LogUtil;
 
 public class CheckVersionService extends Service {
@@ -22,9 +23,8 @@ public class CheckVersionService extends Service {
 		return super.onStartCommand(intent, flags, startId);
 	}
 
-	private void getAppVersion() {
+	public void getAppVersion() {
 		new Thread(new Runnable() {
-
 			@Override
 			public void run() {
 				// MyHttpClient.getVersion(null, null, new
@@ -40,17 +40,20 @@ public class CheckVersionService extends Service {
 				// super.onFailure(e, errorResponse);
 				// }
 				// });
+				// 进度发生变化通知调用方
+				// send the message to the client
 				try {
 					Thread.sleep(3000);
-					LogUtil.d(TAG, "启动获取版本服务");
-					Intent intent = new Intent("com.example.communication.RECEIVER");
-					// 发送Action为com.example.communication.RECEIVER的广播
-					sendBroadcast(intent);
+					LogUtil.d(TAG, "检查成功");
+					MyApplication.getInstance().serverVersion = 1;
+					MyApplication.getInstance().isFinshed = true;
+					stopSelf();
+					LogUtil.d(TAG, "停止服务");
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-
 			}
 		}).start();
 	}
+
 }

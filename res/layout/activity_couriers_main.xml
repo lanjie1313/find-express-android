@@ -1,90 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:ptr="http://schemas.android.com/apk/res/com.runye.express.android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#545454" >
+    android:background="#ffffff"
+    android:orientation="vertical" >
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="20dp"
-        android:background="#545454"
-        android:orientation="horizontal" >
+        android:layout_height="46dp"
+        android:background="@drawable/tool_box_fragment_bg_normal"
+        android:gravity="center_vertical"
+        android:padding="10dp" >
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="16dp"
-            android:layout_weight="1"
-            android:orientation="vertical" >
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
 
-            <com.runye.express.utils.HomeButton
-                android:id="@+id/activity_couriers_main_new"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                ptr:backcolor="0"
-                ptr:big="true"
-                ptr:home="0"
-                ptr:text="待配送"
-                ptr:textSize="24sp" />
-
-            <com.runye.express.utils.HomeButton
-                android:id="@+id/activity_couriers_main_history"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginTop="8dp"
-                ptr:backcolor="1"
-                ptr:big="true"
-                ptr:home="1"
-                ptr:text="历史订单"
-                ptr:textSize="24sp" />
-
-            <com.runye.express.utils.HomeButton
-                android:id="@+id/activity_couriers_main_more"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginTop="8dp"
-                ptr:backcolor="5"
-                ptr:big="true"
-                ptr:home="5"
-                ptr:text="更多..."
-                ptr:textSize="24sp" />
+            <ImageView
+                android:id="@+id/activity_couriers_main_menu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/actionbar_menu" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="16dp"
             android:layout_weight="1"
-            android:orientation="vertical" >
+            android:gravity="center" >
 
-            <com.runye.express.utils.HomeButton
-                android:id="@+id/activity_couriers_main_completed"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                ptr:backcolor="3"
-                ptr:big="true"
-                ptr:home="3"
-                ptr:text="已完成"
-                ptr:textSize="24sp" />
+            <TextView
+                android:id="@+id/activity_couriers_main_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="待处理"
+                android:textColor="#ffffff"
+                android:textSize="18sp" />
+        </LinearLayout>
 
-            <com.runye.express.utils.HomeButton
-                android:id="@+id/activity_couriers_main_evaluation"
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginTop="8dp"
-                ptr:backcolor="4"
-                ptr:big="true"
-                ptr:home="4"
-                ptr:text="查看评价"
-                ptr:textSize="24sp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/activity_couriers_main_project"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/actionbar_project" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:id="@+id/activity_couriers_main_notify"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/actionbar_msgs" />
         </LinearLayout>
     </LinearLayout>
 
-</ScrollView>
+    <com.runye.express.listview.SingleLayoutListView
+        android:id="@+id/activity_couriers_main_listview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </com.runye.express.listview.SingleLayoutListView>
+
+</LinearLayout>

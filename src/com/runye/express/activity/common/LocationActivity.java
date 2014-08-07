@@ -27,7 +27,7 @@ import com.runye.express.utils.ToastUtil;
  * @version V1.0
  * @Company:山西润叶网络科技有限公司
  */
-public class LocationActivity extends ComminBaseActivity {
+public class LocationActivity extends MyBaseActivity {
 	/** 用户lng */
 	private int mLng;
 	/** 用户lat */

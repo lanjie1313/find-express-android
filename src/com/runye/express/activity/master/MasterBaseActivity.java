@@ -18,8 +18,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.alibaba.fastjson.JSON;
-import com.runye.express.activity.common.ComminBaseActivity;
-import com.runye.express.activity.common.MyApplication;
+import com.runye.express.activity.app.MyApplication;
+import com.runye.express.activity.common.MyBaseActivity;
 import com.runye.express.activity.common.OrderInfoActivity;
 import com.runye.express.adapter.OrderModeAdapter;
 import com.runye.express.android.R;
@@ -32,9 +32,9 @@ import com.runye.express.listview.SingleLayoutListView;
 import com.runye.express.listview.SingleLayoutListView.OnLoadMoreListener;
 import com.runye.express.listview.SingleLayoutListView.OnRefreshListener;
 import com.runye.express.utils.LogUtil;
-import com.runye.express.utils.MyToast;
 import com.runye.express.utils.SysExitUtil;
 import com.runye.express.utils.ToastUtil;
+import com.runye.express.widget.MyToast;
 
 /**
  * 
@@ -45,7 +45,7 @@ import com.runye.express.utils.ToastUtil;
  * @version V1.0
  * @Company:山西润叶网络科技有限公司
  */
-public class MasterBaseActivity extends ComminBaseActivity {
+public class MasterBaseActivity extends MyBaseActivity {
 	private final String TAG = "MasterBaseActivity";
 	/** 刷新listview */
 	private SingleLayoutListView mListView;
@@ -149,7 +149,6 @@ public class MasterBaseActivity extends ComminBaseActivity {
 
 			@Override
 			public void onRefresh() {
-				// TODO 下拉刷新
 				Log.d(TAG, "onRefresh");
 				skip = 0;
 				getOrders(0);
@@ -160,7 +159,6 @@ public class MasterBaseActivity extends ComminBaseActivity {
 
 			@Override
 			public void onLoadMore() {
-				// TODO 加载更多
 				Log.d(TAG, "onLoad");
 				skip += limit;
 				getOrders(1);
@@ -175,18 +173,11 @@ public class MasterBaseActivity extends ComminBaseActivity {
 	 * @return void
 	 */
 	private void getOrders(final int type) {
-		// 首先尝试读取缓存
-		// String cacheConfigString = ConfigCache.getUrlCache(HttpUri.ORDERS);
-		// 根据结果判定是读取缓存，还是重新读取
-		// if (cacheConfigString != null) {
-		// LogUtil.d(TAG, "listview有缓存,使用缓存");
-		// handleResult(cacheConfigString, type);
-		// } else {
-		// LogUtil.d(TAG, "listview没有缓存,不使用缓存");
 		/**
 		 * 根据siteid请求order
 		 */
 		access_token = MyApplication.getInstance().getAccess_token();
+		LogUtil.d(TAG, "获取到的token:" + access_token);
 		// 根据状态加载订单
 		String status = getIntent().getStringExtra("STATUS");
 		RequestParams params = new RequestParams();

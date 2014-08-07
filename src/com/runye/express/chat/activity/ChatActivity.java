@@ -76,17 +76,17 @@ import com.easemob.chat.VoiceMessageBody;
 import com.easemob.util.EMLog;
 import com.easemob.util.PathUtil;
 import com.easemob.util.VoiceRecorder;
-import com.runye.express.activity.common.MyApplication;
+import com.runye.express.activity.app.MyApplication;
 import com.runye.express.android.R;
 import com.runye.express.chat.adapter.ExpressionAdapter;
 import com.runye.express.chat.adapter.ExpressionPagerAdapter;
 import com.runye.express.chat.adapter.MessageAdapter;
 import com.runye.express.chat.adapter.VoicePlayClickListener;
-import com.runye.express.chat.utils.CommonUtils;
-import com.runye.express.chat.utils.ImageUtils;
-import com.runye.express.chat.utils.SmileUtils;
-import com.runye.express.chat.widget.ExpandGridView;
-import com.runye.express.chat.widget.PasteEditText;
+import com.runye.express.utils.CommonUtil;
+import com.runye.express.utils.ImageUtil;
+import com.runye.express.utils.SmileUtil;
+import com.runye.express.widget.ExpandGridView;
+import com.runye.express.widget.PasteEditText;
 
 /**
  * 聊天页面
@@ -365,7 +365,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 				File file = new File(filePath);
 				if (!file.exists()) {
 					// 不存在大图发送缩略图
-					filePath = ImageUtils.getThumbnailImagePath(filePath);
+					filePath = ImageUtil.getThumbnailImagePath(filePath);
 				}
 				sendPicture(filePath);
 			}
@@ -599,7 +599,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 	 * 照相获取图片
 	 */
 	public void selectPicFromCamera() {
-		if (!CommonUtils.isExitsSdcard()) {
+		if (!CommonUtil.isExitsSdcard()) {
 			Toast.makeText(getApplicationContext(), "SD卡不存在，不能拍照", 0).show();
 			return;
 		}
@@ -616,7 +616,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 	 * 拍摄视频
 	 */
 	public void selectVideoFromCamera() {
-		if (!CommonUtils.isExitsSdcard()) {
+		if (!CommonUtil.isExitsSdcard()) {
 			Toast.makeText(getApplicationContext(), "SD卡不存在，不能拍摄", 0).show();
 			return;
 		}
@@ -1015,7 +1015,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 		public boolean onTouch(View v, MotionEvent event) {
 			switch (event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
-				if (!CommonUtils.isExitsSdcard()) {
+				if (!CommonUtil.isExitsSdcard()) {
 					Toast.makeText(ChatActivity.this, "发送语音需要sdcard支持！", Toast.LENGTH_SHORT).show();
 					return false;
 				}
@@ -1114,7 +1114,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 							// 这里用的反射，所以混淆的时候不要混淆SmileUtils这个类
 							Class clz = Class.forName("com.easemob.chatuidemo.utils.SmileUtils");
 							Field field = clz.getField(filename);
-							mEditTextContent.append(SmileUtils.getSmiledText(ChatActivity.this,
+							mEditTextContent.append(SmileUtil.getSmiledText(ChatActivity.this,
 									(String) field.get(null)));
 						} else { // 删除文字或者表情
 							if (!TextUtils.isEmpty(mEditTextContent.getText())) {
@@ -1126,7 +1126,7 @@ public class ChatActivity extends BaseActivity implements OnClickListener {
 									int i = tempStr.lastIndexOf("[");// 获取最后一个表情的位置
 									if (i != -1) {
 										CharSequence cs = tempStr.substring(i, selectionStart);
-										if (SmileUtils.containsKey(cs.toString()))
+										if (SmileUtil.containsKey(cs.toString()))
 											mEditTextContent.getEditableText().delete(i, selectionStart);
 										else
 											mEditTextContent.getEditableText().delete(selectionStart - 1,

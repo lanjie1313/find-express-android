@@ -1,7 +1,6 @@
 <resources xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <style name="AppBaseTheme" parent="android:Theme.Light">
-    </style>
+    <style name="AppBaseTheme" parent="android:Theme.Light"></style>
 
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
@@ -117,13 +116,14 @@
         <item name="android:windowExitAnimation">@anim/chat_head_out</item>
     </style>
 
-<!--     <style name="chat_Anim_style" parent="android:Theme.NoTitleBar.Fullscreen"> -->
-<!--         <item name="android:windowAnimationStyle">@style/chat_AnimFade</item> -->
-<!--     </style> -->
+    <!-- <style name="chat_Anim_style" parent="android:Theme.NoTitleBar.Fullscreen"> -->
+    <!-- <item name="android:windowAnimationStyle">@style/chat_AnimFade</item> -->
+    <!-- </style> -->
 
-<!--     <style name="chat_Anim_style2" parent="android:Theme.NoTitleBar"> -->
-<!--         <item name="android:windowAnimationStyle">@style/chat_AnimFade</item> -->
-<!--     </style> -->
+
+    <!-- <style name="chat_Anim_style2" parent="android:Theme.NoTitleBar"> -->
+    <!-- <item name="android:windowAnimationStyle">@style/chat_AnimFade</item> -->
+    <!-- </style> -->
 
     <style name="chat_horizontal_slide" parent="android:Theme.NoTitleBar">
         <item name="android:windowAnimationStyle">@style/chat_AnimFade2</item>
@@ -132,7 +132,7 @@
     <!--
     <style name="horizontal_slide2" parent="android:style/Theme.Holo.Light.NoActionBar">
         <item name="android:windowAnimationStyle">@style/AnimFade2</item>
-    </style>
+    </style>
     -->
 
     <style name="chat_MyDialogStyle">
@@ -214,6 +214,13 @@
         <item name="android:paddingBottom">6.0dip</item>
         <item name="android:includeFontPadding">false</item>
         <item name="android:background">@drawable/chat_edit_text_bg</item>
+    </style>
+    <!-- 去掉启动程序时白屏黑屏 -->
+    <style name="startTheme" parent="AppBaseTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
 </resources>

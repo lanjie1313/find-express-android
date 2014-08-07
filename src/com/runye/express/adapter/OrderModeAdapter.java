@@ -13,8 +13,8 @@ import android.widget.TextView;
 
 import com.runye.express.android.R;
 import com.runye.express.bean.OrderModeBean;
-import com.runye.express.utils.BadgeView;
 import com.runye.express.utils.ToastUtil;
+import com.runye.express.widget.BadgeView;
 
 /**
  * 

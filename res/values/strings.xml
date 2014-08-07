@@ -52,11 +52,13 @@
     <string name="order_delivery_address">收货地址:</string>
     <string name="order_charge">订单金额:</string>
     <!-- 订单详细 -->
-    <string name="order_info_buyer_name">买家姓名</string>
-    <string name="order_info_order_number">订单号</string>
-    <string name="order_info_order_time">成交时间</string>
-    <string name="order_info_delivery_adress">收货地址</string>
-    <string name="order_info_shop_name">店铺地址</string>
+    <string name="order_info_buyer_name">收货人:</string>
+    <string name="order_info_order_number">订单号:</string>
+    <string name="order_info_order_time">下单时间:</string>
+    <string name="order_info_delivery_adress">收货地址:</string>
+    <string name="order_info_address">地址:</string>
+    <string name="order_info_shop_name">店铺名称:</string>
+    <string name="order_info_phone">电话:</string>
     <string name="order_info_goodslist">商品清单</string>
     <string name="order_info_goods_charge">单价</string>
     <string name="order_info_goods_number">数量</string>
@@ -67,7 +69,8 @@
     <string name="order_info_done">完成时间:</string>
     <string name="order_info_scanmap">查看地图</string>
     <string name="order_info_select">分配</string>
-
+    <string name="order_info_serial_number">运单号:</string>
+    <string name="order_info_appointment">预约时间:</string>
     <!-- 站长主界面 -->
 
     <string name="master_main_noAllocation">待分配订单</string>
@@ -137,5 +140,11 @@
     <string name="dissolution_group_hint">退出后，此群将被解散</string>
     <string name="exit_group">退出</string>
     <string name="connect_conflict">同一帐号已在其他设备登录</string>
+    <!-- couriers -->
+    <string name="couriers_new">待处理</string>
+    <string name="couriers_deliving">配送中</string>
+    <string name="couriers_completed">已完成</string>
+    <string name="couriers_rejected">已拒绝</string>
+    <string name="couriers_cancled">已取消</string>
 
 </resources>

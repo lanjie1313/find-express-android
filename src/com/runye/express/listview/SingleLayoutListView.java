@@ -516,17 +516,22 @@ public class SingleLayoutListView extends ListView implements OnScrollListener {
 	 * 不嵌套的时候，可以放在这个方法里使用，效果就是：进入界面直接刷新。具体刷新的控制条件，你自己决定。
 	 * 方法为：直接调用pull2RefreshManually();
 	 */
-	@Override
-	public void onWindowFocusChanged(boolean pHasWindowFocus) {
-		super.onWindowFocusChanged(pHasWindowFocus);
-		// MyLogger.showLogWithLineNum(5,
-		// "mLabel = "+mLabel+"___onWindowFocusChanged... ___pHasWindowFocus = "+pHasWindowFocus);
-		if (mIsDoRefreshOnUIChanged) {
-			if (pHasWindowFocus) {
-				pull2RefreshManually();
-			}
-		}
-	}
+	// @Override
+	// public void onWindowFocusChanged(boolean pHasWindowFocus) {
+	// super.onWindowFocusChanged(pHasWindowFocus);
+	// // MyLogger.showLogWithLineNum(5,
+	// //
+	// "mLabel = "+mLabel+"___onWindowFocusChanged... ___pHasWindowFocus = "+pHasWindowFocus);
+	// if (mIsDoRefreshOnUIChanged) {
+	// if (pHasWindowFocus) {
+	// LogUtil.d("CouriersFragment", "检测到了屏幕的变化");
+	// pull2RefreshManually();
+	// } else if (pHasWindowFocus == false && isChanged) {
+	// LogUtil.d("CouriersFragment", "检测到了view的变化");
+	// pull2RefreshManually();
+	// }
+	// }
+	// }
 
 	/**
 	 * 当该ListView所在的控件显示到屏幕上时，直接显示正在刷新...
@@ -535,13 +540,15 @@ public class SingleLayoutListView extends ListView implements OnScrollListener {
 	 * @author JohnWatson
 	 * @version 1.0
 	 */
-	public void pull2RefreshManually() {
-		mHeadState = REFRESHING;
-		changeHeadViewByState();
-		onRefresh();
+	public void pull2RefreshManually(boolean isShow) {
+		if (isShow) {
 
-		mIsRecored = false;
-		mIsBack = false;
+			mHeadState = REFRESHING;
+			changeHeadViewByState();
+			onRefresh();
+			mIsRecored = false;
+			mIsBack = false;
+		}
 	}
 
 	/**

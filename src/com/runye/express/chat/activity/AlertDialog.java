@@ -28,7 +28,7 @@ import android.widget.TextView;
 import com.easemob.util.ImageUtils;
 import com.runye.express.android.R;
 import com.runye.express.chat.task.DownloadImageTask;
-import com.runye.express.chat.utils.ImageCache;
+import com.runye.express.utils.ImageCache;
 
 public class AlertDialog extends BaseActivity {
 	private TextView mTextView;

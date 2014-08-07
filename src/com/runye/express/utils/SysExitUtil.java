@@ -26,5 +26,6 @@ public class SysExitUtil {
 				activityList.get(i).finish();
 			}
 		}
+		System.exit(0);
 	}
 }

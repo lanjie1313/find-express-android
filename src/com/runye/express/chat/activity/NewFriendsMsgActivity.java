@@ -19,12 +19,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
-import com.runye.express.activity.common.MyApplication;
+import com.runye.express.activity.app.MyApplication;
 import com.runye.express.android.R;
-import com.runye.express.chat.Constant;
 import com.runye.express.chat.adapter.NewFriendsMsgAdapter;
 import com.runye.express.chat.db.InviteMessgeDao;
 import com.runye.express.chat.domain.InviteMessage;
+import com.runye.express.utils.Constant;
 
 /**
  * 申请与通知

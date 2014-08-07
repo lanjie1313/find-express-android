@@ -17,7 +17,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.runye.express.activity.common.MyApplication;
+import com.runye.express.activity.app.MyApplication;
 
 public class DbOpenHelper extends SQLiteOpenHelper {
 

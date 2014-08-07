@@ -49,16 +49,16 @@ import com.easemob.chat.EMNotifier;
 import com.easemob.chat.GroupChangeListener;
 import com.easemob.chat.TextMessageBody;
 import com.easemob.util.HanziToPinyin;
+import com.runye.express.activity.app.MyApplication;
 import com.runye.express.activity.common.LoginActivity;
-import com.runye.express.activity.common.MyApplication;
 import com.runye.express.android.R;
-import com.runye.express.chat.Constant;
 import com.runye.express.chat.db.InviteMessgeDao;
 import com.runye.express.chat.db.UserDao;
 import com.runye.express.chat.domain.InviteMessage;
 import com.runye.express.chat.domain.InviteMessage.InviteMesageStatus;
 import com.runye.express.chat.domain.User;
-import com.runye.express.chat.utils.CommonUtils;
+import com.runye.express.utils.CommonUtil;
+import com.runye.express.utils.Constant;
 
 public class ChatMainActivity extends FragmentActivity {
 
@@ -499,7 +499,7 @@ public class ChatMainActivity extends FragmentActivity {
 					// 刷新ui
 					if (currentTabIndex == 0)
 						chatHistoryFragment.refresh();
-					if (CommonUtils.getTopActivity(ChatMainActivity.this).equals(GroupsActivity.class.getName())) {
+					if (CommonUtil.getTopActivity(ChatMainActivity.this).equals(GroupsActivity.class.getName())) {
 						GroupsActivity.instance.onResume();
 					}
 				}
@@ -528,7 +528,7 @@ public class ChatMainActivity extends FragmentActivity {
 						updateUnreadLabel();
 						if (currentTabIndex == 0)
 							chatHistoryFragment.refresh();
-						if (CommonUtils.getTopActivity(ChatMainActivity.this).equals(GroupsActivity.class.getName())) {
+						if (CommonUtil.getTopActivity(ChatMainActivity.this).equals(GroupsActivity.class.getName())) {
 							GroupsActivity.instance.onResume();
 						}
 					} catch (Exception e) {
@@ -550,7 +550,7 @@ public class ChatMainActivity extends FragmentActivity {
 					updateUnreadLabel();
 					if (currentTabIndex == 0)
 						chatHistoryFragment.refresh();
-					if (CommonUtils.getTopActivity(ChatMainActivity.this).equals(GroupsActivity.class.getName())) {
+					if (CommonUtil.getTopActivity(ChatMainActivity.this).equals(GroupsActivity.class.getName())) {
 						GroupsActivity.instance.onResume();
 					}
 				}
@@ -593,7 +593,7 @@ public class ChatMainActivity extends FragmentActivity {
 					// 刷新ui
 					if (currentTabIndex == 0)
 						chatHistoryFragment.refresh();
-					if (CommonUtils.getTopActivity(ChatMainActivity.this).equals(GroupsActivity.class.getName())) {
+					if (CommonUtil.getTopActivity(ChatMainActivity.this).equals(GroupsActivity.class.getName())) {
 						GroupsActivity.instance.onResume();
 					}
 				}

@@ -28,12 +28,12 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-import com.runye.express.activity.common.MyApplication;
+import com.runye.express.activity.app.MyApplication;
 import com.runye.express.android.R;
-import com.runye.express.chat.Constant;
 import com.runye.express.chat.adapter.ContactAdapter;
 import com.runye.express.chat.domain.User;
-import com.runye.express.chat.widget.Sidebar;
+import com.runye.express.utils.Constant;
+import com.runye.express.widget.Sidebar;
 
 public class PickContactNoCheckboxActivity extends BaseActivity {
 

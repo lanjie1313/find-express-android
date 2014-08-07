@@ -73,7 +73,7 @@
                 android:divider="@color/divider_list"
                 android:dividerHeight="1px"
                 android:fastScrollEnabled="false" />
- 			<com.runye.express.chat.widget.Sidebar
+ 			<com.runye.express.widget.Sidebar
                 android:id="@+id/sidebar"
                 android:layout_width="25dp"
                 android:layout_height="match_parent"

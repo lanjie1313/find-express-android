@@ -25,9 +25,9 @@ import com.runye.express.bean.SiteModeBean;
 import com.runye.express.http.HttpUri;
 import com.runye.express.http.MyHttpClient;
 import com.runye.express.listview.ListViewHeight;
-import com.runye.express.utils.LoadingDialog;
 import com.runye.express.utils.LogUtil;
 import com.runye.express.utils.SysExitUtil;
+import com.runye.express.widget.LoadingDialog;
 
 /**
  * 

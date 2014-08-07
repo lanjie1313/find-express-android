@@ -33,5 +33,21 @@
         <item>@drawable/tool_box_fragment_yixin_icon</item>
         <item>@drawable/tool_box_fragment_yixin_icon</item>
         <item>@drawable/tool_box_fragment_yixin_icon</item>
-    </array> 
+    </array>
+
+<!--     <string-array name="couriers_request"> -->
+<!--         <item>postman_new</item> -->
+<!--         <item>postman_confirmed</item> -->
+<!--         <item>delivering_finish</item> -->
+<!--         <item>postman_reject</item> -->
+<!--         <item>cancelled</item> -->
+<!--     </string-array> -->
+    <string-array name="couriers_request">
+        <item>new</item>
+        <item>confirmed</item>
+        <item>delivering</item>
+        <item>complete</item>
+        <item>cancelled</item>
+    </string-array>
+
 </resources>

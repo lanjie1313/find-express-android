@@ -49,14 +49,15 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
     <application
-        android:name="com.runye.express.activity.common.MyApplication"
+        android:name="com.runye.express.activity.app.MyApplication"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.runye.express.activity.common.LoginActivity"
-            android:label="@string/app_name" >
+            android:name="com.runye.express.activity.common.SplashActivity"
+            android:label="@string/app_name"
+            android:theme="@style/startTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -121,7 +122,9 @@
             android:name="com.runye.express.activity.common.ImagePagerActivity"
             android:theme="@style/horizontal_slide" >
         </activity>
-        <activity android:name="com.runye.express.activity.slidingmenu.MainActivity" >
+        <activity
+            android:name="com.runye.express.activity.common.MainActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
         </activity>
         <activity
             android:name="com.runye.express.chat.activity.ChatMainActivity"
@@ -216,6 +219,18 @@
             android:theme="@style/horizontal_slide"
             android:windowSoftInputMode="stateAlwaysHidden" >
         </activity>
+        <activity
+            android:name="com.runye.express.activity.common.LoginActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.runye.express.activity.common.PopUpDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+        <activity
+            android:name="com.runye.express.activity.common.WayBillsInfoActivity"
+            android:theme="@style/horizontal_slide" >
+        </activity>
         <!-- 开机自启动服务 -->
         <receiver android:name="com.easemob.chat.StartServiceReceiver" >
             <intent-filter android:priority="1000" >
@@ -250,7 +265,8 @@
 
         <service android:name="com.runye.express.service.DownLoadService" >
         </service>
-        <service android:name="com.runye.express.service.CheckVersionService"></service>
+        <service android:name="com.runye.express.service.CheckVersionService" >
+        </service>
     </application>
 
 </manifest>
